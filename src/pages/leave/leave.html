@@ -1,0 +1,51 @@
+<!--
+  Generated template for the LeavePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>請假系統</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 class="title">
+        <ion-icon class="back" name="ios-arrow-back" (click)="perviousMonth()"></ion-icon>
+        <div><span>{{nowYear}}</span><span>年</span><span>{{nowMonth}}</span><span>月</span> </div>
+        <ion-icon class="forward" name="ios-arrow-forward" (click)="nextMonth()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div style="width:100%;height:100%">
+    <ion-grid class="calendar">
+      <ion-row>
+        <ion-col>SUN.</ion-col>
+        <ion-col>MON.</ion-col>
+        <ion-col>TUE.</ion-col>
+        <ion-col>WED.</ion-col>
+        <ion-col>THU.</ion-col>
+        <ion-col>FRI.</ion-col>
+        <ion-col>SAT.</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let weekArray of calanderHtml">
+        <ion-col class="calendar-day" *ngFor="let day of weekArray">
+          <div *ngIf="day.currentMonth;else elseblock">
+            <time class="calendar-current-month" [attr.datetime]="day.fullDate">{{day.date}}</time>
+          </div>
+          <ng-template #elseblock>
+            <time class="calendar-not-current-month" [attr.datetime]="day.fullDate">{{day.date}}</time>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

@@ -1,0 +1,11 @@
+{
+  "name": "MyIonicProject",
+  "app_id": "",
+  "type": "ionic-angular",
+  "ionic_source_map": "source-map",
+  "proxies": [
+    {
+      "path": "/mstoken",
+      "proxyUrl": "https://login.microsoftonline.com/"
+    }]
+}
