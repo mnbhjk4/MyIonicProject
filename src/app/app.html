@@ -1,17 +1,1 @@
-<ion-menu [content]="content">
-  
-
-  <ion-content>
-    <ion-grid>
-        <ion-row>
-
-        </ion-row>
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
-    </ion-grid>
-  </ion-content>
-
-</ion-menu>
-
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+<ion-nav [root]="rootPage" swipeBackEnabled="false"></ion-nav>

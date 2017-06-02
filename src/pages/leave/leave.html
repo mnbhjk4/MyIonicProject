@@ -18,9 +18,9 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12 class="title">
-        <ion-icon class="back" name="ios-arrow-back" (click)="perviousMonth()"></ion-icon>
+        <button ion-button small (click)="perviousMonth()" class="back"><ion-icon  name="ios-arrow-back" ></ion-icon></button>
         <div><span>{{nowYear}}</span><span>年</span><span>{{nowMonth}}</span><span>月</span> </div>
-        <ion-icon class="forward" name="ios-arrow-forward" (click)="nextMonth()"></ion-icon>
+        <button ion-button small (click)="nextMonth()" class="forward"><ion-icon  name="ios-arrow-forward" ></ion-icon></button>
       </ion-col>
     </ion-row>
   </ion-grid>

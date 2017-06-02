@@ -21,6 +21,8 @@ import { MSloginProvider } from '../providers/login/login-mslogin';
 import { CalanderService } from '../pages/leave/calander.service';
 import { CalanderComponent } from '../components/calander/calander';
 
+import { OrganizePage } from '../pages/organize/organize';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -29,7 +31,7 @@ import { CalanderComponent } from '../components/calander/calander';
     IndexPage,
     LoginPage,
     LeavePage,
-    CalanderComponent
+    OrganizePage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,7 @@ import { CalanderComponent } from '../components/calander/calander';
     LoginPage,
     IndexPage,
     LeavePage,
-    CalanderComponent
+    OrganizePage
   ],
   providers: [
     StatusBar,

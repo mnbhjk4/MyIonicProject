@@ -1,11 +1,7 @@
-import { Component, ViewChild, } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
-
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import { IndexPage } from '../pages/index/index';
 import { LoginPage } from '../pages/login/login';
-import { ListPage } from '../pages/list/list';
-import {LeavePage} from '../pages/leave/leave';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginProvider } from '../providers/login/login';
@@ -16,17 +12,14 @@ import { JwtHelper } from 'angular2-jwt';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
   public static token : Map<string,string> = new Map<string,string>();
   public static tokenType = "";
   public static platformType = "web";
   jwtHelper: JwtHelper = new JwtHelper();
-  // make HelloIonicPage the root (or first) page
   rootPage: any = LoginPage;
-  pages: Array<{ title: string, component: any }>;
+
   constructor(
     public platform: Platform,
-    public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     private loginProvider: LoginProvider
@@ -38,14 +31,7 @@ export class MyApp {
     } else if (this.platform.is('windows')) {
       MyApp.platformType = "windows";
     }
-
     this.initializeApp();
-    // set our app's pages
-    this.pages = [
-      { title: 'Index', component: IndexPage },
-      { title: 'My First 1', component: ListPage },
-      { title: 'Leave system',component:LeavePage}
-    ];
   }
   initLoginApp() {
     // 0.試著從URL解析Code
@@ -105,13 +91,5 @@ export class MyApp {
         this.initLoginApp();
       }
     });
-  }
-
-
-  openPage(page) {
-    // close the menu when clicking a link from the menu
-    this.menu.close();
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
   }
 }

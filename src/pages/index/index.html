@@ -1,7 +1,23 @@
-<ion-header>
+<ion-menu [content]="content">
+  
+
+  <ion-content>
+    <ion-grid>
+        <ion-row>
+
+        </ion-row>
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+    </ion-grid>
+  </ion-content>
+
+</ion-menu>
+<ion-nav #content [root]="rootPage"></ion-nav>
+<!--<ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="md-apps"></ion-icon>
     </button>
     <ion-title>Raytrex ERP</ion-title>
   </ion-navbar>
@@ -23,4 +39,4 @@
     <button ion-button color="primary" (click)="triggerAjax()">Trigger</button>
   </p>
 
-</ion-content>
+</ion-content>-->

@@ -12,11 +12,11 @@ import 'rxjs/add/operator/map';
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
-const client_id: string = '77544d4f-2184-4b4c-8760-f3a4474897f9';
+const client_id: string = '7c3abeb3-bb33-435a-9ad6-d63ff39e8179';
 const tenantid: string = 'raytrex.onmicrosoft.com';
 
 // const redirect_url: string = 'http://localhost:8100';
-const client_secret: string = 'gDgF9FdPKLk2uf9A2mOMh1V';
+const client_secret: string = 'dEczFYJg7E71q6Y2OrZRssu';
 const scope: string = 'openid offline_access User.Read Mail.Read'
 @Injectable()
 export class MSloginProvider {
