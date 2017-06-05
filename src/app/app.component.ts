@@ -70,6 +70,7 @@ export class MyApp {
             if (json.access_token != null) {
               let access_obj = new Access_obj();
               access_obj.access_token = json.access_token;
+              access_obj.decoded_access_token = JSON.stringify(this.jwtHelper.decodeToken(json.access_token));
               access_obj.id_token = json.id_token;
               access_obj.refresh_token = json.refresh_token;
               access_obj.state = "Microsoft";
@@ -116,6 +117,7 @@ export class MyApp {
                   if (json.access_token != null) {
                     let access_obj = new Access_obj();
                     access_obj.access_token = json.access_token;
+                    access_obj.decoded_access_token = JSON.stringify(this.jwtHelper.decodeToken(json.access_token));
                     access_obj.id_token = json.id_token;
                     access_obj.refresh_token = json.refresh_token;
                     access_obj.state = "Microsoft";
@@ -152,5 +154,6 @@ export class Access_obj {
   public access_token: string;
   public id_token: string;
   public refresh_token: string;
+  public decoded_access_token : string;
   public state: string;
 }

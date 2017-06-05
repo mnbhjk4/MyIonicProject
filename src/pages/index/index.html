@@ -1,46 +1,19 @@
 <ion-menu [content]="content">
   <ion-header>
+  
     <ion-title>
+      <ion-icon name="ios-contact">
+        <font style="">{{user_name}}</font>
+      </ion-icon>
       <button ion-button (click)="logout()" >Logout</button>
     </ion-title>
+    
   </ion-header>
 
   <ion-content>
-    <ion-grid>
-        <ion-row>
-
-        </ion-row>
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+    <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
-    </ion-grid>
   </ion-content>
-
 </ion-menu>
 <ion-nav #content [root]="rootPage"></ion-nav>
-<!--<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="md-apps"></ion-icon>
-    </button>
-    <ion-title>Raytrex ERP</ion-title>
-  </ion-navbar>
-</ion-header>
-
-
-<ion-content>
-
-  <h3>Welcome to your first Ionic app!</h3>
-
-  <p>
-    This starter project is our way of helping you get a functional app running in record time.
-  </p>
-  <p>
-    Follow along on the tutorial section of the Ionic docs!
-  </p>
-  <p>
-    <button ion-button color="primary" menuToggle>Toggle Menu</button>
-    <button ion-button color="primary" (click)="triggerAjax()">Trigger</button>
-  </p>
-
-</ion-content>-->

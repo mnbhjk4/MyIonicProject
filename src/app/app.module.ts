@@ -21,6 +21,7 @@ import { MSloginProvider } from '../providers/login/login-mslogin';
 import { CalanderService } from '../pages/leave/calander.service';
 
 import { OrganizePage } from '../pages/organize/organize';
+import { ProjectPage} from '../pages/project/project';
 import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
@@ -31,7 +32,8 @@ import { IonicStorageModule } from '@ionic/storage';
     IndexPage,
     LoginPage,
     LeavePage,
-    OrganizePage
+    OrganizePage,
+    ProjectPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { IonicStorageModule } from '@ionic/storage';
     LoginPage,
     IndexPage,
     LeavePage,
-    OrganizePage
+    OrganizePage,
+    ProjectPage
   ],
   providers: [
     StatusBar,
