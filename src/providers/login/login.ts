@@ -35,4 +35,8 @@ export class LoginProvider {
   getUserMail(){
     
   }
+
+  logout(){
+    this.msSloginProvider.logout();
+  }
 }

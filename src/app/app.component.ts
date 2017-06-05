@@ -38,6 +38,7 @@ export class MyApp {
   initLoginApp() {
     // 0.試著從URL解析Code
     let url = localStorage.getItem("url");
+    let parameterMap = new Map();
     if (url == null || url == "") {
       url = this.platform.url();
     }
@@ -51,9 +52,7 @@ export class MyApp {
         for (let i = 0; i < parameters.length; i++) {
           let pairValue = parameters[i].split("=");
           if (pairValue[0] != null && pairValue[1] != null) {
-            console.log(pairValue[0], pairValue[1]);
-            this.storage.remove(pairValue[0]);
-            this.storage.set(pairValue[0], pairValue[1]);
+            parameterMap.set(pairValue[0], pairValue[1]);
           }
         }
       }
@@ -61,38 +60,36 @@ export class MyApp {
     // 1.接收來自MS,Google access ID (登入後的重新導向)
     let codeType = "";
     // Microsoft Azure的方法
-    if (codeType == "") {
-      this.storage.get("state").then((val) => {
-        if (val == "Microsoft") {
-          this.storage.get("code").then((code) => {
-            let result = this.loginProvider.authMSCode(code);
-            if (result != null) {
-              result.subscribe((json) => {
-                if (json.access_token != null) {
-                  let access_obj = new Access_obj();
-                  access_obj.access_token = json.access_token;
-                  access_obj.id_token = json.id_token;
-                  access_obj.refresh_token = json.refresh_token;
-                  access_obj.state = "Microsoft";
-                  this.storage.set("access_obj", access_obj);
-                  this.storage.remove("state");
-                  this.storage.remove("code");
-                  this.rootPage = IndexPage;
-                } else {
-                  this.storage.remove("access_obj");
-                }
-              }, (error) => {
-                let errorAlert = this.alertCtl.create({
-                  title: 'Error',
-                  subTitle: 'Error message : ' + error,
-                  buttons: ['OK']
-                });
-                errorAlert.present();
-              });
+    if (parameterMap.size > 0) {
+      let val = parameterMap.get("state");
+      if (val == "Microsoft") {
+        let code = parameterMap.get("code");
+        let result = this.loginProvider.authMSCode(code);
+        if (result != null) {
+          result.subscribe((json) => {
+            if (json.access_token != null) {
+              let access_obj = new Access_obj();
+              access_obj.access_token = json.access_token;
+              access_obj.id_token = json.id_token;
+              access_obj.refresh_token = json.refresh_token;
+              access_obj.state = "Microsoft";
+              this.storage.set("access_obj", access_obj);
+              this.storage.remove("state");
+              this.storage.remove("code");
+              this.rootPage = IndexPage;
+            } else {
+              this.storage.remove("access_obj");
             }
+          }, (error) => {
+            let errorAlert = this.alertCtl.create({
+              title: 'Error',
+              subTitle: 'Error message : ' + error,
+              buttons: ['OK']
+            });
+            errorAlert.present();
           });
         }
-      });
+      }
     }
     // Google API的方法
     if (codeType == "") {
@@ -124,16 +121,14 @@ export class MyApp {
                     access_obj.state = "Microsoft";
                     this.storage.set("access_obj", access_obj);
                     this.rootPage = IndexPage;
-                  } else {
-                    this.storage.remove("access_obj");
                   }
                 }
               }, (error) => {
 
               });
             }
-          }else{
-             this.rootPage = IndexPage;
+          } else {
+            this.rootPage = IndexPage;
           }
         }
       }

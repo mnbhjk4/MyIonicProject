@@ -3,6 +3,7 @@ import { RequestOptions, Headers,URLSearchParams } from '@angular/http';
 import { JwtHelper } from 'angular2-jwt';
 import { Http } from '@angular/http';
 import { MyApp } from '../../app/app.component';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 
@@ -22,7 +23,7 @@ const scope: string = 'openid offline_access User.Read Mail.Read'
 export class MSloginProvider {
   public redirect_url: string = 'raytrexerp://MyERP';
   private jwtHelper: JwtHelper = new JwtHelper();
-  constructor(public http: Http) {
+  constructor(public http: Http,private storage : Storage) {
 
   }
   gotoAzureLogin() {
@@ -77,7 +78,12 @@ export class MSloginProvider {
     parames.append("refresh_token",refresh_token);
     parames.append("redirectUri",this.redirect_url);
     requestOptions.search = parames;
-    return this.http.get("http://erp.raytrex.com:8080/adal/getTokenByRefreshCode",requestOptions)
+    return this.http.get("http://erp.raytrex.com:8080/adal/getTokenByRefreshToken",requestOptions)
       .map(res => res.json());
+  }
+
+  logout(){
+    this.storage.remove("access_obj");
+    window.location.href = "https://login.microsoftonline.com/"+tenantid+"/oauth2/logout?post_logout_redirect_uri="+this.redirect_url;
   }
 }
