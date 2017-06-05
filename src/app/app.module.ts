@@ -19,9 +19,9 @@ import {Camera} from '@ionic-native/camera';
 import { LoginProvider } from '../providers/login/login';
 import { MSloginProvider } from '../providers/login/login-mslogin';
 import { CalanderService } from '../pages/leave/calander.service';
-import { CalanderComponent } from '../components/calander/calander';
 
 import { OrganizePage } from '../pages/organize/organize';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { OrganizePage } from '../pages/organize/organize';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    FormsModule
+    FormsModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

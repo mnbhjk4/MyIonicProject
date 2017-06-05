@@ -36,18 +36,8 @@ export class IndexPage {
    
   }
 
-  triggerAjax(){
-    console.log(MyApp.token);
-     let requestOptions = new RequestOptions();
 
-    let myHeader = new Headers();
-    myHeader.append('Content-Type', 'application/json');
-    myHeader.append("continuous","true");
-    requestOptions.headers = myHeader;
-    this.http.get("http://erp.raytrex.com:8080/accessToken?token="+encodeURI(MyApp.token.get("code"))+"&scope="+encodeURI("openid User.Read Mail.Read"),requestOptions).map(response => response.json).toPromise();
-  }
-
-    openPage(page) {
+  openPage(page) {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page

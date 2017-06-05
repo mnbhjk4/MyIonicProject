@@ -25,6 +25,12 @@ export class LoginProvider {
   loginByMS(){
     this.msSloginProvider.gotoAzureLogin();
   }
+  authMSCode(code : string){
+    return this.msSloginProvider.getToken(code);
+  }
+  refreshAccessToeknFromMS(refresh_token : string){
+    return this.msSloginProvider.getTokenByRefreshToken(refresh_token);
+  }
 
   getUserMail(){
     
