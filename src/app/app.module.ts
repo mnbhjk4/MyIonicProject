@@ -10,6 +10,7 @@ import { ListPage } from '../pages/list/list';
 import {IndexPage} from '../pages/index/index';
 import {LoginPage} from '../pages/login/login';
 import {LeavePage} from '../pages/leave/leave';
+import { PlannerPage} from '../pages/planner/planner';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,6 +24,7 @@ import { CalanderService } from '../pages/leave/calander.service';
 import { OrganizePage } from '../pages/organize/organize';
 import { ProjectPage} from '../pages/project/project';
 import { IonicStorageModule } from '@ionic/storage';
+import { TaskDetailComponent } from '../components/task-detail/task-detail';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { IonicStorageModule } from '@ionic/storage';
     LoginPage,
     LeavePage,
     OrganizePage,
-    ProjectPage
+    ProjectPage,
+    PlannerPage,
+    TaskDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,9 @@ import { IonicStorageModule } from '@ionic/storage';
     IndexPage,
     LeavePage,
     OrganizePage,
-    ProjectPage
+    ProjectPage,
+    PlannerPage,
+    TaskDetailComponent
   ],
   providers: [
     StatusBar,

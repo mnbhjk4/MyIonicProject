@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { RequestOptions, Headers,URLSearchParams } from '@angular/http';
+import { RequestOptions, Headers, URLSearchParams } from '@angular/http';
+
 import { JwtHelper } from 'angular2-jwt';
 import { Http } from '@angular/http';
 import { MyApp } from '../../app/app.component';
@@ -21,9 +22,11 @@ const client_secret: string = 'dEczFYJg7E71q6Y2OrZRssu';
 const scope: string = 'openid offline_access User.Read Mail.Read'
 @Injectable()
 export class MSloginProvider {
+  public service_host: string = "http://192.168.11.112:8080";
+  // public service_host : string = "http:/erp.raytrex.com:8080";
   public redirect_url: string = 'raytrexerp://MyERP';
   private jwtHelper: JwtHelper = new JwtHelper();
-  constructor(public http: Http,private storage : Storage) {
+  constructor(public http: Http, private storage: Storage) {
 
   }
   gotoAzureLogin() {
@@ -49,41 +52,45 @@ export class MSloginProvider {
     } else {
       this.redirect_url = "raytrexerp://MyERP";
     }
-    let requestOptions  = new RequestOptions();
+    let requestOptions = new RequestOptions();
 
     let myHeader = new Headers();
     requestOptions.headers = myHeader;
-    let parames : URLSearchParams = new URLSearchParams();
-    parames.append("scope",scope);
-    parames.append("code",code);
-    parames.append("redirectUri",this.redirect_url);
+    let parames: URLSearchParams = new URLSearchParams();
+    parames.append("scope", scope);
+    parames.append("code", code);
+    parames.append("redirectUri", this.redirect_url);
     requestOptions.search = parames;
-    return this.http.get("http://erp.raytrex.com:8080/adal/getToken",requestOptions)
+    return this.http.get(this.service_host + "/adal/getToken", requestOptions)
       .map(res => res.json());
 
   }
-  getTokenByRefreshToken(refresh_token : string){
+  getTokenByRefreshToken(refresh_token: string) {
     //確認Platform為那一種(web 或 原生APP)
     if (MyApp.platformType == "web") {
       this.redirect_url = "http://localhost:8100";
     } else {
       this.redirect_url = "raytrexerp://MyERP";
     }
-    let requestOptions  = new RequestOptions();
+    let requestOptions = new RequestOptions();
 
     let myHeader = new Headers();
     requestOptions.headers = myHeader;
-    let parames : URLSearchParams = new URLSearchParams();
-    parames.append("scope",scope);
-    parames.append("refresh_token",refresh_token);
-    parames.append("redirectUri",this.redirect_url);
+    let parames: URLSearchParams = new URLSearchParams();
+    parames.append("scope", scope);
+    parames.append("refresh_token", refresh_token);
+    parames.append("redirectUri", this.redirect_url);
     requestOptions.search = parames;
-    return this.http.get("http://erp.raytrex.com:8080/adal/getTokenByRefreshToken",requestOptions)
+    return this.http.get(this.service_host + "/adal/getTokenByRefreshToken", requestOptions)
       .map(res => res.json());
   }
 
-  logout(){
-    this.storage.remove("access_obj");
-    window.location.href = "https://login.microsoftonline.com/"+tenantid+"/oauth2/logout?post_logout_redirect_uri="+this.redirect_url;
+  logout() {
+    if (MyApp.platformType == "web") {
+      this.redirect_url = "http://localhost:8100";
+    } else {
+      this.redirect_url = "raytrexerp://MyERP";
+    }
+    window.location.href = "https://login.microsoftonline.com/" + tenantid + "/oauth2/logout?post_logout_redirect_uri=" + this.redirect_url;
   }
 }

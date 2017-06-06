@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MSloginProvider } from './login-mslogin';
+import { Platform,Events} from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
 
@@ -13,8 +15,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginProvider {
 
-  constructor(private msSloginProvider: MSloginProvider) {
-    console.log('Hello LoginProvider Provider');
+  constructor(private msSloginProvider: MSloginProvider
+  ,private platform : Platform
+  ,private storage : Storage
+  ,private events : Events) {
   }
   judgeLoginType(codeType : string , code:string){
     if(codeType == "Microsoft"){
@@ -37,6 +41,16 @@ export class LoginProvider {
   }
 
   logout(){
-    this.msSloginProvider.logout();
+    this.storage.remove("access_obj");
+    if (this.platform.is("android")) {
+      this.events.publish("user:logout");
+    } else if (this.platform.is("ios")) {
+      this.events.publish("user:logout");
+    } else if (this.platform.is('windows')) {
+      this.events.publish("user:logout");
+    }else{
+      this.msSloginProvider.logout();
+    }
+    
   }
 }

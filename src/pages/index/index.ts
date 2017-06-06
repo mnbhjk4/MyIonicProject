@@ -1,14 +1,16 @@
 import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http,RequestOptions,Headers, URLSearchParams} from '@angular/http';
-import { MenuController, Nav } from 'ionic-angular';
+import { MenuController, Nav,Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { ListPage } from '../list/list';
 import { LeavePage } from '../leave/leave';
+import { LoginPage } from '../login/login';
 import { OrganizePage } from '../organize/organize';
 import { LoginProvider } from '../../providers/login/login';
 import { ProjectPage } from '../project/project';
+import { PlannerPage } from '../planner/planner';
 /**
  * Generated class for the IndexPage page.
  *
@@ -30,11 +32,13 @@ export class IndexPage {
   private http : Http, 
   public menu: MenuController,
   public loginProvider : LoginProvider,
-  private storage : Storage) {
+  private storage : Storage,
+  private events : Events) {
      // set our app's pages
     this.pages = [
       { title: 'Index', component: ListPage },
       { title: 'Project', component: ProjectPage },
+      { title:'Planner', component:PlannerPage},
       { title: 'Leave system',component:LeavePage},
       { title: 'Organize' , component: OrganizePage}
     ];
@@ -47,6 +51,7 @@ export class IndexPage {
       let id_token = JSON.parse(id_token_string);
       if(id_token.name != null && id_token.name != ""){
         this.user_name = id_token.name;
+        this.listenEvents();
       }
     }
    });
@@ -58,6 +63,11 @@ export class IndexPage {
     this.menu.close();
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
+  }
+  private listenEvents(){
+    this.events.subscribe("user:logout",()=>{
+      this.nav.setRoot(LoginPage);
+    });
   }
   logout(){
     this.loginProvider.logout();

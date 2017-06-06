@@ -16,7 +16,7 @@ export class MyApp {
   public static tokenType = "";
   public static platformType = "web";
   jwtHelper: JwtHelper = new JwtHelper();
-  rootPage: any = LoginPage;
+  rootPage: any;
 
   constructor(
     public platform: Platform,
@@ -87,7 +87,9 @@ export class MyApp {
               subTitle: 'Error message : ' + error,
               buttons: ['OK']
             });
-            errorAlert.present();
+            errorAlert.present().then(() => {
+              this.rootPage = LoginPage;
+            });
           });
         }
       }
@@ -133,6 +135,8 @@ export class MyApp {
             this.rootPage = IndexPage;
           }
         }
+      } else {
+        this.rootPage = LoginPage;
       }
     });
 
@@ -154,6 +158,6 @@ export class Access_obj {
   public access_token: string;
   public id_token: string;
   public refresh_token: string;
-  public decoded_access_token : string;
+  public decoded_access_token: string;
   public state: string;
 }
