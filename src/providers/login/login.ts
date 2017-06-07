@@ -40,6 +40,10 @@ export class LoginProvider {
     
   }
 
+  getUserProfilePhoto(access_token : string){
+   return this.msSloginProvider.getUserProfilePhoto(access_token);
+  }
+
   logout(){
     this.storage.remove("access_obj");
     if (this.platform.is("android")) {

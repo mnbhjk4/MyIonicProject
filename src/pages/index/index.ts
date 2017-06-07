@@ -1,6 +1,6 @@
 import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Http,RequestOptions,Headers, URLSearchParams} from '@angular/http';
+import { Http,RequestOptions,Headers} from '@angular/http';
 import { MenuController, Nav,Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -24,7 +24,7 @@ import { PlannerPage } from '../planner/planner';
 })
 export class IndexPage {
    @ViewChild(Nav) nav: Nav;
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string,icon:string ,component: any }>;
   rootPage : any = ListPage;
   private user_name : string = "金麻煩";
   constructor(public navCtrl: NavController, 
@@ -36,11 +36,11 @@ export class IndexPage {
   private events : Events) {
      // set our app's pages
     this.pages = [
-      { title: 'Index', component: ListPage },
-      { title: 'Project', component: ProjectPage },
-      { title:'Planner', component:PlannerPage},
-      { title: 'Leave system',component:LeavePage},
-      { title: 'Organize' , component: OrganizePage}
+      { title: 'Index', icon: 'ios-home' ,component: ListPage },
+      { title: 'Project', icon: 'ios-boat' ,component: ProjectPage },
+      { title:'Planner', icon: 'ios-link' ,component:PlannerPage},
+      { title: 'Leave system',icon: 'ios-bicycle' ,component:LeavePage},
+      { title: 'Organize' , icon: 'ios-people' ,component: OrganizePage}
     ];
   }
 
@@ -52,9 +52,15 @@ export class IndexPage {
       if(id_token.name != null && id_token.name != ""){
         this.user_name = id_token.name;
         this.listenEvents();
+        this.loginProvider.getUserProfilePhoto(access_obj.access_token).subscribe(
+          result=>{
+            console.log(result["@odata.id"]);
+          }
+        );
       }
     }
    });
+  
   }
 
 

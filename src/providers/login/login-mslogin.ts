@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { RequestOptions, Headers, URLSearchParams } from '@angular/http';
 
 import { JwtHelper } from 'angular2-jwt';
-import { Http } from '@angular/http';
+import { Http ,} from '@angular/http';
+import {Observable } from 'rxjs/Observable';
 import { MyApp } from '../../app/app.component';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
@@ -82,6 +83,18 @@ export class MSloginProvider {
     parames.append("redirectUri", this.redirect_url);
     requestOptions.search = parames;
     return this.http.get(this.service_host + "/adal/getTokenByRefreshToken", requestOptions)
+      .map(res => res.json());
+  }
+
+  getUserProfilePhoto(access_token : string) : Observable<Response>{
+    let requestOptions = new RequestOptions();
+
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    let parames: URLSearchParams = new URLSearchParams();
+    parames.append("access_token", access_token);
+    requestOptions.search = parames;
+    return this.http.get(this.service_host + "/adal/getUserProfilePhoto", requestOptions)
       .map(res => res.json());
   }
 

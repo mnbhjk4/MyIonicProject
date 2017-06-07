@@ -7,24 +7,26 @@ import { MyApp } from './app.component';
 
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
-import {IndexPage} from '../pages/index/index';
-import {LoginPage} from '../pages/login/login';
-import {LeavePage} from '../pages/leave/leave';
-import { PlannerPage} from '../pages/planner/planner';
+import { IndexPage } from '../pages/index/index';
+import { LoginPage } from '../pages/login/login';
+import { LeavePage } from '../pages/leave/leave';
+import { PlannerPage } from '../pages/planner/planner';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import {Camera} from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 
 import { LoginProvider } from '../providers/login/login';
 import { MSloginProvider } from '../providers/login/login-mslogin';
 import { CalanderService } from '../pages/leave/calander.service';
 
 import { OrganizePage } from '../pages/organize/organize';
-import { ProjectPage} from '../pages/project/project';
+import { ProjectPage } from '../pages/project/project';
 import { IonicStorageModule } from '@ionic/storage';
 import { TaskDetailComponent } from '../components/task-detail/task-detail';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from 'angular2-calendar';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { TaskDetailComponent } from '../components/task-detail/task-detail';
     IonicModule.forRoot(MyApp),
     HttpModule,
     FormsModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    BrowserAnimationsModule, 
+    CalendarModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -62,12 +66,12 @@ import { TaskDetailComponent } from '../components/task-detail/task-detail';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     Camera,
     LoginProvider,
     MSloginProvider,
     CalanderService
   ],
-  exports:[LeavePage]
+  exports: [LeavePage]
 })
-export class AppModule {}
+export class AppModule { }
