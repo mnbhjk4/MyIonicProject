@@ -23,7 +23,7 @@ const client_secret: string = 'JmAXcEV54v1kbG2jTuA4JwW';
 const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.Read User.ReadBasic.All'
 @Injectable()
 export class MSloginProvider {
-  public service_host: string = "http://192.168.11.112:8080";
+  public service_host: string = "http://192.168.11.139:8080";
   // public service_host : string = "http:/erp.raytrex.com:8080";
   public redirect_url: string = 'raytrexerp://MyERP';
   private jwtHelper: JwtHelper = new JwtHelper();
