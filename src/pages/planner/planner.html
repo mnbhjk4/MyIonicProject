@@ -23,7 +23,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="planner-content" padding>
   <div [ngSwitch]="plannerContent">
     <ion-grid *ngSwitchCase="'my-plans'">
       <ion-row>
@@ -31,8 +31,43 @@
           <table class="planner-project-table">
             <tr><th class="planner-project-title">Project1</th></tr>
             <tr><td>
-              <table class="planner-task-table">
-                <tr><th class="planner-task-table-title"><font>Task1</font>
+              <table class="planner-task-table" (click)="openDetail('test')">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document this text is very very very very long
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
+              </table>
+            </td></tr>
+             <tr><td>
+             <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
                   <button><ion-icon name="ios-code-working"></ion-icon></button>
                 </th></tr>
                 <tr><td class="planner-task-content">
@@ -51,359 +86,1046 @@
                     </div>
   
                 </td></tr>
-                <tr><td class="planner-task-owner">
-                  <ion-icon name="ios-play"></ion-icon>
-                  Task owner:AGI</td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+             <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </ion-col>
+        <ion-col col-md-6 class="planner-col">
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
              <table class="planner-task-table">
-                <tr><th class="planner-task-table-title"><font>Task2</font>
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
                   <button><ion-icon name="ios-code-working"></ion-icon></button>
                 </th></tr>
                 <tr><td class="planner-task-content">
-                  <ul>
-                    <li>
+
+                    <div>
                       <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>2.Coding
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>3.Debug
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>4.Release
-                    </li>
-                  </ul>
+                    </div>
+  
                 </td></tr>
-                <tr><td class="planner-task-owner">
-                  <ion-icon name="ios-square-outline"></ion-icon>
-                  <ion-icon name="ios-play"></ion-icon>
-                  <ion-icon name="ios-checkbox-outline"></ion-icon>
-                  Task owner:AGI</td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
               <table class="planner-task-table">
-                <tr><th class="planner-task-table-title"><font>Task3</font>
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
                   <button><ion-icon name="ios-code-working"></ion-icon></button>
                 </th></tr>
                 <tr><td class="planner-task-content">
-                  <ul>
-                    <li>
+
+                    <div>
                       <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>2.Coding
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>3.Debug
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>4.Release
-                    </li>
-                  </ul>
+                    </div>
+  
                 </td></tr>
-                <tr><td class="planner-task-owner">
-                  <ion-icon name="ios-square-outline"></ion-icon>
-                  <ion-icon name="ios-play"></ion-icon>
-                  <ion-icon name="ios-checkbox-outline"></ion-icon>
-                  Task owner:AGI</td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
             <tr><td>
               <table class="planner-task-table">
-                <tr><th class="planner-task-table-title"><font>Task4</font>
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
                   <button><ion-icon name="ios-code-working"></ion-icon></button>
                 </th></tr>
                 <tr><td class="planner-task-content">
-                  <ul>
-                    <li>
+
+                    <div>
                       <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>2.Coding
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>3.Debug
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>4.Release
-                    </li>
-                  </ul>
+                    </div>
+  
                 </td></tr>
-                <tr><td class="planner-task-owner">
-                  <ion-icon name="ios-square-outline"></ion-icon>
-                  <ion-icon name="ios-play"></ion-icon>
-                  <ion-icon name="ios-checkbox-outline"></ion-icon>
-                  Task owner:AGI</td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
+          </table>
+        </ion-col>
+        <ion-col col-md-6 class="planner-col">
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
             <tr><td>
-            <table class="planner-task-table">
-                <tr><th class="planner-task-table-title"><font>Task5</font>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
                   <button><ion-icon name="ios-code-working"></ion-icon></button>
                 </th></tr>
                 <tr><td class="planner-task-content">
-                  <ul>
-                    <li>
+
+                    <div>
                       <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>2.Coding
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>3.Debug
-                    </li>
-                     <li>
+                    </div>
+                     <div>
                       <ion-icon name="ios-square-outline"></ion-icon>4.Release
-                    </li>
-                  </ul>
+                    </div>
+  
                 </td></tr>
-                <tr><td class="planner-task-owner">
-                  <ion-icon name="ios-square-outline"></ion-icon>
-                  <ion-icon name="ios-play"></ion-icon>
-                  <ion-icon name="ios-checkbox-outline"></ion-icon>
-                  Task owner:AGI</td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
               </table>
             </td></tr>
-          </table>
-        </ion-col>
-        <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-            <tr><th><font>Project2</font>
-            <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>  
-            </th></tr>
+             <tr><td>
+             <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+             <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
             <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task2</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task3</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-          </table>
-        </ion-col>
-        <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-            <tr><th><font>Project3</font>
-            <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>  
-            </th></tr>
-           <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task2</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task3</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
           </table>
         </ion-col>
         <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-             <tr><th><font>Project4</font>
-            <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>  
-            </th></tr>
-           <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task2</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task3</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-          </table>
-        </ion-col>
-        <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-             <tr><th><font>Project5</font>
-            <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>  
-            </th></tr>
-           <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task2</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-             <tr><td>
-              <table>
-                <tr><th>Task3</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
-              </table>
-            </td></tr>
-          </table>
-        </ion-col>
-        <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-            <tr><th><font>Project6</font>
-            <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>  
-            </th></tr>
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
             <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
-              <table>
-                <tr><th>Task2</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+             <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
-              <table>
-                <tr><th>Task3</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
           </table>
         </ion-col>
         <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-            <tr><th><font>Project7</font>
-            <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>  
-            </th></tr>
-          <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
-              <table>
-                <tr><th>Task2</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+             <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
-              <table>
-                <tr><th>Task3</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </ion-col>
+       <ion-col col-md-6 class="planner-col">
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
+              </table>
+            </td></tr>
+             <tr><td>
+             <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+             <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
           </table>
         </ion-col>
         <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-             <tr><th><font>Project8</font>
-            <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>  
-            </th></tr>
-           <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
-              <table>
-                <tr><th>Task2</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+             <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
              <tr><td>
-              <table>
-                <tr><th>Task3</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </ion-col>
+        <ion-col col-md-6 class="planner-col">
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-09</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     <div>Agi_Wu(agi_wu@raytrex.com)</div>
+                     <div>Agi2_Wu(agi_wu@raytrex.com)</div>
+                  </td></tr>
+              </table>
+            </td></tr>
+             <tr><td>
+             <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-16</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+             <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-23</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
+              </table>
+            </td></tr>
+            <tr><td>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title">
+                  <font>Task1</font>
+                  
+                  <button><ion-icon name="ios-code-working"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">
+
+                    <div>
+                      <ion-icon name="ios-checkbox-outline"></ion-icon>1.Desgin Document
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>2.Coding
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>3.Debug
+                    </div>
+                     <div>
+                      <ion-icon name="ios-square-outline"></ion-icon>4.Release
+                    </div>
+  
+                </td></tr>
+                <tr><td class="planner-task-status">
+                  <ion-icon  name="ios-play"></ion-icon>
+                  <font class="planner-task-progress">1/4(25%)</font>
+                  <font class="planner-task-due-date">06-30</font>
+                 </td></tr>
+                 <tr><td class="planner-task-owner">
+                     Agi_Wu(agi_wu@raytrex.com)
+                  </td></tr>
               </table>
             </td></tr>
           </table>

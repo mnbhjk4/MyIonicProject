@@ -4,8 +4,48 @@
       <ion-icon name="md-apps"></ion-icon>
     </button>
     <ion-title>{{task_id}}</ion-title>
+    <div>
+      <button ion-button style="background:#F000FF;"><ion-icon name="md-checkmark"></ion-icon></button>
+      <button ion-button style="background:#FF4800;"><ion-icon name="ios-square" ></ion-icon></button>
+      <button ion-button style="background:#FFA200;"><ion-icon name="ios-square" ></ion-icon></button>
+      <button ion-button style="background:#B6E903;"><ion-icon name="ios-square" ></ion-icon></button>
+      <button ion-button style="background:#01AB99;"><ion-icon name="ios-square" ></ion-icon></button>
+      <button ion-button style="background:#00DEFF;"><ion-icon name="ios-square" ></ion-icon></button>
+    </div>
   </ion-navbar>
 </ion-header>
 <ion-content>
-    
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+          <ion-label>Task status</ion-label>
+          <ion-select>
+            <ion-option selected>
+              Not action
+            </ion-option>
+            <ion-option>
+              Progressing
+            </ion-option>
+            <ion-option>
+              Done
+            </ion-option>
+          </ion-select>
+      </ion-col>
+      <ion-col col-4>
+          <ion-label>Start date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+      </ion-col>
+       <ion-col col-4>
+          <ion-label>Start date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" ></ion-datetime>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let items of itemArray" style="border:solid 1px black">
+      <ion-col col-1><ion-checkbox checked="{{items.checked}}"></ion-checkbox></ion-col>
+      <ion-col><ion-input value="{{items.itemContent}}"></ion-input></ion-col>
+      <ion-col col-1><button ion-button><ion-icon name="md-remove" (click)="removeRow(items.id)"></ion-icon></button></ion-col>
+    </ion-row>
+    <ion-row><button ion-button><ion-icon name="md-add" (click)="addRow()"></ion-icon></button></ion-row>
+  </ion-grid>
+
 </ion-content>
