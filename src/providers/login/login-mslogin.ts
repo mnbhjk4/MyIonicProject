@@ -18,13 +18,12 @@ import 'rxjs/add/operator/map';
 const client_id: string = '7c3abeb3-bb33-435a-9ad6-d63ff39e8179';
 const tenantid: string = 'raytrex.onmicrosoft.com';
 
-// const redirect_url: string = 'http://localhost:8100';
 const client_secret: string = 'JmAXcEV54v1kbG2jTuA4JwW';
 const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.Read User.ReadBasic.All'
 @Injectable()
 export class MSloginProvider {
-  public service_host: string = "http://192.168.11.139:8080";
-  // public service_host : string = "http:/erp.raytrex.com:8080";
+  //public service_host: string = "http://192.168.11.139:8080";
+   public service_host : string = "http://erp.raytrex.com:8080";
   public redirect_url: string = 'raytrexerp://MyERP';
   private jwtHelper: JwtHelper = new JwtHelper();
   constructor(public http: Http, private storage: Storage) {

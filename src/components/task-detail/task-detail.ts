@@ -23,6 +23,8 @@ export class TaskDetailComponent {
     {id:"3",checked:false,itemContent:"Debug"},
     {id:"4",checked:false,itemContent:"Release"}
   ];
+
+  description : string = "description testing";
   constructor(private navParams: NavParams) {
     this.task_id = this.navParams.get("task_id");
   }

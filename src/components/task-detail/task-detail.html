@@ -46,6 +46,18 @@
       <ion-col col-1><button ion-button><ion-icon name="md-remove" (click)="removeRow(items.id)"></ion-icon></button></ion-col>
     </ion-row>
     <ion-row><button ion-button><ion-icon name="md-add" (click)="addRow()"></ion-icon></button></ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Description</ion-label>
+        <ion-textarea class="detail-description" row="5" value="{{description}}"></ion-textarea>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Working commit<ion-icon name="md-attach"></ion-icon></ion-label><button></button>
+        <ion-input></ion-input>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 
 </ion-content>
