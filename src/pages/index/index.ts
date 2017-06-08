@@ -36,11 +36,11 @@ export class IndexPage {
   private events : Events) {
      // set our app's pages
     this.pages = [
-      { title: 'Index', icon: 'ios-home' ,component: ListPage },
-      { title: 'Project', icon: 'ios-boat' ,component: ProjectPage },
-      { title:'Planner', icon: 'ios-link' ,component:PlannerPage},
-      { title: 'Leave system',icon: 'ios-bicycle' ,component:LeavePage},
-      { title: 'Organize' , icon: 'ios-people' ,component: OrganizePage}
+      { title: 'Index', icon: 'ios-home-outline' ,component: ListPage },
+      { title: 'Project', icon: 'ios-boat-outline' ,component: ProjectPage },
+      { title:'Planner', icon: 'ios-link-outline' ,component:PlannerPage},
+      { title: 'Leave system',icon: 'ios-bicycle-outline' ,component:LeavePage},
+      { title: 'Organize' , icon: 'ios-people-outline' ,component: OrganizePage}
     ];
   }
 

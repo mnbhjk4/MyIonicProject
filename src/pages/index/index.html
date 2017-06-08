@@ -5,15 +5,17 @@
       <ion-icon name="ios-contact">
         <font style="">{{user_name}}</font>
       </ion-icon>
-      <button  ion-button small (click)="logout()" ><ion-icon name="ios-log-out"></ion-icon></button>
+      
     </ion-title>
     
   </ion-header>
 
   <ion-content class="index-content">
     <button ion-item class="index-content-button" *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon name="{{p.icon}}"></ion-icon><font class="index-content-button-text">{{p.title}}</font>
-      </button>
+        <ion-icon class="index-content-button-icon" name="{{p.icon}}"></ion-icon><font class="index-content-button-text">{{p.title}}</font>
+    </button>
+    <button  ion-item class="index-content-button" (click)="logout()" ><ion-icon class="index-content-button-icon" 
+        name="ios-log-out"></ion-icon><font class="index-content-button-text">Log out</font></button>
   </ion-content>
 </ion-menu>
 <ion-nav #content [root]="rootPage"></ion-nav>

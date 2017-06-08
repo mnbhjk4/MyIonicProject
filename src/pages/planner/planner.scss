@@ -1,9 +1,32 @@
 
 ion-fab{
-    top:0;
     right:0;
 }
 
 .planner-col{
     min-width : 280px;
+}
+
+.planner-project-table{
+    width:100%;
+
+    .planner-project-title{
+        border: solid 1px #000000;
+        background:lightgreen;
+    }
+}
+
+
+.planner-task-table{
+    border:solid 1px #003333;
+    width:100%;
+}
+.planner-task-table-title{
+    
+}
+.planner-task-content{
+    text-align: center;
+}
+.planner-task-owner{
+    text-align:center;
 }

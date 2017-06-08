@@ -28,21 +28,15 @@
     <ion-grid *ngSwitchCase="'my-plans'">
       <ion-row>
         <ion-col col-md-6 class="planner-col">
-          <table style="border:solid 2px blue;width:100%">
-            <tr style="height:40px"><th><font>Project1</font>
-              <ion-fab>
-                <button ion-fab mini><ion-icon name="ios-options"></ion-icon></button>
-                <ion-fab-list>
-                  <button ion-fab (click)="openDetail('test')"><ion-icon name="ios-hammer"></ion-icon></button>
-                  <button ion-fab><ion-icon name="ios-trash"></ion-icon></button>
-                </ion-fab-list>
-              </ion-fab>
-            </th></tr>
+          <table class="planner-project-table">
+            <tr><th class="planner-project-title">Project1</th></tr>
             <tr><td>
-              <table>
-                <tr><th>Task1</th></tr>
-                <tr><td>Task content</td></tr>
-                <tr><td>Task owner:AGI</td></tr>
+              <table class="planner-task-table">
+                <tr><th class="planner-task-table-title"><font>Task1</font>
+                  <button><ion-icon name="ion-android-list"></ion-icon></button>
+                </th></tr>
+                <tr><td class="planner-task-content">Task content</td></tr>
+                <tr><td class="planner-task-owner">Task owner:AGI</td></tr>
               </table>
             </td></tr>
              <tr><td>
