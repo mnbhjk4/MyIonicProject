@@ -18,34 +18,38 @@
   <ion-grid>
     <ion-row>
       <ion-col col-4>
-          <ion-label>Task status</ion-label>
-          <ion-select>
-            <ion-option selected>
-              Not action
-            </ion-option>
-            <ion-option>
-              Progressing
-            </ion-option>
-            <ion-option>
-              Done
-            </ion-option>
-          </ion-select>
+        <ion-label>Task status</ion-label>
+        <ion-select>
+          <ion-option selected>
+            Not action
+          </ion-option>
+          <ion-option>
+            Progressing
+          </ion-option>
+          <ion-option>
+            Done
+          </ion-option>
+        </ion-select>
       </ion-col>
       <ion-col col-4>
-          <ion-label>Start date</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+        <ion-label>Start date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="start_date"></ion-datetime>
       </ion-col>
-       <ion-col col-4>
-          <ion-label>Start date</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY" ></ion-datetime>
+      <ion-col col-4>
+        <ion-label>End date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="end_date"></ion-datetime>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let items of itemArray" style="border:solid 1px black">
-      <ion-col col-1><ion-checkbox checked="{{items.checked}}"></ion-checkbox></ion-col>
-      <ion-col><ion-input value="{{items.itemContent}}"></ion-input></ion-col>
-      <ion-col col-1><button ion-button><ion-icon name="md-remove" (click)="removeRow(items.id)"></ion-icon></button></ion-col>
+      <ion-col col-1>
+        <ion-checkbox checked="{{items.checked}}"></ion-checkbox>
+      </ion-col>
+      <ion-col>
+        <ion-input value="{{items.itemContent}}"></ion-input>
+      </ion-col>
+      <ion-col col-1><button ion-button (click)="removeRow(items.id)"><ion-icon name="md-remove" ></ion-icon></button></ion-col>
     </ion-row>
-    <ion-row><button ion-button><ion-icon name="md-add" (click)="addRow()"></ion-icon></button></ion-row>
+    <ion-row><button ion-button (click)="addRow()"><ion-icon name="md-add"></ion-icon></button></ion-row>
     <ion-row>
       <ion-col>
         <ion-label>Description</ion-label>
@@ -54,10 +58,28 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-label>Working commit<ion-icon name="md-attach"></ion-icon></ion-label><button></button>
-        <ion-input></ion-input>
+        <ion-label>Working commit
+          <ion-icon name="md-attach"></ion-icon>
+        </ion-label>
+        <ion-input class="detail-comment"></ion-input><button ion-button><ion-icon name="ios-redo"></ion-icon></button>
       </ion-col>
     </ion-row>
+    <div *ngFor="let comment of commentArray">
+      <ion-row>
+        <ion-col>
+          <div><font>{{comment.editor}}</font>
+            <font *ngFor="let attachs of comment.attachs">
+              <a href="{{attachs.url}}">{{attachs.title}}</a>
+            </font>
+          </div>
+          <div>{{comment.comment_date}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div>{{comment.comment}}</div>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
-
 </ion-content>
