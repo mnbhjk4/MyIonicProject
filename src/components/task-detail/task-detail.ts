@@ -14,6 +14,7 @@ import { NavParams } from 'ionic-angular';
 export class TaskDetailComponent {
 
   task_id : string;
+  title:string;
   start_date : string = new Date().toISOString();
   end_date : string =  new Date().toISOString();
 
@@ -34,7 +35,8 @@ export class TaskDetailComponent {
 
   description : string = "description testing";
   constructor(private navParams: NavParams) {
-    this.task_id = this.navParams.get("task_id");
+    this.task_id = this.navParams.get('task_id');
+    this.title = this.navParams.get('title');
   }
 
   addRow(){
