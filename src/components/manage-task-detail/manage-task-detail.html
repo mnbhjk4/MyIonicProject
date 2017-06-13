@@ -5,7 +5,7 @@
     </button>
     <ion-title>{{title}}</ion-title>
     <div>
-      <button ion-button icon-only style="background:#F000FF;width:35px;" (click)="changePriority('1')">
+     <button ion-button icon-only style="background:#F000FF;width:35px;" (click)="changePriority('1')">
         <div *ngIf="priority == '1';else else1">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
@@ -60,27 +60,29 @@
   <ion-grid>
     <ion-row>
       <ion-col>
+        <ion-label>Task owner</ion-label><
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
         <ion-label>Task status</ion-label>
-        <ion-select value="Done">
-          <ion-option value="Not action">
+        <ion-select>
+          <ion-option selected>
             Not action
           </ion-option>
-          <ion-option  value="Progressing">
+          <ion-option>
             Progressing
           </ion-option>
-          <ion-option  value="Done">
+          <ion-option>
             Done
           </ion-option>
         </ion-select>
       </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-6>
+      <ion-col col-4>
         <ion-label>Start date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="start_date"></ion-datetime>
       </ion-col>
-
-      <ion-col col-6>
+      <ion-col col-4>
         <ion-label>End date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="end_date"></ion-datetime>
       </ion-col>
@@ -101,31 +103,6 @@
         <ion-textarea class="detail-description" row="5" value="{{description}}"></ion-textarea>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-label>Working commit
-          <ion-icon name="md-attach"></ion-icon>
-        </ion-label>
-        <ion-input class="detail-comment"></ion-input><button ion-button><ion-icon name="ios-redo"></ion-icon></button>
-      </ion-col>
-    </ion-row>
-    <div *ngFor="let comment of commentArray">
-      <ion-row>
-        <ion-col>
-          <div>
-            <font>{{comment.editor}}</font>
-            <font *ngFor="let attachs of comment.attachs">
-              <a href="{{attachs.url}}">{{attachs.title}}</a>
-            </font>
-          </div>
-          <div>{{comment.comment_date}}</div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <div>{{comment.comment}}</div>
-        </ion-col>
-      </ion-row>
-    </div>
+    
   </ion-grid>
 </ion-content>

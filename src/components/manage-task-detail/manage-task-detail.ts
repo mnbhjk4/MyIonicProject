@@ -1,19 +1,17 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
-
 /**
- * Generated class for the TaskDetailComponent component.
+ * Generated class for the ManageTaskDetailComponent component.
  *
  * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
  * for more info on Angular Components.
  */
 @Component({
-  selector: 'task-detail',
-  templateUrl: 'task-detail.html'
+  selector: 'manage-task-detail',
+  templateUrl: 'manage-task-detail.html'
 })
-export class TaskDetailComponent {
-  priority : string = "1";
-  status: string = "Done";
+export class ManageTaskDetailComponent {
+  priority:string = '1';
   task_id : string;
   title:string;
   start_date : string = new Date().toISOString();

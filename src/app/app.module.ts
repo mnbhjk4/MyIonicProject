@@ -27,6 +27,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { TaskDetailComponent } from '../components/task-detail/task-detail';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'angular2-calendar';
+import { ManageTaskDetailComponent } from '../components/manage-task-detail/manage-task-detail';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CalendarModule } from 'angular2-calendar';
     OrganizePage,
     ProjectPage,
     PlannerPage,
-    TaskDetailComponent
+    TaskDetailComponent,
+    ManageTaskDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { CalendarModule } from 'angular2-calendar';
     OrganizePage,
     ProjectPage,
     PlannerPage,
-    TaskDetailComponent
+    TaskDetailComponent,
+    ManageTaskDetailComponent
   ],
   providers: [
     StatusBar,

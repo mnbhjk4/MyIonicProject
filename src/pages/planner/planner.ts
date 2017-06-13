@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TaskDetailComponent } from '../../components/task-detail/task-detail'
-
+import { ManageTaskDetailComponent } from '../../components/manage-task-detail/manage-task-detail';
 /**
  * Generated class for the PlannerPage page.
  *
@@ -16,6 +16,7 @@ import { TaskDetailComponent } from '../../components/task-detail/task-detail'
 export class PlannerPage {
   private plannerContent : string = "my-plans";
   private projects:Array<Project> =[];
+  private manageProjects:Array<Project> = [];
   constructor(public navCtrl: NavController, 
     public navParams: NavParams) {
   }
@@ -34,11 +35,15 @@ export class PlannerPage {
         [{checked:true,itemTitle:"Testing1"},{checked:true,itemTitle:"Testing2"},{checked:false,itemTitle:"Testing3"},{checked:false,itemTitle:"Testing4"},{checked:false,itemTitle:"Testing5"}]);
       }
       this.projects.push(proj);
+       this.manageProjects.push(proj);
     }
   }
 
   openDetail(task_id : string,title:string){
    this.navCtrl.push(TaskDetailComponent,{task_id : task_id,title:title});
+  }
+  openManageTaskDetail(task_id:string,title:string){
+    this.navCtrl.push(ManageTaskDetailComponent,{task_id : task_id,title:title});
   }
 
   demoProjectData(id:string,title:string,priority:string){

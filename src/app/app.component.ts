@@ -37,7 +37,7 @@ export class MyApp {
   }
   initLoginApp() {
     // 0.試著從URL解析Code
-    let url = localStorage.getItem("url");
+    let url = window.localStorage.getItem("url");
     let parameterMap = new Map();
     if (url == null || url == "") {
       url = this.platform.url();
@@ -55,10 +55,11 @@ export class MyApp {
             parameterMap.set(pairValue[0], pairValue[1]);
           }
         }
+        //清除暫存在WEB storage中的URL
+         window.localStorage.removeItem("url");
       }
     }
     // 1.接收來自MS,Google access ID (登入後的重新導向)
-    let codeType = "";
     // Microsoft Azure的方法
     if (parameterMap.size > 0) {
       let val = parameterMap.get("state");
@@ -95,51 +96,54 @@ export class MyApp {
       }
     }
     // Google API的方法
-    if (codeType == "") {
-      this.storage.get("state").then((val) => {
-        codeType = val;
-      });
+    if (parameterMap.size > 0) {
+      let val = parameterMap.get("state");
+      if (val == "Google") {
+      }
     }
 
 
 
-    //
-    this.storage.get("access_obj").then((access_obj) => {
-      if (access_obj != null) {
-        let access_token = this.jwtHelper.decodeToken(access_obj.access_token);
-        if (access_token.exp != null) {
-          if (access_token.exp < Date.now() / 1000) {
-            //Access token已過期
-            //嘗試去讀取Refresh token
-            let state = access_obj.state;
-            if (state == "Microsoft") {
-              let refresh_token = access_obj.refresh_token;
-              this.loginProvider.refreshAccessToeknFromMS(refresh_token).subscribe((json) => {
-                if (json != null) {
-                  if (json.access_token != null) {
-                    let access_obj = new Access_obj();
-                    access_obj.access_token = json.access_token;
-                    access_obj.decoded_access_token = JSON.stringify(this.jwtHelper.decodeToken(json.access_token));
-                    access_obj.id_token = json.id_token;
-                    access_obj.refresh_token = json.refresh_token;
-                    access_obj.state = "Microsoft";
-                    this.storage.set("access_obj", access_obj);
-                    this.rootPage = IndexPage;
+    //利用Ionic Storage來讀取持久層中的access_obj來讀取上次User登入後的資料
+    this.storage.ready().then(() => {
+      this.storage.get("access_obj").then((access_obj) => {
+        if (access_obj != null) {
+          let access_token = this.jwtHelper.decodeToken(access_obj.access_token);
+          if (access_token.exp != null) {
+            if (access_token.exp < Date.now() / 1000) {
+              //Access token已過期
+              //嘗試去讀取Refresh token
+              let state = access_obj.state;
+              if (state == "Microsoft") {
+                let refresh_token = access_obj.refresh_token;
+                this.loginProvider.refreshAccessToeknFromMS(refresh_token).subscribe((json) => {
+                  if (json != null) {
+                    if (json.access_token != null) {
+                      let access_obj = new Access_obj();
+                      access_obj.access_token = json.access_token;
+                      access_obj.decoded_access_token = JSON.stringify(this.jwtHelper.decodeToken(json.access_token));
+                      access_obj.id_token = json.id_token;
+                      access_obj.refresh_token = json.refresh_token;
+                      access_obj.state = "Microsoft";
+                      this.storage.set("access_obj", access_obj).then(()=>{
+                         this.rootPage = IndexPage;
+                      });
+                     
+                    }
                   }
-                }
-              }, (error) => {
+                }, (error) => {
 
-              });
+                });
+              }
+            } else {
+              this.rootPage = IndexPage;
             }
-          } else {
-            this.rootPage = IndexPage;
           }
+        } else {
+          this.rootPage = LoginPage;
         }
-      } else {
-        this.rootPage = LoginPage;
-      }
+      });
     });
-
   }
 
   initializeApp() {
