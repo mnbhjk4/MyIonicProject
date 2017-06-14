@@ -5,7 +5,7 @@
   "ionic_source_map": "source-map",
   "proxies": [
     {
-      "path": "/mstoken",
-      "proxyUrl": "https://login.microsoftonline.com/"
+      "path": "/",
+      "proxyUrl": "http://erp.raytrex.com:8080/"
     }]
 }

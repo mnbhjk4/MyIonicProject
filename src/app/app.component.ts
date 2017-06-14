@@ -132,7 +132,7 @@ export class MyApp {
                     }
                   }
                 }, (error) => {
-
+                  this.rootPage = LoginPage;
                 });
               }
             } else {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TaskDetailComponent } from '../../components/task-detail/task-detail'
 import { ManageTaskDetailComponent } from '../../components/manage-task-detail/manage-task-detail';
+import {TaskProvider} from '../../providers/task/task'
 /**
  * Generated class for the PlannerPage page.
  *
@@ -18,7 +19,8 @@ export class PlannerPage {
   private projects:Array<Project> =[];
   private manageProjects:Array<Project> = [];
   constructor(public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private taskProvider:TaskProvider) {
   }
 
   ionViewDidLoad() {
@@ -40,7 +42,8 @@ export class PlannerPage {
   }
 
   openDetail(task_id : string,title:string){
-   this.navCtrl.push(TaskDetailComponent,{task_id : task_id,title:title});
+    this.taskProvider.getTask("test");
+  //  this.navCtrl.push(TaskDetailComponent,{task_id : task_id,title:title});
   }
   openManageTaskDetail(task_id:string,title:string){
     this.navCtrl.push(ManageTaskDetailComponent,{task_id : task_id,title:title});

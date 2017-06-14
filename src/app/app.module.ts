@@ -28,6 +28,7 @@ import { TaskDetailComponent } from '../components/task-detail/task-detail';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'angular2-calendar';
 import { ManageTaskDetailComponent } from '../components/manage-task-detail/manage-task-detail';
+import { TaskProvider } from '../providers/task/task';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ManageTaskDetailComponent } from '../components/manage-task-detail/mana
     Camera,
     LoginProvider,
     MSloginProvider,
-    CalanderService
+    CalanderService,
+    TaskProvider
   ],
   exports: [LeavePage]
 })

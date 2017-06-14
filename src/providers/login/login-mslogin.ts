@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions, Headers, URLSearchParams } from '@angular/http';
-
-import { JwtHelper } from 'angular2-jwt';
 import { Http ,} from '@angular/http';
 import {Observable } from 'rxjs/Observable';
 import { MyApp } from '../../app/app.component';
@@ -22,10 +20,7 @@ const client_secret: string = 'JmAXcEV54v1kbG2jTuA4JwW';
 const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.ReadBasic.All'
 @Injectable()
 export class MSloginProvider {
-  public service_host: string = "http://192.168.11.141:8080";
-  //public service_host : string = "http://erp.raytrex.com:8080";
   public redirect_url: string = 'raytrexerp://MyERP';
-  private jwtHelper: JwtHelper = new JwtHelper();
   constructor(public http: Http, private storage: Storage) {
 
   }
@@ -61,7 +56,7 @@ export class MSloginProvider {
     parames.append("code", code);
     parames.append("redirectUri", this.redirect_url);
     requestOptions.search = parames;
-    return this.http.get(this.service_host + "/adal/getToken", requestOptions)
+    return this.http.get("/adal/getToken", requestOptions)
       .map(res => res.json());
 
   }
@@ -81,7 +76,7 @@ export class MSloginProvider {
     parames.append("refresh_token", refresh_token);
     parames.append("redirectUri", this.redirect_url);
     requestOptions.search = parames;
-    return this.http.get(this.service_host + "/adal/getTokenByRefreshToken", requestOptions)
+    return this.http.get("/adal/getTokenByRefreshToken", requestOptions)
       .map(res => res.json());
   }
 
@@ -93,7 +88,7 @@ export class MSloginProvider {
     let parames: URLSearchParams = new URLSearchParams();
     parames.append("access_token", access_token);
     requestOptions.search = parames;
-    return this.http.get(this.service_host + "/adal/getUserProfilePhoto", requestOptions)
+    return this.http.get("/adal/getUserProfilePhoto", requestOptions)
       .map(res => res.json());
   }
 
