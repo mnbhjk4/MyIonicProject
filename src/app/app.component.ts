@@ -5,6 +5,7 @@ import { LoginPage } from '../pages/login/login';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginProvider } from '../providers/login/login';
+import { MSloginProvider } from '../providers/login/login-mslogin';
 import { JwtHelper } from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
 
@@ -24,7 +25,8 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private loginProvider: LoginProvider,
     private storage: Storage,
-    public alertCtl: AlertController
+    public alertCtl: AlertController,
+    private msLoginProvider:MSloginProvider
   ) {
     if (this.platform.is("android")) {
       MyApp.platformType = "andorid";
@@ -65,7 +67,7 @@ export class MyApp {
       let val = parameterMap.get("state");
       if (val == "Microsoft") {
         let code = parameterMap.get("code");
-        let result = this.loginProvider.authMSCode(code);
+        let result = this.msLoginProvider.getToken(code);
         if (result != null) {
           result.subscribe((json) => {
             if (json.access_token != null) {
@@ -78,6 +80,7 @@ export class MyApp {
               this.storage.set("access_obj", access_obj);
               this.storage.remove("state");
               this.storage.remove("code");
+              MyApp.tokenType = "Microsoft";
               this.rootPage = IndexPage;
             } else {
               this.storage.remove("access_obj");
@@ -110,13 +113,14 @@ export class MyApp {
         if (access_obj != null) {
           let access_token = this.jwtHelper.decodeToken(access_obj.access_token);
           if (access_token.exp != null) {
+            let state = access_obj.state;
             if (access_token.exp < Date.now() / 1000) {
               //Access token已過期
               //嘗試去讀取Refresh token
-              let state = access_obj.state;
+             
               if (state == "Microsoft") {
                 let refresh_token = access_obj.refresh_token;
-                this.loginProvider.refreshAccessToeknFromMS(refresh_token).subscribe((json) => {
+                this.msLoginProvider.getTokenByRefreshToken(refresh_token).subscribe((json) => {
                   if (json != null) {
                     if (json.access_token != null) {
                       let access_obj = new Access_obj();
@@ -126,6 +130,7 @@ export class MyApp {
                       access_obj.refresh_token = json.refresh_token;
                       access_obj.state = "Microsoft";
                       this.storage.set("access_obj", access_obj).then(()=>{
+                         MyApp.tokenType = "Microsoft";
                          this.rootPage = IndexPage;
                       });
                      
@@ -136,6 +141,7 @@ export class MyApp {
                 });
               }
             } else {
+              MyApp.tokenType = state;
               this.rootPage = IndexPage;
             }
           }

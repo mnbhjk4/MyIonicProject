@@ -42,8 +42,7 @@ export class PlannerPage {
   }
 
   openDetail(task_id : string,title:string){
-    this.taskProvider.getTask("test");
-  //  this.navCtrl.push(TaskDetailComponent,{task_id : task_id,title:title});
+   this.navCtrl.push(TaskDetailComponent,{task_id : task_id,title:title});
   }
   openManageTaskDetail(task_id:string,title:string){
     this.navCtrl.push(ManageTaskDetailComponent,{task_id : task_id,title:title});

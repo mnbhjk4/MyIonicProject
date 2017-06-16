@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LoginProvider} from '../../providers/login/login';
+import { MSloginProvider} from '../../providers/login/login-mslogin';
 
 @Component({
   selector: 'page-login',
@@ -8,7 +8,7 @@ import { LoginProvider} from '../../providers/login/login';
 })
 export class LoginPage {
   constructor(public navController: NavController 
-  ,private msLoginProvider : LoginProvider) {
+  ,private msLoginProvider : MSloginProvider) {
   }
 
   ionViewDidLoad() {
@@ -21,7 +21,7 @@ export class LoginPage {
   }
 
   loginMS(){
-    this.msLoginProvider.loginByMS();
+     this.msLoginProvider.gotoAzureLogin();
   }
 
   logoutMS(){

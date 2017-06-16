@@ -55,7 +55,7 @@ export class IndexPage {
               console.log(result["@odata.id"]);
             }
           );
-
+          
         }
       }
     });

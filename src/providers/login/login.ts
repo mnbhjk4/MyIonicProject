@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MSloginProvider } from './login-mslogin';
 import { Platform, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { MyApp } from '../../app/app.component'
 import 'rxjs/add/operator/map';
 
 
@@ -20,21 +21,8 @@ export class LoginProvider {
     , private storage: Storage
     , private events: Events) {
   }
-  judgeLoginType(codeType: string, code: string) {
-    if (codeType == "Microsoft") {
-      this.msSloginProvider.getToken(code);
-    }
-  }
 
-  loginByMS() {
-    this.msSloginProvider.gotoAzureLogin();
-  }
-  authMSCode(code: string) {
-    return this.msSloginProvider.getToken(code);
-  }
-  refreshAccessToeknFromMS(refresh_token: string) {
-    return this.msSloginProvider.getTokenByRefreshToken(refresh_token);
-  }
+
 
   getUserMail() {
 
