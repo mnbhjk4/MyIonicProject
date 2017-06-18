@@ -1,0 +1,80 @@
+
+.planner-content{
+    background:#EFEFEF;
+}
+
+.planner-col{
+    min-width : 280px;
+}
+
+.planner-project-table{
+    width:100%;
+    border: solid 1px #0F0F0F;
+    .planner-project-title-1{
+        background:#B7D0FB;
+        font-size:1.5em;
+    }
+    .planner-project-title-2{
+        background:#B7D0FB;
+        font-size:1.5em;
+    }
+    .planner-project-title-3{
+        background:#B7D0FB;
+        font-size:1.5em;
+    }
+    .planner-project-title-4{
+        background:#B7D0FB;
+        font-size:1.5em;
+    }
+    .planner-project-title-5{
+        background:#B7D0FB;
+        font-size:1.5em;
+    }
+    .planner-project-title-6{
+        background:#B7D0FB;
+        font-size:1.5em;
+    }
+}
+
+
+.planner-task-table{
+    margin-block-end: 10px;
+    background:#FFFFFF;
+    border:solid 1px #003333;
+    width:100%;
+       .planner-task-table-title-1{
+        background:#F000FF;
+    }
+    .planner-task-table-title-2{
+        background:#FF4800;
+    }
+    .planner-task-table-title-3{
+        background:#FFA200;
+    }
+    .planner-task-table-title-4{
+        background:#B6E903;
+    }
+    .planner-task-table-title-5{
+        background:#01AB99;
+    }
+    .planner-task-table-title-6{
+        background:#00DEFF;
+    }
+}
+
+.planner-task-content{
+    text-align: center;
+    padding-right: 5%;
+    font-size:1.25em;
+    border:solid 1px #0F0F0F;
+}
+
+.planner-task-status{
+    text-align: center;
+    font-size:1.25em;
+}
+
+.planner-task-owner{
+    border: solid 1px #000033;
+    text-align: center;
+}

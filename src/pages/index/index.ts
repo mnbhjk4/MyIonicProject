@@ -11,6 +11,7 @@ import { OrganizePage } from '../organize/organize';
 import { LoginProvider } from '../../providers/login/login';
 import { ProjectPage } from '../project/project';
 import { PlannerPage } from '../planner/planner';
+import { TaskPage } from '../task/task';
 /**
  * Generated class for the IndexPage page.
  *
@@ -37,7 +38,7 @@ export class IndexPage {
     this.pages = [
       { title: 'Index', icon: 'ios-home-outline', component: ListPage },
       { title: 'Project', icon: 'ios-boat-outline', component: ProjectPage },
-      { title: 'Planner', icon: 'ios-link-outline', component: PlannerPage },
+      { title: 'Task', icon: 'ios-link-outline', component: TaskPage },
       { title: 'Leave system', icon: 'ios-bicycle-outline', component: LeavePage },
       { title: 'Organize', icon: 'ios-people-outline', component: OrganizePage }
     ];

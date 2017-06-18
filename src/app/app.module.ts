@@ -29,6 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'angular2-calendar';
 import { ManageTaskDetailComponent } from '../components/manage-task-detail/manage-task-detail';
 import { TaskProvider } from '../providers/task/task';
+import { TaskPage } from '../pages/task/task';
+import { ProjectProvider } from '../providers/project/project';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { TaskProvider } from '../providers/task/task';
     ProjectPage,
     PlannerPage,
     TaskDetailComponent,
-    ManageTaskDetailComponent
+    ManageTaskDetailComponent,
+    TaskPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,8 @@ import { TaskProvider } from '../providers/task/task';
     ProjectPage,
     PlannerPage,
     TaskDetailComponent,
-    ManageTaskDetailComponent
+    ManageTaskDetailComponent,
+    TaskPage
   ],
   providers: [
     StatusBar,
@@ -75,7 +79,8 @@ import { TaskProvider } from '../providers/task/task';
     LoginProvider,
     MSloginProvider,
     CalanderService,
-    TaskProvider
+    TaskProvider,
+    ProjectProvider
   ],
   exports: [LeavePage]
 })

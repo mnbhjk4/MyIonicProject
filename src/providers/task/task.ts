@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http,URLSearchParams,Headers } from '@angular/http';
+import { Http, URLSearchParams, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -15,127 +15,132 @@ export class TaskProvider {
     console.log('Hello TaskProvider Provider');
   }
 
-  getTask(uid:string){
+  getTask(uid: string) {
     let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append("uid","test UID");
-    this.http.post("/task/test",urlSearchParams.toString()).map((res)=> res.json()).subscribe((value)=>{
+    urlSearchParams.append("uid", "test UID");
+    this.http.post("/task/test", urlSearchParams.toString()).map((res) => res.json()).subscribe((value) => {
       console.log(Task.fromObject(value));
     });
   }
 
 }
 
+export class Project {
+  id: string = "";
+  title: string = "";
+  priority: string = "6";
+  taskArray: Array<Task> = [];
+}
 
 export class Task {
-  project_number: string;
-  task_no: string;
-  customer_id: string;
-  name: string;
-  description: string;
-  attach_uuid: string;
-  permission_id: string;
-  parent_task_no: string;
-  taskOwnerList: Array<Task_Owner> = [];
-  taskCommentList: Array<Task_Comment> = [];
-  taskStatusList: Array<Task_Status> = [];
-
+  taskNo: string = "";
+  projectNumber: string = "";
+  customerId: string = ""
+  name: string = "";
+  description: string = "";
+  attachUuid: string = "";
+  permissionId: string = "";
+  parentId: string = "";
+  taskStatus: Array<TaskStatus> = [];
+  onweList: Array<TaskOwner> = [];
+  commentList: Array<TaskComment> = [];
+  subTaskList: Array<Task> = [];
   static fromObject(src: any) {
     let obj = new Task();
-    obj.project_number = src.project_number;
-    obj.task_no = src.task_no;
-    obj.customer_id = src.customer_id;
+    obj.projectNumber = src.projectNumber;
+    obj.taskNo = src.taskNo;
+    obj.customerId = src.customerId;
     obj.name = src.name;
     obj.description = src.description;
-    obj.attach_uuid = src.attach_uuid;
-    obj.permission_id = src.permission_id;
-    obj.parent_task_no = src.parent_task_no;
-    if(src.taskOwnerList instanceof  Array){
-      for(let index = 0 ; index < src.taskOwnerList.length; index++){
-        let task_owner = Task_Owner.fromObject(src.taskOwnerList[index]);
-        obj.taskOwnerList.push(task_owner);
+    obj.attachUuid = src.attachUuid;
+    obj.permissionId = src.permissionId;
+    obj.parentId = src.parentId;
+
+    if (src.onweList instanceof Array) {
+      for (let index = 0; index < src.onweList.length; index++) {
+        let task_owner = TaskOwner.fromObject(src.onweList[index]);
+        obj.onweList.push(task_owner);
       }
     }
-    if(src.taskCommentList instanceof  Array){
-       for(let index = 0 ; index < src.taskCommentList.length; index++){
-         let task_comment = Task_Comment.fromObject(src.taskCommentList[index]);
-        obj.taskCommentList.push(task_comment);
+    if (src.commentList instanceof Array) {
+      for (let index = 0; index < src.commentList.length; index++) {
+        let task_comment = TaskComment.fromObject(src.commentList[index]);
+        obj.commentList.push(task_comment);
       }
     }
-    if(src.taskStatusList instanceof  Array){
-      for(let index = 0 ; index < src.taskStatusList.length; index++){
-        let task_status = Task_Status.fromObject(src.taskStatusList[index]);
-        obj.taskStatusList.push(task_status);
+    if (src.taskStatus instanceof Array) {
+      for (let index = 0; index < src.taskStatus.length; index++) {
+        let task_status = TaskStatus.fromObject(src.taskStatus[index]);
+        obj.taskStatus.push(task_status);
       }
     }
     return obj;
 
   }
 }
-
-export class Task_Owner {
-  task_owner_serial_no: number;
-  task_no: string;
+export class TaskOwner {
+  serialNo: number;
+  taskNo: string;
   uid: string;
-  join_date: Date;
-  leave_date: Date;
+  joinDate: Date;
+  leaveDate: Date;
   static fromObject(src: any) {
-    let obj = new Task_Owner();
-    obj.task_owner_serial_no = src.task_owner_serial_no;
-    obj.task_no = src.task_no;
+    let obj = new TaskOwner();
+    obj.serialNo = src.serialNo;
+    obj.taskNo = src.taskNo;
     obj.uid = src.uid;
-    obj.join_date = src.join_date;
-    obj.leave_date = src.leave_date;
+    obj.joinDate = src.joinDate;
+    obj.leaveDate = src.leaveDate;
 
     return obj;
 
   }
 }
-
-export class Task_Comment {
-  task_comment_uuid: string;
-  task_no: string;
-  comment: string;
-  comment_date: Date;
-  uid: string;
-  attach_uuid: string;
+export class TaskStatus {
+  taskStatusId: string = "";
+  taskNo: string = "";
+  updateTime: Date;
+  status: string = "";
+  priority: string = "";
+  startDate: Date;
+  dueDate: Date;
+  alarmDate: Date;
+  endDate: Date;
+  taskIndex: number;
+  parentTaskId: string;
   static fromObject(src: any) {
-    let obj = new Task_Comment();
-    obj.task_comment_uuid = src.task_comment_uuid;
-    obj.task_no = src.task_no;
-    obj.comment = src.comment;
-    obj.comment_date = src.comment_date;
-    obj.uid = src.uid;
-    obj.attach_uuid = src.attach_uuid;
-
-    return obj;
-
-  }
-}
-
-export class Task_Status {
-  task_status_id: number;
-  task_no: string;
-  update_date: Date;
-  status: string;
-  priority: number;
-  start_date: Date;
-  due_date: Date;
-  alert_date: Date;
-  end_date: Date;
-  task_index: number;
-  parent_task_no: string;
-  static fromObject(src: any) {
-    let obj = new Task_Status();
-    obj.task_status_id = src.task_status_id;
-    obj.update_date = src.update_date;
-    obj.status = src.status;
+    let obj = new TaskStatus();
+    obj.taskStatusId = src.taskStatusId;
+    obj.taskNo = src.taskNo;
+    obj.updateTime = src.updateTime;
     obj.priority = src.priority;
-    obj.start_date = src.start_date;
-    obj.due_date = src.due_date;
-    obj.alert_date = src.alert_date;
-    obj.end_date = src.end_date;
-    obj.task_index = src.task_index;
-    obj.parent_task_no = src.parent_task_no;
+    obj.startDate = src.startDate;
+    obj.dueDate = src.dueDate;
+    obj.alarmDate = src.alarmDate;
+    obj.endDate = src.endDate;
+    obj.taskIndex = src.taskIndex;
+    obj.parentTaskId = src.parentTaskId;
+    return obj;
+  }
+
+}
+
+export class TaskComment {
+  taskCommentUuid: string;
+  taskNo: string;
+  comment: string;
+  commentDate: Date;
+  uid: string;
+  attachUid: string;
+
+  static fromObject(src: any) {
+    let obj = new TaskComment();
+    obj.taskCommentUuid = src.taskCommentUuid;
+    obj.taskNo = src.taskNo;
+    obj.comment = src.comment;
+    obj.commentDate = src.commentDate;
+    obj.uid = src.uid;
+    obj.attachUid = src.attachUid;
 
     return obj;
 
