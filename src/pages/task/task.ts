@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TaskDetailComponent } from '../../components/task-detail/task-detail'
 import { ManageTaskDetailComponent } from '../../components/manage-task-detail/manage-task-detail';
-import {TaskProvider} from '../../providers/task/task'
+import { TaskProvider,Task,TaskOwner,TaskComment,TaskStatus } from '../../providers/task/task';
+import { ProjectProvider,Project,ProjectOwner,ProjectStatus} from '../../providers/project/project';
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the TaskPage page.
  *
@@ -20,26 +22,16 @@ private plannerContent : string = "my-plans";
   private manageProjects:Array<Project> = [];
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    private taskProvider:TaskProvider) {
+    private projectProvider:ProjectProvider,
+    private taskProvider:TaskProvider,
+    private storage :　Storage) {
   }
 
   
   ionViewDidLoad() {
-    for(let index = 1 ; index <= 5;index++){
-      let proj = this.demoProjectData(index.toString(),"Test"+index,index.toString())
-      let taskCount = this.getRandomInt(1,10);
-      for(let taskIndex=1;taskIndex <= taskCount;taskIndex++){
-        this.demoTaskData(
-        proj,
-        taskIndex.toString(),
-        ["Agi_wu"],
-        "This title is "+this.getRandomInt(0,100).toString(),
-        new Date(),taskIndex%5 == 0?"1":(taskIndex%5).toString(),
-        [{checked:true,itemTitle:"Testing1"},{checked:true,itemTitle:"Testing2"},{checked:false,itemTitle:"Testing3"},{checked:false,itemTitle:"Testing4"},{checked:false,itemTitle:"Testing5"}]);
-      }
-      this.projects.push(proj);
-       this.manageProjects.push(proj);
-    }
+    this.storage.get("access_obj").then((access_obj)=>{
+      this.getProject(access_obj.uid);
+    }); 
   }
 
   openDetail(task_id : string,title:string){
@@ -49,29 +41,18 @@ private plannerContent : string = "my-plans";
     this.navCtrl.push(ManageTaskDetailComponent,{task_id : task_id,title:title});
   }
 
-  demoProjectData(id:string,title:string,priority:string){
-    let project = new Project();
-    project.id= id;
-    project.title=title;
-    project.priority = priority;
-    return project;
-  }
-  demoTaskData(project:Project,task_id:string,owner:Array<string>
-    ,title:string,endDate:Date,priority:string,
-    itemArray:Array<{checked:boolean,itemTitle:string}>){
-    let task = new Task();
-    task.id = task_id;
-    task.endDate = endDate;
-    task.owner = owner;
-    task.title = title;
-    task.priority = priority;
-    task.itemArray = itemArray;
-    project.taskArray.push(task);
+  getProject(uid:string){
+    this.projectProvider.getProjectByUid(uid).subscribe(data=>{
+      if(data != null &&　data instanceof Array){
+        for(let index = 0 ;index < data.length ;index++){
+          let project = Project.fromObject(data[index]);
+          this.projects.push(project);
+        }
+      }
+    });
   }
 
-   getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+
 }
 
 

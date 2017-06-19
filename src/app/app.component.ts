@@ -72,9 +72,12 @@ export class MyApp {
           result.subscribe((json) => {
             if (json.access_token != null) {
               let access_obj = new Access_obj();
+              let decodeToken = this.jwtHelper.decodeToken(json.access_token);
+              console.log(decodeToken);
               access_obj.access_token = json.access_token;
-              access_obj.decoded_access_token = JSON.stringify(this.jwtHelper.decodeToken(json.access_token));
-              access_obj.id_token = json.id_token;
+              access_obj.decoded_access_token = JSON.stringify(decodeToken);
+              access_obj.uid =  this.jwtHelper.decodeToken(json.access_token).uid;
+              access_obj.uid = decodeToken.oid;
               access_obj.refresh_token = json.refresh_token;
               access_obj.state = "Microsoft";
               this.storage.set("access_obj", access_obj);
@@ -112,21 +115,24 @@ export class MyApp {
       this.storage.get("access_obj").then((access_obj) => {
         if (access_obj != null) {
           let access_token = this.jwtHelper.decodeToken(access_obj.access_token);
+          console.log(access_token);
           if (access_token.exp != null) {
             let state = access_obj.state;
             if (access_token.exp < Date.now() / 1000) {
               //Access token已過期
               //嘗試去讀取Refresh token
-             
               if (state == "Microsoft") {
                 let refresh_token = access_obj.refresh_token;
                 this.msLoginProvider.getTokenByRefreshToken(refresh_token).subscribe((json) => {
                   if (json != null) {
                     if (json.access_token != null) {
                       let access_obj = new Access_obj();
+                      let decodeToken = this.jwtHelper.decodeToken(json.access_token);
+                      console.log(decodeToken);
                       access_obj.access_token = json.access_token;
-                      access_obj.decoded_access_token = JSON.stringify(this.jwtHelper.decodeToken(json.access_token));
+                      access_obj.decoded_access_token = JSON.stringify(decodeToken);
                       access_obj.id_token = json.id_token;
+                      access_obj.uid = decodeToken.oid;
                       access_obj.refresh_token = json.refresh_token;
                       access_obj.state = "Microsoft";
                       this.storage.set("access_obj", access_obj).then(()=>{
@@ -165,6 +171,7 @@ export class MyApp {
 }
 
 export class Access_obj {
+  public uid:string;
   public access_token: string;
   public id_token: string;
   public refresh_token: string;

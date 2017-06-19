@@ -29,13 +29,13 @@
       <ion-row >
         <ion-col class="planner-col" *ngFor="let project of projects">
           <table class="planner-project-table">
-            <tr  [ngSwitch]="project.priority">
-                <th  *ngSwitchCase="'1'" class="planner-project-title-1">{{project.title}}</th>
-                <th  *ngSwitchCase="'2'" class="planner-project-title-2">{{project.title}}</th>
-                <th  *ngSwitchCase="'3'" class="planner-project-title-3">{{project.title}}</th>
-                <th  *ngSwitchCase="'4'" class="planner-project-title-4">{{project.title}}</th>
-                <th  *ngSwitchCase="'5'" class="planner-project-title-5">{{project.title}}</th>
-                <th  *ngSwitchCase="'6'" class="planner-project-title-6">{{project.title}}</th>
+            <tr  [ngSwitch]="project.statusList[0].priority">
+                <th  *ngSwitchCase="1" class="planner-project-title-1">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="2" class="planner-project-title-2">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="3" class="planner-project-title-3">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="4" class="planner-project-title-4">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="5" class="planner-project-title-5">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="6" class="planner-project-title-6">{{project.statusList[0].projectName}}</th>
             </tr>
             <tr>
               <td>

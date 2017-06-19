@@ -25,12 +25,6 @@ export class TaskProvider {
 
 }
 
-export class Project {
-  id: string = "";
-  title: string = "";
-  priority: string = "6";
-  taskArray: Array<Task> = [];
-}
 
 export class Task {
   taskNo: string = "";
@@ -41,9 +35,9 @@ export class Task {
   attachUuid: string = "";
   permissionId: string = "";
   parentId: string = "";
-  taskStatus: Array<TaskStatus> = [];
-  onweList: Array<TaskOwner> = [];
-  commentList: Array<TaskComment> = [];
+  taskStatusList: Array<TaskStatus> = [];
+  taskOwnerList: Array<TaskOwner> = [];
+  taskCommentList: Array<TaskComment> = [];
   subTaskList: Array<Task> = [];
   static fromObject(src: any) {
     let obj = new Task();
@@ -59,19 +53,19 @@ export class Task {
     if (src.onweList instanceof Array) {
       for (let index = 0; index < src.onweList.length; index++) {
         let task_owner = TaskOwner.fromObject(src.onweList[index]);
-        obj.onweList.push(task_owner);
+        obj.taskOwnerList.push(task_owner);
       }
     }
     if (src.commentList instanceof Array) {
       for (let index = 0; index < src.commentList.length; index++) {
         let task_comment = TaskComment.fromObject(src.commentList[index]);
-        obj.commentList.push(task_comment);
+        obj.taskCommentList.push(task_comment);
       }
     }
     if (src.taskStatus instanceof Array) {
       for (let index = 0; index < src.taskStatus.length; index++) {
         let task_status = TaskStatus.fromObject(src.taskStatus[index]);
-        obj.taskStatus.push(task_status);
+        obj.taskStatusList.push(task_status);
       }
     }
     return obj;
