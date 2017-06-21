@@ -10,17 +10,14 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class TaskProvider {
-
+  private server: string = "http://192.168.11.141:8080";
   constructor(public http: Http) {
-    console.log('Hello TaskProvider Provider');
   }
 
-  getTask(uid: string) {
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append("uid", "test UID");
-    this.http.post("/task/test", urlSearchParams.toString()).map((res) => res.json()).subscribe((value) => {
-      console.log(Task.fromObject(value));
-    });
+  getTaskByProjectNo(project_no: string) {
+    let params = new Object();
+    params["project_no"] = project_no;
+    return this.http.post(this.server + "/task/getTaskByProjectNo", JSON.stringify(params)).map((res) => res.json());
   }
 
 }
@@ -31,10 +28,9 @@ export class Task {
   projectNumber: string = "";
   customerId: string = ""
   name: string = "";
-  description: string = "";
   attachUuid: string = "";
   permissionId: string = "";
-  parentId: string = "";
+  parentTaskNo: string = "";
   taskStatusList: Array<TaskStatus> = [];
   taskOwnerList: Array<TaskOwner> = [];
   taskCommentList: Array<TaskComment> = [];
@@ -45,26 +41,25 @@ export class Task {
     obj.taskNo = src.taskNo;
     obj.customerId = src.customerId;
     obj.name = src.name;
-    obj.description = src.description;
     obj.attachUuid = src.attachUuid;
     obj.permissionId = src.permissionId;
-    obj.parentId = src.parentId;
+    obj.parentTaskNo = src.parentTaskNo;
 
-    if (src.onweList instanceof Array) {
-      for (let index = 0; index < src.onweList.length; index++) {
-        let task_owner = TaskOwner.fromObject(src.onweList[index]);
+    if (src.taskOwnerList instanceof Array) {
+      for (let index = 0; index < src.taskOwnerList.length; index++) {
+        let task_owner = TaskOwner.fromObject(src.taskOwnerList[index]);
         obj.taskOwnerList.push(task_owner);
       }
     }
-    if (src.commentList instanceof Array) {
-      for (let index = 0; index < src.commentList.length; index++) {
-        let task_comment = TaskComment.fromObject(src.commentList[index]);
+    if (src.taskCommentList instanceof Array) {
+      for (let index = 0; index < src.taskCommentList.length; index++) {
+        let task_comment = TaskComment.fromObject(src.taskCommentList[index]);
         obj.taskCommentList.push(task_comment);
       }
     }
-    if (src.taskStatus instanceof Array) {
-      for (let index = 0; index < src.taskStatus.length; index++) {
-        let task_status = TaskStatus.fromObject(src.taskStatus[index]);
+    if (src.taskStatusList instanceof Array) {
+      for (let index = 0; index < src.taskStatusList.length; index++) {
+        let task_status = TaskStatus.fromObject(src.taskStatusList[index]);
         obj.taskStatusList.push(task_status);
       }
     }
@@ -101,10 +96,12 @@ export class TaskStatus {
   alarmDate: Date;
   endDate: Date;
   taskIndex: number;
-  parentTaskId: string;
+  description: string = "";
+  parentTaskNo: string;
   static fromObject(src: any) {
     let obj = new TaskStatus();
     obj.taskStatusId = src.taskStatusId;
+    obj.status = src.status;
     obj.taskNo = src.taskNo;
     obj.updateTime = src.updateTime;
     obj.priority = src.priority;
@@ -113,7 +110,8 @@ export class TaskStatus {
     obj.alarmDate = src.alarmDate;
     obj.endDate = src.endDate;
     obj.taskIndex = src.taskIndex;
-    obj.parentTaskId = src.parentTaskId;
+    obj.parentTaskNo = src.parentTaskNo;
+    obj.description = src.description;
     return obj;
   }
 

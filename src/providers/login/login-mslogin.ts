@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequestOptions, Headers, URLSearchParams } from '@angular/http';
 import { Http ,} from '@angular/http';
 import {Observable } from 'rxjs/Observable';
-import { MyApp } from '../../app/app.component';
+import { MyApp,UserInfo } from '../../app/app.component';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -20,6 +20,7 @@ const client_secret: string = 'JmAXcEV54v1kbG2jTuA4JwW';
 const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.ReadBasic.All'
 @Injectable()
 export class MSloginProvider {
+  private server:string = "http://192.168.11.141:8080";
   public redirect_url: string = 'raytrexerp://MyERP';
   constructor(public http: Http, private storage: Storage) {
 
@@ -51,12 +52,14 @@ export class MSloginProvider {
 
     let myHeader = new Headers();
     requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+
     let parames: URLSearchParams = new URLSearchParams();
     parames.append("scope", scope);
     parames.append("code", code);
     parames.append("redirectUri", this.redirect_url);
     requestOptions.search = parames;
-    return this.http.get("/adal/getToken", requestOptions)
+    return this.http.post(this.server+"/adal/getToken",null, requestOptions)
       .map(res => res.json());
 
   }
@@ -69,14 +72,16 @@ export class MSloginProvider {
     }
     let requestOptions = new RequestOptions();
 
-    let myHeader = new Headers();
+     let myHeader = new Headers();
     requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+
     let parames: URLSearchParams = new URLSearchParams();
     parames.append("scope", scope);
     parames.append("refresh_token", refresh_token);
     parames.append("redirectUri", this.redirect_url);
     requestOptions.search = parames;
-    return this.http.get("/adal/getTokenByRefreshToken", requestOptions)
+    return this.http.post(this.server+"/adal/getTokenByRefreshToken",null, requestOptions)
       .map(res => res.json());
   }
 
@@ -85,10 +90,26 @@ export class MSloginProvider {
 
     let myHeader = new Headers();
     requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+
     let parames: URLSearchParams = new URLSearchParams();
     parames.append("access_token", access_token);
     requestOptions.search = parames;
-    return this.http.get("/adal/getUserProfilePhoto", requestOptions)
+    return this.http.post(this.server+"/adal/getUserProfilePhoto",null, requestOptions)
+      .map(res => res.json());
+  }
+
+  getCompanyUserMap(access_token : string) : Observable<Response>{
+    let requestOptions = new RequestOptions();
+
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+
+    let parames: URLSearchParams = new URLSearchParams();
+    parames.append("access_token", access_token);
+    requestOptions.search = parames;
+    return this.http.post(this.server+"/adal/getCompanyUserMap",null, requestOptions)
       .map(res => res.json());
   }
 

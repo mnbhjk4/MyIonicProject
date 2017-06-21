@@ -13,9 +13,10 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  public static token: Map<string, string> = new Map<string, string>();
+  public static token: Map<string, UserInfo> = new Map<string, UserInfo>();
   public static tokenType = "";
   public static platformType = "web";
+  public static companyUsers : Map<string,UserInfo> = new Map<string,UserInfo>();
   jwtHelper: JwtHelper = new JwtHelper();
   rootPage: any;
 
@@ -73,18 +74,20 @@ export class MyApp {
             if (json.access_token != null) {
               let access_obj = new Access_obj();
               let decodeToken = this.jwtHelper.decodeToken(json.access_token);
-              console.log(decodeToken);
               access_obj.access_token = json.access_token;
               access_obj.decoded_access_token = JSON.stringify(decodeToken);
               access_obj.uid =  this.jwtHelper.decodeToken(json.access_token).uid;
               access_obj.uid = decodeToken.oid;
               access_obj.refresh_token = json.refresh_token;
               access_obj.state = "Microsoft";
-              this.storage.set("access_obj", access_obj);
+              
               this.storage.remove("state");
               this.storage.remove("code");
               MyApp.tokenType = "Microsoft";
-              this.rootPage = IndexPage;
+              this.storage.set("access_obj", access_obj).then(()=>{
+                 this.rootPage = IndexPage;
+              });
+             
             } else {
               this.storage.remove("access_obj");
             }
@@ -100,6 +103,7 @@ export class MyApp {
           });
         }
       }
+      return;
     }
     // Google API的方法
     if (parameterMap.size > 0) {
@@ -177,4 +181,11 @@ export class Access_obj {
   public refresh_token: string;
   public decoded_access_token: string;
   public state: string;
+}
+
+export class UserInfo{
+  uid:string;
+  mail:string;
+  name:string;
+
 }

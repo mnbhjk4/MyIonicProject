@@ -12,6 +12,7 @@ import { LoginProvider } from '../../providers/login/login';
 import { ProjectPage } from '../project/project';
 import { PlannerPage } from '../planner/planner';
 import { TaskPage } from '../task/task';
+import { MyApp,UserInfo } from "../../app/app.component";
 /**
  * Generated class for the IndexPage page.
  *
@@ -56,7 +57,23 @@ export class IndexPage {
               console.log(result["@odata.id"]);
             }
           );
-          
+          this.loginProvider.getCompanyUserMap(access_obj.access_token).subscribe(
+            result=>{
+              let values = result["value"];
+              if(values instanceof Array){
+                for(let index = 0 ; index < values.length ; index++){
+                  let user = new UserInfo();
+                  if(MyApp.tokenType == "Microsoft"){
+                    user.uid = values[index].id;
+                    user.name = values[index].displayName;
+                    user.mail = values[index].mail;
+                    MyApp.companyUsers.set(user.uid,user);
+                  }
+                }
+              }
+              console.log(result);
+            }
+          );
         }
       }
     });

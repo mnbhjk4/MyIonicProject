@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Task } from '../task/task';
 import 'rxjs/add/operator/map';
 
 /*
@@ -10,14 +11,14 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class ProjectProvider {
-
+  private server:string = "http://192.168.11.141:8080";
   constructor(public http: Http) {
   }
 
   getProjectByUid(uid : string){
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append("uid", uid);
-    return this.http.post("/project/geProjectByUid", urlSearchParams.toString()).map((res) =>res.json());
+    return this.http.post(this.server+"/project/geProjectByUid", urlSearchParams.toString()).map((res) =>res.json());
   }
 
 }
@@ -27,6 +28,7 @@ export class Project {
   customerId: string;
   attachUuid: string;
   permissionId: string;
+  taskList:Array<Task> = [];
   ownerList: Array<ProjectOwner> = [];
   statusList: Array<ProjectStatus> = [];
   static fromObject(src: any) {

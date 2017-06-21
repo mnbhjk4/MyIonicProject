@@ -31,6 +31,7 @@ import { ManageTaskDetailComponent } from '../components/manage-task-detail/mana
 import { TaskProvider } from '../providers/task/task';
 import { TaskPage } from '../pages/task/task';
 import { ProjectProvider } from '../providers/project/project';
+import { UserListComponent } from '../components/user-list/user-list';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ProjectProvider } from '../providers/project/project';
     PlannerPage,
     TaskDetailComponent,
     ManageTaskDetailComponent,
-    TaskPage
+    TaskPage,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,8 @@ import { ProjectProvider } from '../providers/project/project';
     PlannerPage,
     TaskDetailComponent,
     ManageTaskDetailComponent,
-    TaskPage
+    TaskPage,
+    UserListComponent
   ],
   providers: [
     StatusBar,

@@ -27,7 +27,11 @@ export class LoginProvider {
   getUserMail() {
 
   }
-
+  getCompanyUserMap(access_token : string){
+    if(MyApp.tokenType == "Microsoft"){
+      return this.msSloginProvider.getCompanyUserMap(access_token);
+    }
+  }
   getUserProfilePhoto(access_token: string) {
     return this.msSloginProvider.getUserProfilePhoto(access_token);
   }

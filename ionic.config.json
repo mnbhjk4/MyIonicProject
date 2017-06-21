@@ -1,11 +1,11 @@
 {
-  "name": "MyIonicProject",
+  "name": "Frontier",
   "app_id": "",
   "type": "ionic-angular",
   "ionic_source_map": "source-map",
   "proxies": [
     {
       "path": "/",
-      "proxyUrl": "http://erp.raytrex.com:8080/"
+      "proxyUrl": "http://192.168.11.141:8080/"
     }]
 }

@@ -30,58 +30,64 @@
         <ion-col class="planner-col" *ngFor="let project of projects">
           <table class="planner-project-table">
             <tr  [ngSwitch]="project.statusList[0].priority">
-                <th  *ngSwitchCase="1" class="planner-project-title-1">{{project.statusList[0].projectName}}</th>
-                <th  *ngSwitchCase="2" class="planner-project-title-2">{{project.statusList[0].projectName}}</th>
-                <th  *ngSwitchCase="3" class="planner-project-title-3">{{project.statusList[0].projectName}}</th>
-                <th  *ngSwitchCase="4" class="planner-project-title-4">{{project.statusList[0].projectName}}</th>
-                <th  *ngSwitchCase="5" class="planner-project-title-5">{{project.statusList[0].projectName}}</th>
-                <th  *ngSwitchCase="6" class="planner-project-title-6">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="'1'" class="planner-project-title-1" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="'2'" class="planner-project-title-2" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="'3'" class="planner-project-title-3" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="'4'" class="planner-project-title-4" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="'5'" class="planner-project-title-5" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                <th  *ngSwitchCase="'6'" class="planner-project-title-6" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
             </tr>
             <tr>
               <td>
-                <table class="planner-task-table" *ngFor="let task of project.taskArray" (click)="openDetail(task.id,task.title)">
-                  <tr [ngSwitch]="task.priority">
+                <table class="planner-task-table" *ngFor="let task of project.taskList" (click)="openDetail(task)">
+                  <tr [ngSwitch]="task.taskStatusList[0].priority">
                     <th  *ngSwitchCase="'1'" class="planner-task-table-title-1">
-                      <font>{{task.title}}</font>
+                      <font>{{task.name}}</font>
                       <button><ion-icon name="ios-code-working"></ion-icon></button>
                     </th>
                     <th  *ngSwitchCase="'2'" class="planner-task-table-title-2">
-                      <font>{{task.title}}</font>
+                      <font>{{task.name}}</font>
                       <button><ion-icon name="ios-code-working"></ion-icon></button>
                     </th>
                     <th  *ngSwitchCase="'3'" class="planner-task-table-title-3">
-                      <font>{{task.title}}</font>
+                      <font>{{task.name}}</font>
                       <button><ion-icon name="ios-code-working"></ion-icon></button>
                     </th>
                     <th  *ngSwitchCase="'4'" class="planner-task-table-title-4">
-                      <font>{{task.title}}</font>
+                      <font>{{task.name}}</font>
                       <button><ion-icon name="ios-code-working"></ion-icon></button>
                     </th>
                     <th  *ngSwitchCase="'5'" class="planner-task-table-title-5">
-                      <font>{{task.title}}</font>
+                      <font>{{task.name}}</font>
                       <button><ion-icon name="ios-code-working"></ion-icon></button>
                     </th>
                     <th  *ngSwitchCase="'6'" class="planner-task-table-title-6">
-                      <font>{{task.title}}</font>
+                      <font>{{task.name}}</font>
                       <button><ion-icon name="ios-code-working"></ion-icon></button>
                     </th>
                   </tr>
-                  <tr *ngFor="let item of task.itemArray">
+                  <tr *ngFor="let subtask of task.subTaskList">
                     <td class="planner-task-content" >
-                       <ion-checkbox [(ngModel)]="item.checked" disabled="true"></ion-checkbox>{{item.itemTitle}}
+                       <ion-checkbox [(ngModel)]="subtask.taskStatusList[0].status" disabled="true"></ion-checkbox>{{subtask.name}}
                     </td>
                   </tr>
                   <tr>
                     <td class="planner-task-status">
-                      <ion-icon name="ios-play"></ion-icon>
-                      <font class="planner-task-progress">{{task.getPersentString()}}</font>
-                      <font class="planner-task-due-date">{{task.endDate.toISOString()}}</font>
+                      <div [ngSwitch]="task.taskStatusList[0].status">
+                        <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"  ></ion-icon>
+                        <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"  ></ion-icon>
+                        <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"  ></ion-icon>
+                        <ion-icon *ngSwitchDefault name="ios-help-circle"  ></ion-icon>
+                      </div>
+                      
+                      <font class="planner-task-progress"></font>
+                      <font class="planner-task-due-date">{{task.taskStatusList[0].startDate | date: 'yyyy-MM-dd'}}</font>
                     </td>
                   </tr>
                   <tr>
                     <td class="planner-task-owner">
-                      <div *ngFor="let own of task.owner">
-                        {{own}}
+                      <div *ngFor="let own of task.taskOwnerList">
+                        {{this.companyUserMap.get(own.uid).name}}
                       </div>
                     </td>
                   </tr>
@@ -92,7 +98,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-grid *ngSwitchCase="'management'">
+    <!--<ion-grid *ngSwitchCase="'management'">
      <ion-row >
         <ion-col class="planner-col" *ngFor="let project of manageProjects">
           <table class="planner-project-table">
@@ -158,7 +164,7 @@
           </table>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </ion-grid>-->
   </div>
 
 </ion-content>
