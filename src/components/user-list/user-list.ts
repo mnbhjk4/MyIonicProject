@@ -12,17 +12,30 @@ import { MyApp,UserInfo } from '../../app/app.component';
   templateUrl: 'user-list.html',
 })
 export class UserListComponent {
-  private companyUser : Array<{id,name}> = [];
+  private companyUser : Array<{id,name,selected}> = [];
+  private filterCompanyUser : Array<{id,name,selected}> = [];
 
   constructor(public viewCtrl: ViewController) {
     MyApp.companyUsers.forEach((value : UserInfo,key:string)=>{
-      this.companyUser.push({id:value.uid,name:value.name});
-      console.log(value);
+      this.companyUser.push({id:value.uid,name:value.name,selected:false});
+      this.filterCompanyUser.push({id:value.uid,name:value.name,selected:false});
     });
   }
 
+  getCompanyUser(event : any){
+    let val = event.target.value;
+    this.filterCompanyUser = this.companyUser.copyWithin(0,this.companyUser.length);
+    if(val && val.trim() != ''){
+      this.filterCompanyUser = this.companyUser.filter((user)=>{
+        let add = (user.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return add;
+      });
+    }
+    
+  }
+
   close() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss("TESTLA","TEASEDASDA");
   }
 
 }

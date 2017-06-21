@@ -24,7 +24,6 @@ export class TaskDetailComponent {
     let obj = this.navParams.get('task');
     if(obj instanceof Task){
       this.task = obj;
-      console.log(MyApp.companyUsers);
     }
   }
 
@@ -42,6 +41,9 @@ export class TaskDetailComponent {
     let popover = this.popoverController.create(UserListComponent);
     popover.present({
       ev: event
+    });
+    popover.onDidDismiss((data)=>{
+      console.log(data);
     });
   }
   removeRow(task : Task){
