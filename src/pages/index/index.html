@@ -1,10 +1,9 @@
 <ion-menu [content]="content">
   <ion-header>
-  
+    
     <ion-title class="index-title">
-      <ion-icon name="ios-contact">
-        <font style="">{{user_name}}</font>
-      </ion-icon>
+      <img [src]="targetUser.img" style="width: 40px; height: 40px;">
+      <font style="">{{targetUser.name}}</font>
       
     </ion-title>
     

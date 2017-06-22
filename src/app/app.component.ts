@@ -187,5 +187,5 @@ export class UserInfo{
   uid:string;
   mail:string;
   name:string;
-
+  img:string;
 }

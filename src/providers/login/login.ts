@@ -32,8 +32,8 @@ export class LoginProvider {
       return this.msSloginProvider.getCompanyUserMap(access_token);
     }
   }
-  getUserProfilePhoto(access_token: string) {
-    return this.msSloginProvider.getUserProfilePhoto(access_token);
+  getUserProfilePhoto(access_token: string,uid : string,name:string) {
+    return this.msSloginProvider.getUserProfilePhoto(access_token,uid,name);
   }
 
   logout() {

@@ -3,9 +3,9 @@
     <button ion-button menuToggle>
       <ion-icon name="md-apps"></ion-icon>
     </button>
-    <ion-title>{{title}}</ion-title>
+    <ion-title>{{task.name}}</ion-title>
     <div>
-      <button ion-button icon-only style="background:#F000FF;width:35px;" (click)="changePriority('1')">
+      <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
         <div *ngIf="task.taskStatusList[0].priority == '1';else else1">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
@@ -13,15 +13,15 @@
           <ion-icon name="" ></ion-icon>
         </ng-template>
       </button>
-      <button ion-button icon-only style="background:#FF4800;width:35px;" (click)="changePriority('2')">
+      <button ion-button icon-only class="priority-2" (click)="changePriority('2')">
          <div *ngIf="task.taskStatusList[0].priority  == '2';else else2">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
         <ng-template #else2>
-          <ion-icon name="" style="background:#FF4800;" ></ion-icon>
+         <ion-icon name="" ></ion-icon>
         </ng-template>
       </button>
-      <button ion-button icon-only style="background:#FFA200;width:35px;" (click)="changePriority('3')">
+      <button ion-button icon-only class="priority-3" (click)="changePriority('3')">
         <div *ngIf="task.taskStatusList[0].priority  == '3';else else3">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
@@ -29,7 +29,7 @@
           <ion-icon name="" ></ion-icon>
         </ng-template>
       </button>
-      <button ion-button icon-only style="background:#B6E903;width:35px;" (click)="changePriority('4')">
+      <button ion-button icon-only class="priority-4" (click)="changePriority('4')">
         <div *ngIf="task.taskStatusList[0].priority  == '4';else else4">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
@@ -37,7 +37,7 @@
           <ion-icon name="" ></ion-icon>
         </ng-template>
       </button>
-      <button ion-button icon-only style="background:#01AB99;width:35px;" (click)="changePriority('5')">
+      <button ion-button icon-only class="priority-5" (click)="changePriority('5')">
         <div *ngIf="task.taskStatusList[0].priority  == '5';else else5">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
@@ -45,7 +45,7 @@
           <ion-icon name="" ></ion-icon>
         </ng-template>
       </button>
-      <button ion-button icon-only style="background:#00DEFF;width:35px;" (click)="changePriority('6')">
+      <button ion-button icon-only class="priority-6" (click)="changePriority('6')">
         <div *ngIf="task.taskStatusList[0].priority  == '6';else else6">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
@@ -58,39 +58,43 @@
 </ion-header>
 <ion-content>
   <ion-grid>
+    <div *ngFor="let owner of task.taskOwnerList">
+      <ion-row>
+        <ion-col>
+          <ion-label>{{this.companyUsers.get(owner.uid).name}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </div>
     <ion-row>
-      <div *ngFor="let owner of task.taskOwnerList">
-        <ion-col><ion-label>{{this.companyUsers.get(owner.uid).name}}</ion-label></ion-col>
-      </div>
-      
-      <ion-col><button ion-button title="Add owner" (click)="selectUsers($event)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
-      
+      <ion-col><button ion-button title="Add owner" (click)="selectUsers(task)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-3>
+      <ion-col>
         <ion-label>Task status</ion-label>
-        <ion-select  [(ngModel)]="task.taskStatusList[0].status">
+        <ion-select [(ngModel)]="task.taskStatusList[0].status">
           <ion-option value="Not Action">
             Not Action
           </ion-option>
-          <ion-option  value="Progressing">
+          <ion-option value="Progressing">
             Progressing
           </ion-option>
-          <ion-option  value="Done">
+          <ion-option value="Done">
             Done
           </ion-option>
         </ion-select>
       </ion-col>
-      <ion-col col-3>
+    </ion-row>
+    <ion-row warp>
+      <ion-col>
         <ion-label>Start date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="task.taskStatusList[0].startDate"></ion-datetime>
       </ion-col>
 
-      <ion-col col-3>
+      <ion-col>
         <ion-label>Due date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="task.taskStatusList[0].dueDate"></ion-datetime>
       </ion-col>
-      <ion-col col-3>
+      <ion-col>
         <ion-label>Alert date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="task.taskStatusList[0].alertDate"></ion-datetime>
       </ion-col>
@@ -100,23 +104,57 @@
     </ion-row>
     <ion-row *ngFor="let subtask of task.subTaskList" style="border:solid 1px black">
       <ion-col col-1>
+        <div class="priority-{{subtask.taskStatusList[0].priority}} subtask-priority"></div>
         <ion-checkbox checked="{{subtask.taskStatusList[0].status == 'Done'}}"></ion-checkbox>
       </ion-col>
       <ion-col>
-        <ion-input value="{{subtask.name}}"></ion-input>
+        <ion-grid class="subtask-grid">
+          <ion-row>
+            <ion-col>
+              <ion-label>Task name</ion-label>
+              <ion-input class="subtask-name" value="{{subtask.name}}"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row wrap>
+            <ion-col>
+              <ion-label>Start Date</ion-label>
+              <ion-col name="md-calendar"></ion-col>
+              <ion-datetime class="subtask-start-date" displayFormat="MM/DD/YYYY"></ion-datetime>
+            </ion-col>
+            <ion-col>
+              <ion-label>Due Date</ion-label>
+              <ion-col name="md-calendar"></ion-col>
+              <ion-datetime class="subtask-due-date" displayFormat="MM/DD/YYYY"></ion-datetime>
+            </ion-col>
+            <ion-col>
+              <ion-label>Alert Date</ion-label>
+              <ion-col name="md-calendar"></ion-col>
+              <ion-datetime class="subtask-due-date" displayFormat="MM/DD/YYYY"></ion-datetime>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Description</ion-label>
+              <ion-input class="subtask-description"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-col>
-      <ion-col>
-          <ion-label>Start Date</ion-label><ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+      <ion-col col-2>
+        <ion-fab>
+          <button class="subtask-up-config"ion-fab><ion-icon name="md-settings" ></ion-icon></button>
+          <ion-fab-list>
+            <button class="subtask-up-button" ion-button (click)="removeRow(subtask)"><ion-icon name="ios-arrow-dropup-circle" ></ion-icon></button>
+            <button class="subtask-down-button" ion-button (click)="removeRow(subtask)"><ion-icon name="ios-arrow-dropdown-circle" ></ion-icon></button>
+            <button class="subtask-upload-button" ion-button (click)="removeRow(subtask)"><ion-icon name="md-cloud-upload" ></ion-icon></button>
+            <button class="subtask-remove-button" ion-button (click)="removeRow(subtask)"><ion-icon name="md-remove" ></ion-icon></button>
+          </ion-fab-list>
+        </ion-fab>
+
       </ion-col>
-      <ion-col>
-          <ion-label>Due Date</ion-label><ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
-      </ion-col>
-      <ion-col>
-          <ion-label>Description</ion-label><ion-input></ion-input>
-      </ion-col>
-      <ion-col col-1><button ion-button (click)="removeRow(subtask)"><ion-icon name="md-remove" ></ion-icon></button></ion-col>
+
     </ion-row>
-    <ion-row><button ion-button (click)="addRow()"><ion-icon name="md-add"></ion-icon></button></ion-row>
+    <ion-row><button ion-button (click)="addRow(task)"><ion-icon name="md-add"></ion-icon></button></ion-row>
     <ion-row>
       <ion-col>
         <ion-label>Description</ion-label>
@@ -125,7 +163,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-label>Working commit
+        <ion-label>Working comment
           <ion-icon name="md-attach"></ion-icon>
         </ion-label>
         <ion-input class="detail-comment"></ion-input><button ion-button><ion-icon name="ios-redo"></ion-icon></button>

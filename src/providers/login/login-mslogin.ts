@@ -20,7 +20,7 @@ const client_secret: string = 'JmAXcEV54v1kbG2jTuA4JwW';
 const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.ReadBasic.All'
 @Injectable()
 export class MSloginProvider {
-  private server:string = "http://192.168.11.141:8080";
+  private server: string = "http://erp.raytrex.com:8080";
   public redirect_url: string = 'raytrexerp://MyERP';
   constructor(public http: Http, private storage: Storage) {
 
@@ -85,7 +85,7 @@ export class MSloginProvider {
       .map(res => res.json());
   }
 
-  getUserProfilePhoto(access_token : string) : Observable<Response>{
+  getUserProfilePhoto(access_token : string, uid : string, name :string){
     let requestOptions = new RequestOptions();
 
     let myHeader = new Headers();
@@ -94,9 +94,11 @@ export class MSloginProvider {
 
     let parames: URLSearchParams = new URLSearchParams();
     parames.append("access_token", access_token);
+    parames.append("uid",uid);
+    parames.append("name",name);
     requestOptions.search = parames;
-    return this.http.post(this.server+"/adal/getUserProfilePhoto",null, requestOptions)
-      .map(res => res.json());
+    let a = this.http.post(this.server+"/adal/getUserProfilePhoto",null, requestOptions);
+    return a;
   }
 
   getCompanyUserMap(access_token : string) : Observable<Response>{

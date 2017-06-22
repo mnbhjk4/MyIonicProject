@@ -28,7 +28,7 @@ export class IndexPage {
   @ViewChild(Nav) nav: Nav;
   pages: Array<{ title: string, icon: string, component: any }>;
   rootPage: any = ListPage;
-  private user_name: string = "";
+  private targetUser: UserInfo = new UserInfo();
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private http: Http,
@@ -51,12 +51,8 @@ export class IndexPage {
       if (id_token_string != null && id_token_string != "") {
         let id_token = JSON.parse(id_token_string);
         if (id_token.name != null && id_token.name != "") {
-          this.user_name = id_token.name;
-          this.loginProvider.getUserProfilePhoto(access_obj.access_token).subscribe(
-            result => {
-              console.log(result["@odata.id"]);
-            }
-          );
+          let user_name = id_token.name;
+          
           this.loginProvider.getCompanyUserMap(access_obj.access_token).subscribe(
             result=>{
               let values = result["value"];
@@ -64,10 +60,21 @@ export class IndexPage {
                 for(let index = 0 ; index < values.length ; index++){
                   let user = new UserInfo();
                   if(MyApp.tokenType == "Microsoft"){
-                    user.uid = values[index].id;
-                    user.name = values[index].displayName;
-                    user.mail = values[index].mail;
-                    MyApp.companyUsers.set(user.uid,user);
+                    this.loginProvider.getUserProfilePhoto(access_obj.access_token,values[index].id,values[index].displayName).subscribe(
+                      result => {
+                       user.uid = values[index].id;
+                        user.name = values[index].displayName;
+                        user.mail = values[index].mail;
+                        if(result.text().length > 0){
+                          user.img = "data:image/png;base64,"+result.text();
+                        }
+                        
+                        MyApp.companyUsers.set(user.uid,user);
+                        if(user.uid == id_token.oid){
+                          this.targetUser = user;
+                        }
+                      }
+                    );
                   }
                 }
               }

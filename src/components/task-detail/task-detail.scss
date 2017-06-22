@@ -1,9 +1,43 @@
 task-detail {
 
 }
+.priority-1{
+    background:#F000FF;width:35px;
+}
+.priority-2{
+    background:#FF4800;width:35px;
+}
+.priority-3{
+    background:#FFA200;width:35px;
+}
+.priority-4{
+    background:#B6E903;width:35px;
+}
+.priority-5{
+    background:#01AB99;width:35px;
+}
+.priority-6{
+    background:#00DEFF;width:35px;
+}
+.subtask-priority{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:0;
+}
+.subtask-grid{
+}
 .detail-description{
     background:#E1E1E1;
 }
 .detail-comment{
     background:#E1E1E1;
+}
+.subtask-name,.subtask-start-date,.subtask-due-date,.subtask-description{
+    border-bottom:solid 1px gray;
+}
+.subtask-remove-button{
+
 }

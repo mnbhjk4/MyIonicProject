@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class ProjectProvider {
-  private server:string = "http://192.168.11.141:8080";
+  private server: string = "http://erp.raytrex.com:8080";
   constructor(public http: Http) {
   }
 
