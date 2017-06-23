@@ -69,9 +69,24 @@
     border:solid 1px #0F0F0F;
 }
 
-.planner-task-status{
+.planner-task-status-summary{
+    border : solid 1px black;
     text-align: center;
     font-size:1.25em;
+    .planner-task-status{
+      float:left;
+      padding-left: 20%;
+    }
+    .planner-task-progress{
+       float:left;
+       padding-left: 10px;
+       padding-top: 5px;
+    }
+    .planner-task-due-date{
+        float:left;
+        padding-left: 10px;
+        padding-top: 5px;
+    }
 }
 
 .planner-task-owner{

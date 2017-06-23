@@ -1,6 +1,6 @@
 import { Component,Pipe, PipeTransform } from '@angular/core';
 import { ViewController } from 'ionic-angular';
-import { MyApp,UserInfo } from '../../app/app.component';
+import { MyApp,Employee,EmployeeInfo } from '../../app/app.component';
 /**
  * Generated class for the UserListComponent component.
  *
@@ -21,11 +21,11 @@ export class UserListComponent {
     if( selectedOwner == null ||  !(selectedOwner instanceof Array)){
       selectedOwner = [];
     }
-    MyApp.companyUsers.forEach((value : UserInfo,key:string)=>{
+    MyApp.companyUsers.forEach((value : Employee,key:string)=>{
       if(selectedOwner.indexOf(value.uid) != -1){
-        this.companyUser.push({id:value.uid,name:value.name,img:value.img,selected:true});
+        this.companyUser.push({id:value.uid,name:value.employeesInfo.lastName,img:value.employeesInfo.image,selected:true});
       }else{
-        this.companyUser.push({id:value.uid,name:value.name,img:value.img,selected:false});
+        this.companyUser.push({id:value.uid,name:value.employeesInfo.lastName,img:value.employeesInfo.image,selected:false});
       }
     });
     this.filterCompanyUser = this.companyUser;

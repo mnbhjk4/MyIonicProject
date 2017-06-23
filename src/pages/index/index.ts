@@ -12,7 +12,7 @@ import { LoginProvider } from '../../providers/login/login';
 import { ProjectPage } from '../project/project';
 import { PlannerPage } from '../planner/planner';
 import { TaskPage } from '../task/task';
-import { MyApp,UserInfo } from "../../app/app.component";
+import { MyApp,Employee } from "../../app/app.component";
 /**
  * Generated class for the IndexPage page.
  *
@@ -25,10 +25,11 @@ import { MyApp,UserInfo } from "../../app/app.component";
   templateUrl: 'index.html',
 })
 export class IndexPage {
+  targetUser : Employee = MyApp.targetUser;
   @ViewChild(Nav) nav: Nav;
   pages: Array<{ title: string, icon: string, component: any }>;
   rootPage: any = ListPage;
-  private targetUser: UserInfo = new UserInfo();
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private http: Http,
@@ -46,44 +47,7 @@ export class IndexPage {
   }
 
   ionViewDidLoad() {
-    this.storage.get("access_obj").then((access_obj) => {
-      let id_token_string = access_obj.decoded_access_token;
-      if (id_token_string != null && id_token_string != "") {
-        let id_token = JSON.parse(id_token_string);
-        if (id_token.name != null && id_token.name != "") {
-          let user_name = id_token.name;
-          
-          this.loginProvider.getCompanyUserMap(access_obj.access_token).subscribe(
-            result=>{
-              let values = result["value"];
-              if(values instanceof Array){
-                for(let index = 0 ; index < values.length ; index++){
-                  let user = new UserInfo();
-                  if(MyApp.tokenType == "Microsoft"){
-                    this.loginProvider.getUserProfilePhoto(access_obj.access_token,values[index].id,values[index].displayName).subscribe(
-                      result => {
-                       user.uid = values[index].id;
-                        user.name = values[index].displayName;
-                        user.mail = values[index].mail;
-                        if(result.text().length > 0){
-                          user.img = "data:image/png;base64,"+result.text();
-                        }
-                        
-                        MyApp.companyUsers.set(user.uid,user);
-                        if(user.uid == id_token.oid){
-                          this.targetUser = user;
-                        }
-                      }
-                    );
-                  }
-                }
-              }
-              console.log(result);
-            }
-          );
-        }
-      }
-    });
+   
 
   }
 

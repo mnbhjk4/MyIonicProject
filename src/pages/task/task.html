@@ -68,26 +68,33 @@
                   </tr>
                   <tr *ngFor="let subtask of task.subTaskList">
                     <td class="planner-task-content" >
-                       <ion-checkbox [(ngModel)]="subtask.taskStatusList[0].status" disabled="true"></ion-checkbox>{{subtask.name}}
+                       <div [ngSwitch]="subtask.taskStatusList[0].status">
+                        <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"  ></ion-icon>
+                        <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"  ></ion-icon>
+                        <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"  ></ion-icon>
+                        <ion-icon *ngSwitchDefault name="ios-help-circle"  ></ion-icon>
+                         {{subtask.name}}
+                      </div>
+                     
                     </td>
                   </tr>
-                  <tr>
-                    <td class="planner-task-status">
-                      <div [ngSwitch]="task.taskStatusList[0].status">
+                  <tr class="planner-task-status-summary">
+                    <td >
+                      <div class="planner-task-status" [ngSwitch]="task.taskStatusList[0].status">
                         <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"  ></ion-icon>
                         <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"  ></ion-icon>
                         <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"  ></ion-icon>
                         <ion-icon *ngSwitchDefault name="ios-help-circle"  ></ion-icon>
                       </div>
                       
-                      <font class="planner-task-progress"></font>
-                      <font class="planner-task-due-date">{{task.taskStatusList[0].startDate | date: 'yyyy-MM-dd'}}</font>
+                      <div class="planner-task-progress"><font>{{this.setProgess(task)}}</font></div>
+                      <div class="planner-task-due-date"><font>{{task.taskStatusList[0].startDate | date: 'yyyy-MM-dd'}}</font></div>
                     </td>
                   </tr>
                   <tr>
                     <td class="planner-task-owner">
                       <div *ngFor="let own of task.taskOwnerList">
-                        {{this.companyUserMap.get(own.uid).name}}
+                        {{this.companyUserMap.get(own.uid).employeesInfo.lastName}}
                       </div>
                     </td>
                   </tr>

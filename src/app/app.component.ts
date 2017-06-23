@@ -13,10 +13,10 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  public static token: Map<string, UserInfo> = new Map<string, UserInfo>();
   public static tokenType = "";
   public static platformType = "web";
-  public static companyUsers : Map<string,UserInfo> = new Map<string,UserInfo>();
+  public static targetUser: Employee = null;
+  public static companyUsers: Map<string, Employee> = new Map<string, Employee>();
   jwtHelper: JwtHelper = new JwtHelper();
   rootPage: any;
 
@@ -27,7 +27,7 @@ export class MyApp {
     private loginProvider: LoginProvider,
     private storage: Storage,
     public alertCtl: AlertController,
-    private msLoginProvider:MSloginProvider
+    private msLoginProvider: MSloginProvider
   ) {
     if (this.platform.is("android")) {
       MyApp.platformType = "andorid";
@@ -59,7 +59,7 @@ export class MyApp {
           }
         }
         //清除暫存在WEB storage中的URL
-         window.localStorage.removeItem("url");
+        window.localStorage.removeItem("url");
       }
     }
     // 1.接收來自MS,Google access ID (登入後的重新導向)
@@ -76,18 +76,18 @@ export class MyApp {
               let decodeToken = this.jwtHelper.decodeToken(json.access_token);
               access_obj.access_token = json.access_token;
               access_obj.decoded_access_token = JSON.stringify(decodeToken);
-              access_obj.uid =  this.jwtHelper.decodeToken(json.access_token).uid;
+              access_obj.uid = this.jwtHelper.decodeToken(json.access_token).uid;
               access_obj.uid = decodeToken.oid;
               access_obj.refresh_token = json.refresh_token;
               access_obj.state = "Microsoft";
-              
+
               this.storage.remove("state");
               this.storage.remove("code");
               MyApp.tokenType = "Microsoft";
-              this.storage.set("access_obj", access_obj).then(()=>{
-                 this.rootPage = IndexPage;
+              this.storage.set("access_obj", access_obj).then(() => {
+                 this.redirectToIndex(access_obj.access_token,decodeToken.oid);
               });
-             
+
             } else {
               this.storage.remove("access_obj");
             }
@@ -139,11 +139,11 @@ export class MyApp {
                       access_obj.uid = decodeToken.oid;
                       access_obj.refresh_token = json.refresh_token;
                       access_obj.state = "Microsoft";
-                      this.storage.set("access_obj", access_obj).then(()=>{
-                         MyApp.tokenType = "Microsoft";
-                         this.rootPage = IndexPage;
+                      this.storage.set("access_obj", access_obj).then(() => {
+                        MyApp.tokenType = "Microsoft";
+                        this.redirectToIndex(access_obj.access_token,decodeToken.oid);
                       });
-                     
+
                     }
                   }
                 }, (error) => {
@@ -152,7 +152,7 @@ export class MyApp {
               }
             } else {
               MyApp.tokenType = state;
-              this.rootPage = IndexPage;
+              this.redirectToIndex(access_obj.access_token,access_token.oid);
             }
           }
         } else {
@@ -172,10 +172,28 @@ export class MyApp {
       }
     });
   }
+
+  redirectToIndex(access_token: string, oid: string) {
+    this.loginProvider.getCompanyUsers(access_token).subscribe(
+      result => {
+        if (result instanceof Array) {
+          for (let index = 0; index < result.length; index++) {
+            let employee = Employee.fromObject(result[index]);
+            if (employee.uid == oid) {
+              MyApp.targetUser = employee;
+            }
+            MyApp.companyUsers.set(employee.uid, employee);
+          }
+        }
+        console.log(result);
+        this.rootPage = IndexPage;
+      }
+    );
+  }
 }
 
 export class Access_obj {
-  public uid:string;
+  public uid: string;
   public access_token: string;
   public id_token: string;
   public refresh_token: string;
@@ -183,9 +201,112 @@ export class Access_obj {
   public state: string;
 }
 
-export class UserInfo{
-  uid:string;
-  mail:string;
-  name:string;
-  img:string;
+export class Employee {
+  uid: string = "";
+  empNo: string = "";
+  employeesInfo: EmployeeInfo = new EmployeeInfo();
+  roles: Array<EmployeeRoles> = [];
+
+  public static fromObject(src: any): Employee {
+    let e = new Employee();
+    e.uid = src.uid;
+    e.empNo = src.empNo;
+    e.employeesInfo = EmployeeInfo.fromObject(src.employeesInfo);
+    if (src.roles instanceof Array) {
+      for (let srcRole in src.roles) {
+        e.roles.push(EmployeeRoles.fromObject(srcRole));
+      }
+    }
+    return e;
+  }
+}
+
+export class EmployeeInfo {
+  uid: string = "";
+  firstName: string = "";
+  midName: string = "";
+  lastName: string = "";
+  birthDate: Date;
+  preferredLanguage: string = "";
+  gender: string = "";
+  contactAddr1: string = "";
+  contactAddr2: string = "";
+  contactPhone1: string = "";
+  contactPhone2: string = "";
+  hireDate: Date
+  leaveDate: Date;
+  image: string = "";
+
+  public static fromObject(src: any): EmployeeInfo {
+    let e = new EmployeeInfo();
+    e.uid = src.uid;
+    e.firstName = src.firstName;
+    e.midName = src.midName;
+    e.lastName = src.lastName;
+    e.birthDate = src.birthDate;
+    e.preferredLanguage = src.preferredLanguage;
+    e.gender = src.gender;
+    e.contactAddr1 = src.contactAddr1;
+    e.contactAddr2 = src.contactAddr2;
+    e.contactPhone1 = src.contactPhone1;
+    e.contactPhone2 = src.contactPhone2;
+    e.hireDate = src.hireDate;
+    e.leaveDate = src.leaveDate;
+    e.image = src.image;
+    return e;
+  }
+}
+
+export class EmployeeRoles {
+  uid: string;
+  roleId: string;
+  fromDate: string;
+  toDate: string;
+  role: Role;
+  public static fromObject(src: any): EmployeeRoles {
+    let e = new EmployeeRoles();
+    e.uid = src.uid;
+    e.roleId = src.roleId;
+    e.fromDate = src.midName;
+    e.toDate = src.toDate;
+    e.role = Role.fromObject(src.role);
+
+    return e;
+  }
+}
+
+export class Role {
+  depId: string;
+  roleId: string;
+  role_name: string;
+  roleLevel: string;
+  department: Department;
+  public static fromObject(src: any): Role {
+    let e = new Role();
+    e.depId = src.depId;
+    e.roleId = src.roleId;
+    e.role_name = src.role_name;
+    e.roleLevel = src.roleLevel;
+    e.department = Department.fromObject(src.department);
+
+    return e;
+  }
+}
+
+export class Department {
+  depId: string;
+  depNo: string;
+  name: string;
+  region: string;
+  parentDepId: string;
+  public static fromObject(src: any): Department {
+    let e = new Department();
+    e.depId = src.depId;
+    e.depNo = src.depNo;
+    e.name = src.name;
+    e.region = src.region;
+    e.parentDepId = src.parentDepId;
+
+    return e;
+  }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TaskDetailComponent } from '../../components/task-detail/task-detail'
 import { ManageTaskDetailComponent } from '../../components/manage-task-detail/manage-task-detail';
-import { MyApp ,UserInfo} from '../../app/app.component';
+import { MyApp ,Employee} from '../../app/app.component';
 import { TaskProvider,Task,TaskOwner,TaskComment,TaskStatus } from '../../providers/task/task';
 import { ProjectProvider,Project,ProjectOwner,ProjectStatus} from '../../providers/project/project';
 import { Storage } from '@ionic/storage';
@@ -18,7 +18,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'task.html',
 })
 export class TaskPage {
-  private companyUserMap : Map<string,UserInfo> = MyApp.companyUsers;
+  private companyUserMap : Map<string,Employee> = MyApp.companyUsers;
   private plannerContent : string = "my-plans";
   private projects:Array<Project> =[];
   private manageProjects:Array<Project> = [];
@@ -62,7 +62,17 @@ export class TaskPage {
     });
   }
 
-
+  setProgess(task : Task){
+    let total = task.subTaskList.length;
+    let complete = 0;
+    for(let index = 0;index < task.subTaskList.length;index++){
+      let t = task.subTaskList[index];
+      if(t.taskStatusList[0].status == "Done"){
+        complete++;
+      }
+    }
+    return complete+"/"+total;
+  }
 }
 
 

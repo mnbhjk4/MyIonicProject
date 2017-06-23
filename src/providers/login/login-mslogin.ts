@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { RequestOptions, Headers, URLSearchParams } from '@angular/http';
-import { Http ,} from '@angular/http';
-import {Observable } from 'rxjs/Observable';
-import { MyApp,UserInfo } from '../../app/app.component';
+import { Http ,RequestOptions, Headers, URLSearchParams } from '@angular/http';
+import { MyApp } from '../../app/app.component';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -101,19 +99,7 @@ export class MSloginProvider {
     return a;
   }
 
-  getCompanyUserMap(access_token : string) : Observable<Response>{
-    let requestOptions = new RequestOptions();
-
-    let myHeader = new Headers();
-    requestOptions.headers = myHeader;
-    myHeader.append('Content-Type', 'application/json');
-
-    let parames: URLSearchParams = new URLSearchParams();
-    parames.append("access_token", access_token);
-    requestOptions.search = parames;
-    return this.http.post(this.server+"/adal/getCompanyUserMap",null, requestOptions)
-      .map(res => res.json());
-  }
+ 
 
   logout() {
     if (MyApp.platformType == "web") {

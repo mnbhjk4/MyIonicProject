@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { NavParams, PopoverController, PopoverOptions } from 'ionic-angular';
+import { Component ,ViewChildren,QueryList,ElementRef,Renderer} from '@angular/core';
+import { NavParams, PopoverController, PopoverOptions,Select } from 'ionic-angular';
 import { Task, TaskStatus, TaskComment, TaskOwner } from '../../providers/task/task';
-import { MyApp, UserInfo } from '../../app/app.component';
+import { MyApp, Employee } from '../../app/app.component';
 import { UserListComponent } from '../../components/user-list/user-list';
+import { LoginProvider } from '../../providers/login/login';
 
 /**
  * Generated class for the TaskDetailComponent component.
@@ -15,23 +16,27 @@ import { UserListComponent } from '../../components/user-list/user-list';
   templateUrl: 'task-detail.html'
 })
 export class TaskDetailComponent {
-  companyUsers: Map<string, UserInfo> = MyApp.companyUsers;
+  @ViewChildren('subselect')
+  subtaskBlock:QueryList<Select>;
+
+  companyUsers: Map<string, Employee> = MyApp.companyUsers;
   task: Task = null;
   newIndex: number = 1;
   constructor(private navParams: NavParams,
-    private popoverController: PopoverController) {
+    private popoverController: PopoverController,
+    private loginProvider : LoginProvider,
+    private renderer: Renderer) {
     let obj = this.navParams.get('task');
     if (obj instanceof Task) {
       this.task = obj;
     }
-
   }
 
   addRow(parentTask : Task) {
     let newTask = new Task();
     newTask.taskNo = "NEW" + this.newIndex;
     let initTaskStatus = new TaskStatus();
-    initTaskStatus.status = "Not action";
+    initTaskStatus.status = "Not Action";
     initTaskStatus.priority = "6";
     initTaskStatus.parentTaskNo  = parentTask.taskNo;
     newTask.taskStatusList.push(initTaskStatus);
@@ -74,7 +79,6 @@ export class TaskDetailComponent {
         //更新Task Owner list
         task.taskOwnerList = newTaskOwnerList;
       }
-
     });
 
   }
@@ -87,5 +91,13 @@ export class TaskDetailComponent {
   }
   changePriority(priority: string) {
     this.task.taskStatusList[0].priority = priority;
+  }
+
+  selectTaskStatus(id : any){
+    this.subtaskBlock.forEach(item =>{
+      if(item.id == id){
+        item.open();
+      }
+    });
   }
 }
