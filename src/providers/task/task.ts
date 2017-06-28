@@ -34,6 +34,7 @@ export class Task {
   taskStatusList: Array<TaskStatus> = [];
   taskOwnerList: Array<TaskOwner> = [];
   taskCommentList: Array<TaskComment> = [];
+  tempComment : TaskComment = new TaskComment();
   subTaskList: Array<Task> = [];
   static fromObject(src: any) {
     let obj = new Task();

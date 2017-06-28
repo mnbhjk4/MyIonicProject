@@ -24,7 +24,7 @@ import { CalanderService } from '../pages/leave/calander.service';
 import { OrganizePage } from '../pages/organize/organize';
 import { ProjectPage } from '../pages/project/project';
 import { IonicStorageModule } from '@ionic/storage';
-import { TaskDetailComponent } from '../components/task-detail/task-detail';
+import { TaskDetailComponent,PriorityComponent } from '../components/task-detail/task-detail';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'angular2-calendar';
 import { ManageTaskDetailComponent } from '../components/manage-task-detail/manage-task-detail';
@@ -47,7 +47,8 @@ import { UserListComponent } from '../components/user-list/user-list';
     TaskDetailComponent,
     ManageTaskDetailComponent,
     TaskPage,
-    UserListComponent
+    UserListComponent,
+    PriorityComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +73,8 @@ import { UserListComponent } from '../components/user-list/user-list';
     TaskDetailComponent,
     ManageTaskDetailComponent,
     TaskPage,
-    UserListComponent
+    UserListComponent,
+    PriorityComponent
   ],
   providers: [
     StatusBar,

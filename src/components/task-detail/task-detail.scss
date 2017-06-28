@@ -1,6 +1,7 @@
 task-detail {
 
 }
+
 .priority-1{
     background:#F000FF;width:35px;
 }
@@ -31,11 +32,18 @@ task-detail {
 .detail-comment{
     background:#E1E1E1;
 }
-.subtask-name,.subtask-start-date,.subtask-due-date,.subtask-description{
+.subtask-name,.subtask-start-date,.subtask-due-date,.subtask-description,.subtask-comment{
     border-bottom:solid 1px gray;
 }
 .subtask-remove-button{
 
+}
+
+.subtask-priority{
+    position: absolute;
+    width:100%;
+    height: 100%;
+    
 }
 
 .short_name{
@@ -47,4 +55,8 @@ task-detail {
     padding-top:10%;
     width:40px;
     height:40px;
+}
+
+.priorityPopup .popover-content{
+    width:400px;
 }

@@ -75,7 +75,9 @@
                         <ion-icon *ngSwitchDefault name="ios-help-circle"  ></ion-icon>
                          {{subtask.name}}
                       </div>
-                     
+                      <div *ngFor="let subowner of subtask.taskOwnerList">
+                        {{this.companyUserMap.get(subowner.uid).employeesInfo.lastName}}
+                      </div>
                     </td>
                   </tr>
                   <tr class="planner-task-status-summary">

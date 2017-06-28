@@ -1,5 +1,5 @@
-import { Component ,ViewChildren,QueryList,ElementRef,Renderer} from '@angular/core';
-import { NavParams, PopoverController, PopoverOptions,Select } from 'ionic-angular';
+import { Component, ViewChildren, QueryList, ElementRef, Pipe } from '@angular/core';
+import { NavParams, PopoverController, PopoverOptions, Select, ViewController } from 'ionic-angular';
 import { Task, TaskStatus, TaskComment, TaskOwner } from '../../providers/task/task';
 import { MyApp, Employee } from '../../app/app.component';
 import { UserListComponent } from '../../components/user-list/user-list';
@@ -17,28 +17,30 @@ import { LoginProvider } from '../../providers/login/login';
 })
 export class TaskDetailComponent {
   @ViewChildren('subselect')
-  subtaskBlock:QueryList<Select>;
+  subtaskBlock: QueryList<Select>;
+
+  @ViewChildren('subselectPriority')
+  subTaskPriority: QueryList<Select>;
 
   companyUsers: Map<string, Employee> = MyApp.companyUsers;
   task: Task = null;
   newIndex: number = 1;
   constructor(private navParams: NavParams,
     private popoverController: PopoverController,
-    private loginProvider : LoginProvider,
-    private renderer: Renderer) {
+    private loginProvider: LoginProvider) {
     let obj = this.navParams.get('task');
     if (obj instanceof Task) {
       this.task = obj;
     }
   }
 
-  addRow(parentTask : Task) {
+  addRow(parentTask: Task) {
     let newTask = new Task();
     newTask.taskNo = "NEW" + this.newIndex;
     let initTaskStatus = new TaskStatus();
     initTaskStatus.status = "Not Action";
     initTaskStatus.priority = "6";
-    initTaskStatus.parentTaskNo  = parentTask.taskNo;
+    initTaskStatus.parentTaskNo = parentTask.taskNo;
     newTask.taskStatusList.push(initTaskStatus);
     this.task.subTaskList.push(newTask);
 
@@ -93,11 +95,144 @@ export class TaskDetailComponent {
     this.task.taskStatusList[0].priority = priority;
   }
 
-  selectTaskStatus(id : any){
-    this.subtaskBlock.forEach(item =>{
-      if(item.id == id){
+  selectTaskStatus(id: any) {
+    this.subtaskBlock.forEach(item => {
+      if (item.getElementRef().nativeElement.id == id) {
         item.open();
       }
     });
   }
+
+  upTaskIndex(parentTask: Task, goupChildrenTask: Task) {
+    for (let index = 0; index < parentTask.subTaskList.length; index++) {
+      let cTask = parentTask.subTaskList[index];
+      if (cTask.taskNo == goupChildrenTask.taskNo) {
+        if (index == 0) {//確認是否為第一個陣列(就不用往上提了吧)
+          break;
+        } else {//就把它往上提一個Index
+          parentTask.subTaskList.splice(index, 1);
+          parentTask.subTaskList.splice((index - 1), 0, goupChildrenTask);
+          break;//找到了要Break調否則會一直往上跑
+        }
+
+      }
+    }
+  }
+  downTaskIndex(parentTask: Task, goupChildrenTask: Task) {
+    for (let index = 0; index < parentTask.subTaskList.length; index++) {
+      let cTask = parentTask.subTaskList[index];
+      if (cTask.taskNo == goupChildrenTask.taskNo) {
+        if (index == parentTask.subTaskList.length - 1) {//確認是否為第一個陣列(就不用往下提了吧)
+          break;
+        } else {//就把它往下提一個Index
+          parentTask.subTaskList.splice(index, 1);
+          parentTask.subTaskList.splice((index + 1), 0, goupChildrenTask);
+          break;//找到了要Break調否則會一直往下掉
+        }
+      }
+    }
+  }
+  chgSubtaskPriority(task: Task) {
+    let pop = this.popoverController.create(PriorityComponent, { priority: task.taskStatusList[0].priority }, { cssClass: "priorityPopup" });
+
+    pop.present();
+    pop.onDidDismiss((data) => {
+      if (data != null) {
+        task.taskStatusList[0].priority = data;
+      }
+    });
+  }
+
+  uploadComment(taskComment: TaskComment) {
+
+  }
+
+  commitComment(task: Task) {
+    if(task.tempComment.comment == null || task.tempComment.comment.trim() == ''){
+      return;
+    }
+    task.tempComment.commentDate = new Date();
+    task.tempComment.taskNo = task.taskNo;
+    task.tempComment.uid = MyApp.targetUser.uid;
+    task.taskCommentList.push(task.tempComment);
+    task.taskCommentList = task.taskCommentList.sort((a: TaskComment, b: TaskComment) => {
+      if (a.commentDate.getTime() > b.commentDate.getTime()) {
+        return -1;
+      } else if (a.commentDate.getTime() < b.commentDate.getTime()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    task.tempComment = new TaskComment();
+  }
 }
+
+@Component({
+  selector: 'task-detail',
+  template: ` <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
+        <div *ngIf="priority == '1';else else1">
+          <ion-icon name="ios-checkmark" ></ion-icon>
+        </div>
+        <ng-template #else1>
+          <ion-icon name="" ></ion-icon>
+        </ng-template>
+      </button>
+      <button ion-button icon-only class="priority-2" (click)="changePriority('2')">
+         <div *ngIf="priority  == '2';else else2">
+          <ion-icon name="ios-checkmark" ></ion-icon>
+        </div>
+        <ng-template #else2>
+         <ion-icon name="" ></ion-icon>
+        </ng-template>
+      </button>
+      <button ion-button icon-only class="priority-3" (click)="changePriority('3')">
+        <div *ngIf="priority  == '3';else else3">
+          <ion-icon name="ios-checkmark" ></ion-icon>
+        </div>
+        <ng-template #else3>
+          <ion-icon name="" ></ion-icon>
+        </ng-template>
+      </button>
+      <button ion-button icon-only class="priority-4" (click)="changePriority('4')">
+        <div *ngIf="priority  == '4';else else4">
+          <ion-icon name="ios-checkmark" ></ion-icon>
+        </div>
+        <ng-template #else4>
+          <ion-icon name="" ></ion-icon>
+        </ng-template>
+      </button>
+      <button ion-button icon-only class="priority-5" (click)="changePriority('5')">
+        <div *ngIf="priority  == '5';else else5">
+          <ion-icon name="ios-checkmark" ></ion-icon>
+        </div>
+        <ng-template #else5>
+          <ion-icon name="" ></ion-icon>
+        </ng-template>
+      </button>
+      <button ion-button icon-only class="priority-6" (click)="changePriority('6')">
+        <div *ngIf="priority  == '6';else else6">
+          <ion-icon name="ios-checkmark" ></ion-icon>
+        </div>
+        <ng-template #else6>
+          <ion-icon name="" ></ion-icon>
+        </ng-template>
+      </button>
+      <button ion-button (click)="applyPriority()"><ion-icon name="md-checkmark">Apply</ion-icon></button>`
+})
+export class PriorityComponent {
+  priority: string = "6";
+  constructor(public viewCtrl: ViewController) {
+    let nowPriority = this.viewCtrl.getNavParams().data["priority"];
+    this.priority = nowPriority;
+  }
+
+  changePriority(priority: string) {
+    this.priority = priority;
+  }
+
+  applyPriority() {
+    this.viewCtrl.dismiss(this.priority);
+  }
+}
+
