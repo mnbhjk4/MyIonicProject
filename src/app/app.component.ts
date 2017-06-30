@@ -185,7 +185,6 @@ export class MyApp {
             MyApp.companyUsers.set(employee.uid, employee);
           }
         }
-        console.log(result);
         this.rootPage = IndexPage;
       }
     );
@@ -213,8 +212,8 @@ export class Employee {
     e.empNo = src.empNo;
     e.employeesInfo = EmployeeInfo.fromObject(src.employeesInfo);
     if (src.roles instanceof Array) {
-      for (let srcRole in src.roles) {
-        e.roles.push(EmployeeRoles.fromObject(srcRole));
+      for (let i=0; i< src.roles.length;i++) {
+        e.roles.push(EmployeeRoles.fromObject(src.roles[i]));
       }
     }
     return e;
@@ -278,17 +277,16 @@ export class EmployeeRoles {
 export class Role {
   depId: string;
   roleId: string;
-  role_name: string;
+  roleName: string;
   roleLevel: string;
-  department: Department;
+  department : Department;
   public static fromObject(src: any): Role {
     let e = new Role();
     e.depId = src.depId;
     e.roleId = src.roleId;
-    e.role_name = src.role_name;
+    e.roleName = src.roleName;
     e.roleLevel = src.roleLevel;
     e.department = Department.fromObject(src.department);
-
     return e;
   }
 }

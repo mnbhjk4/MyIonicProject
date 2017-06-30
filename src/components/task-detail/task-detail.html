@@ -1,10 +1,11 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="md-apps"></ion-icon>
-    </button>
+  <ion-navbar [hideBackButton]="true">
+  
     <ion-title>{{task.name}}</ion-title>
     <div>
+      <button ion-button (click)="pop()">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
       <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
         <div *ngIf="task.taskStatusList[0].priority == '1';else else1">
           <ion-icon name="ios-checkmark" ></ion-icon>
@@ -224,7 +225,7 @@
     <ion-row>
       <ion-col>
         <ion-label>Description</ion-label>
-        <ion-textarea class="detail-description" row="5" value="{{task.taskStatusList[0].description}}"></ion-textarea>
+        <ion-textarea class="detail-description" row="5"  [(ngModel)]="task.taskStatusList[0].description"></ion-textarea>
       </ion-col>
     </ion-row>
     <ion-row>

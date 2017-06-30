@@ -38,7 +38,6 @@ export class LoginProvider {
     myHeader.append('Content-Type', 'application/json');
 
     let parames: URLSearchParams = new URLSearchParams();
-    parames.append("access_token", access_token);
     requestOptions.search = parames;
     return this.http.post(this.server+"/employee/getCompanyUsers",null, requestOptions)
       .map(res => res.json());

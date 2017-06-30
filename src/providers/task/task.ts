@@ -19,7 +19,10 @@ export class TaskProvider {
     params["project_no"] = project_no;
     return this.http.post(this.server + "/task/getTaskByProjectNo", JSON.stringify(params)).map((res) => res.json());
   }
-
+  
+  saveTask(task : Task){
+    return this.http.post(this.server + "/task/saveTask",JSON.stringify(task)).map((res) => res.json());
+  }
 }
 
 
@@ -45,6 +48,12 @@ export class Task {
     obj.attachUuid = src.attachUuid;
     obj.permissionId = src.permissionId;
     obj.parentTaskNo = src.parentTaskNo;
+    if(src.subTaskList instanceof Array){
+       for (let index = 0; index < src.subTaskList.length; index++) {
+        let task = Task.fromObject(src.subTaskList[index]);
+        obj.subTaskList.push(task);
+      }
+    }
 
     if (src.taskOwnerList instanceof Array) {
       for (let index = 0; index < src.taskOwnerList.length; index++) {
@@ -69,9 +78,9 @@ export class Task {
   }
 }
 export class TaskOwner {
-  serialNo: number;
-  taskNo: string;
-  uid: string;
+  serialNo: number = -1;
+  taskNo: string = "";
+  uid: string = "";
   joinDate: Date;
   leaveDate: Date;
   static fromObject(src: any) {
@@ -79,9 +88,12 @@ export class TaskOwner {
     obj.serialNo = src.serialNo;
     obj.taskNo = src.taskNo;
     obj.uid = src.uid;
-    obj.joinDate = src.joinDate;
-    obj.leaveDate = src.leaveDate;
-
+    if(src.joinDate != null){
+      obj.joinDate = new Date(src.joinDate);
+    }
+     if(src.leaveDate != null){
+      obj.leaveDate = new Date(src.leaveDate);
+    }
     return obj;
 
   }
@@ -98,18 +110,28 @@ export class TaskStatus {
   endDate: Date;
   taskIndex: number;
   description: string = "";
-  parentTaskNo: string;
+  parentTaskNo: string = "";
   static fromObject(src: any) {
     let obj = new TaskStatus();
     obj.taskStatusId = src.taskStatusId;
     obj.status = src.status;
     obj.taskNo = src.taskNo;
-    obj.updateTime = src.updateTime;
+    if(src.updateTime != null){
+      obj.updateTime = new Date(src.updateTime);
+    }
+    if(src.startDate != null){
+      obj.startDate = new Date(src.startDate);
+    }
+    if(src.dueDate != null){
+      obj.dueDate = new Date(src.dueDate);
+    }
+    if(src.alarmDate != null){
+      obj.alarmDate = new Date(src.alarmDate);
+    }
+    if(src.endDate != null){
+      obj.endDate = new Date(src.endDate);
+    }
     obj.priority = src.priority;
-    obj.startDate = src.startDate;
-    obj.dueDate = src.dueDate;
-    obj.alarmDate = src.alarmDate;
-    obj.endDate = src.endDate;
     obj.taskIndex = src.taskIndex;
     obj.parentTaskNo = src.parentTaskNo;
     obj.description = src.description;
@@ -119,19 +141,21 @@ export class TaskStatus {
 }
 
 export class TaskComment {
-  taskCommentUuid: string;
-  taskNo: string;
-  comment: string;
+  taskCommentUuid: string = "";
+  taskNo: string = "";
+  comment: string = "";
   commentDate: Date;
-  uid: string;
-  attachUid: string;
+  uid: string = "";
+  attachUid: string = "";
 
   static fromObject(src: any) {
     let obj = new TaskComment();
     obj.taskCommentUuid = src.taskCommentUuid;
     obj.taskNo = src.taskNo;
     obj.comment = src.comment;
-    obj.commentDate = src.commentDate;
+    if(src.commentDate != null){
+      obj.commentDate = new Date(src.commentDate);
+    }
     obj.uid = src.uid;
     obj.attachUid = src.attachUid;
 

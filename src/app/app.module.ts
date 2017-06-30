@@ -21,7 +21,7 @@ import { LoginProvider } from '../providers/login/login';
 import { MSloginProvider } from '../providers/login/login-mslogin';
 import { CalanderService } from '../pages/leave/calander.service';
 
-import { OrganizePage } from '../pages/organize/organize';
+import { OrganizePage,UserInfoComponent } from '../pages/organize/organize';
 import { ProjectPage } from '../pages/project/project';
 import { IonicStorageModule } from '@ionic/storage';
 import { TaskDetailComponent,PriorityComponent } from '../components/task-detail/task-detail';
@@ -30,8 +30,10 @@ import { CalendarModule } from 'angular2-calendar';
 import { ManageTaskDetailComponent } from '../components/manage-task-detail/manage-task-detail';
 import { TaskProvider } from '../providers/task/task';
 import { TaskPage } from '../pages/task/task';
+import { TaskBlockComponent } from '../pages/task/task-block';
 import { ProjectProvider } from '../providers/project/project';
 import { UserListComponent } from '../components/user-list/user-list';
+import { OrganizeProvider } from '../providers/organize/organize';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { UserListComponent } from '../components/user-list/user-list';
     ManageTaskDetailComponent,
     TaskPage,
     UserListComponent,
-    PriorityComponent
+    PriorityComponent,
+    UserInfoComponent,
+    TaskBlockComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,9 @@ import { UserListComponent } from '../components/user-list/user-list';
     ManageTaskDetailComponent,
     TaskPage,
     UserListComponent,
-    PriorityComponent
+    PriorityComponent,
+     UserInfoComponent,
+     TaskBlockComponent
   ],
   providers: [
     StatusBar,
@@ -85,7 +91,8 @@ import { UserListComponent } from '../components/user-list/user-list';
     MSloginProvider,
     CalanderService,
     TaskProvider,
-    ProjectProvider
+    ProjectProvider,
+    OrganizeProvider
   ],
   exports: [LeavePage]
 })

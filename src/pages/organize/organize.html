@@ -6,8 +6,21 @@
     <ion-title>Organize</ion-title>
   </ion-navbar>
 </ion-header>
-
-
 <ion-content padding>
-
+  <ion-grid>
+      <ion-row class="organize-tree" *ngFor="let departmentArray of this.deparmentTreeList; let i = index">
+        <ion-col class="organize-depart-col" *ngFor="let department of departmentArray">
+          <table>
+            <tr>
+              <th>{{department.name}}</th>
+            </tr>
+            <tr *ngFor="let employee of department.employees">
+              <td (click)="showEmployeeInfo(employee)">
+                {{employee.employeesInfo.lastName}}
+              </td>
+            </tr>
+          </table>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
 </ion-content>

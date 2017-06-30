@@ -1,3 +1,51 @@
 page-organize {
 
 }
+
+
+.organize-tree{
+   	padding-top: 20px; position: relative;
+    transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+    .organize-depart-col{
+        justify-content:center;
+        display:flex;
+        padding-top: 50px;
+        table{
+            text-align: center;
+            td:hover{
+                cursor: pointer;
+                background: lightblue;
+            }
+        }
+    }
+
+    ion-col::before,  ion-col::after{
+        content: '';
+        position: absolute; top: 0; right: 50%;
+        border-top: 1px solid #ccc;
+        width: 50%; height: 20px;
+    }
+    ion-col::after{
+        right: auto; left: 50%;
+        border-left: 1px solid #ccc;
+    }
+
+    ion-col:first-child::before, ion-col:last-child::after{
+        border: 0 none;
+    }
+    /*Adding back the vertical connector to the last nodes*/
+    ion-col:last-child::before{
+        border-right: 1px solid #ccc;
+        border-radius: 0 5px 0 0;
+        -webkit-border-radius: 0 5px 0 0;
+        -moz-border-radius: 0 5px 0 0;
+    }
+    ion-col:first-child::after{
+        border-radius: 5px 0 0 0;
+        -webkit-border-radius: 5px 0 0 0;
+        -moz-border-radius: 5px 0 0 0;
+    }
+    
+}

@@ -1,6 +1,7 @@
 import { Component,Pipe, PipeTransform } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { MyApp,Employee,EmployeeInfo } from '../../app/app.component';
+import { LoginProvider } from '../../providers/login/login';
 /**
  * Generated class for the UserListComponent component.
  *
@@ -15,7 +16,8 @@ export class UserListComponent {
   private companyUser : Array<{id,name,img,selected}> = [];
   private filterCompanyUser : Array<{id,name,selected}> = [];
 
-  constructor(public viewCtrl: ViewController) {
+  constructor(public viewCtrl: ViewController, 
+    private loginProvider : LoginProvider) {
           console.log(this.viewCtrl.data["selectedOwner"]);
     let selectedOwner:Array<string> = this.viewCtrl.data["selectedOwner"];
     if( selectedOwner == null ||  !(selectedOwner instanceof Array)){
@@ -41,14 +43,8 @@ export class UserListComponent {
       });
     }
   }
+  updateUser(name : string){
 
-  updateUser(id : string){
-    //  for(let index = 0;index < this.companyUser.length;index++){
-    //   if(this.companyUser[index].id == id){
-    //    this.companyUser[index].selected = !(this.companyUser[index].selected);
-    //    break;
-    //   }
-    // }
   }
 
   close(){
@@ -65,15 +61,5 @@ export class UserListComponent {
     this.viewCtrl.dismiss();
   }
 
-  getShortName(name : string){
-    if(name.indexOf("_") != -1){
-      let names = name.split("_");
-      let nw =  names[0].charAt(0) +　names[1].charAt(0);
-      return nw;
-    }else{
-      let nw =  name[0].charAt(0);
-      return nw;
-    }
-  }
 }
 

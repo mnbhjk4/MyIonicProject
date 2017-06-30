@@ -1,6 +1,6 @@
 import { Component, ViewChildren, QueryList, ElementRef, Pipe } from '@angular/core';
-import { NavParams, PopoverController, PopoverOptions, Select, ViewController } from 'ionic-angular';
-import { Task, TaskStatus, TaskComment, TaskOwner } from '../../providers/task/task';
+import { NavParams, PopoverController, PopoverOptions, Select, Events,NavController,ViewController,LoadingController  } from 'ionic-angular';
+import { Task, TaskStatus, TaskComment, TaskOwner,TaskProvider } from '../../providers/task/task';
 import { MyApp, Employee } from '../../app/app.component';
 import { UserListComponent } from '../../components/user-list/user-list';
 import { LoginProvider } from '../../providers/login/login';
@@ -27,20 +27,46 @@ export class TaskDetailComponent {
   newIndex: number = 1;
   constructor(private navParams: NavParams,
     private popoverController: PopoverController,
-    private loginProvider: LoginProvider) {
+    private loginProvider: LoginProvider,
+    private taskProvider : TaskProvider,
+    private navCtrl: NavController,
+    private loadingController : LoadingController,
+    private events : Events ) {
     let obj = this.navParams.get('task');
     if (obj instanceof Task) {
       this.task = obj;
     }
   }
 
+  pop(){
+    let loader = this.loadingController.create({
+      content : "Saveing data..."
+    });
+    loader.present();
+     this.taskProvider.saveTask(this.task).subscribe((data)=>{
+     if(data != null && (data instanceof Object || data.indexOf("Error") == -1)){
+       let newTask = Task.fromObject(data);
+       this.task = newTask;
+       loader.dismiss();
+       this.navCtrl.pop().then( a=>{
+         this.events.publish("refresh:project",{projectNo:this.task.projectNumber});
+       });
+     }
+    });
+    
+  }
   addRow(parentTask: Task) {
     let newTask = new Task();
     newTask.taskNo = "NEW" + this.newIndex;
+    newTask.customerId = parentTask.customerId;
+    newTask.parentTaskNo = parentTask.taskNo;
+    newTask.projectNumber = parentTask.projectNumber;
+
     let initTaskStatus = new TaskStatus();
     initTaskStatus.status = "Not Action";
     initTaskStatus.priority = "6";
     initTaskStatus.parentTaskNo = parentTask.taskNo;
+    initTaskStatus.taskNo = "NEW"+this.newIndex;
     newTask.taskStatusList.push(initTaskStatus);
     this.task.subTaskList.push(newTask);
 

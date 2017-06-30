@@ -1,5 +1,5 @@
 <!-- Generated template for the UserListComponent component -->
-<ion-grid>
+<ion-grid style="width:300px">
     <ion-row  class="index-title">
        Please select owner
       <button ion-button (click)="closeWithoutSave()"><ion-icon name="ios-close"></ion-icon></button>
@@ -20,7 +20,7 @@
             </ion-label>
             <ng-template #elseblock>
               <ion-label> 
-                <div class="short_name">{{getShortName(user.name)}}</div>
+                <div class="short_name">{{this.loginProvider.getShortName(user.name)}}</div>
                 {{user.name}}
               </ion-label>
             </ng-template>
