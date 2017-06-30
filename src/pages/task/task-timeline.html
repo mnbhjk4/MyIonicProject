@@ -1,0 +1,21 @@
+<div class="gantt-grid" #ganttgrid (scroll)="onScroll($event)">
+    <div class="gantt-header-grid"  #ganttheadergrid>
+        <div class="header-row header-title">
+            <div>Name</div>
+            <div>Owner</div>
+        </div>
+        <div class="header-row" *ngFor="let row of rowDetailList">
+            <div class="header-name">{{row.name}}</div>
+            <div class="header-owner">{{row.name}}</div>
+        </div>
+    </div>
+
+    <div class="gantt-date-grid">
+        <div class="date-row date-title">
+
+        </div>
+       <div class="date-row" *ngFor="let row of rowDetailList">
+            <div class="date-name" *ngFor="let d of dataTime"></div>
+        </div>
+    </div>
+</div>

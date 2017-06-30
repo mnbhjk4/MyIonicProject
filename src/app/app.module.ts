@@ -21,20 +21,20 @@ import { LoginProvider } from '../providers/login/login';
 import { MSloginProvider } from '../providers/login/login-mslogin';
 import { CalanderService } from '../pages/leave/calander.service';
 
-import { OrganizePage,UserInfoComponent } from '../pages/organize/organize';
+import { OrganizePage, UserInfoComponent } from '../pages/organize/organize';
 import { ProjectPage } from '../pages/project/project';
 import { IonicStorageModule } from '@ionic/storage';
-import { TaskDetailComponent,PriorityComponent } from '../components/task-detail/task-detail';
+import { TaskDetailComponent, PriorityComponent } from '../components/task-detail/task-detail';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'angular2-calendar';
 import { ManageTaskDetailComponent } from '../components/manage-task-detail/manage-task-detail';
 import { TaskProvider } from '../providers/task/task';
 import { TaskPage } from '../pages/task/task';
 import { TaskBlockComponent } from '../pages/task/task-block';
+import { TaskTimelineComponent } from '../pages/task/task-timeline';
 import { ProjectProvider } from '../providers/project/project';
 import { UserListComponent } from '../components/user-list/user-list';
 import { OrganizeProvider } from '../providers/organize/organize';
-
 @NgModule({
   declarations: [
     MyApp,
@@ -52,7 +52,8 @@ import { OrganizeProvider } from '../providers/organize/organize';
     UserListComponent,
     PriorityComponent,
     UserInfoComponent,
-    TaskBlockComponent
+    TaskBlockComponent,
+    TaskTimelineComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +61,7 @@ import { OrganizeProvider } from '../providers/organize/organize';
     HttpModule,
     FormsModule,
     IonicStorageModule.forRoot(),
-    BrowserAnimationsModule, 
+    BrowserAnimationsModule,
     CalendarModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -79,8 +80,9 @@ import { OrganizeProvider } from '../providers/organize/organize';
     TaskPage,
     UserListComponent,
     PriorityComponent,
-     UserInfoComponent,
-     TaskBlockComponent
+    UserInfoComponent,
+    TaskBlockComponent,
+    TaskTimelineComponent
   ],
   providers: [
     StatusBar,
