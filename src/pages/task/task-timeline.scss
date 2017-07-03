@@ -2,41 +2,58 @@
     position: relative;
     width:100%;
     height:600px;
+    white-space: nowrap;
+    overflow: hidden;
     border:solid 1px black;
-    overflow: auto;
     
     .gantt-header-grid{
         position: absolute;
         width:20%;
+        height: 560px;
         border:solid 1px black;
-        
-        .header-title{
-           display: flex;
-           width:100%;
-        }
+        overflow : hidden;
+
         .header-row{
             display: flex;
             height:20px;
             border:solid 1px black;
         }
-        
     }
-    .scroll{
-        position: fixed;
-    }
-    .gantt-date-grid{
+     .gantt-date-grid{
         position: absolute;
-        padding-left: 20%;
+        left: 20%;
         border:solid 1px black;
+        width:80%;
+        height: 560px;
+        overflow:hidden;
         .date-row{
             display: flex;
             height:20px;
-            
             .date-name{
-                width:150px;
+                width:120px;
                 height:20px;
                 border: solid 1px black;
             }
         }
     }
+   .scroll-vertical{
+        position: absolute;
+        right: 0;
+        overflow-y:scroll;
+        height:100%;
+        .vertical-div{
+            display:block;
+            width:18px;
+        }
+   }
+   .scroll-horizontal{
+        position: absolute;
+        bottom:0;
+        overflow-x: scroll;
+        width:100%;
+        .horizontal-div{
+            display:block;
+            height: 18px;
+        }
+   }
 }

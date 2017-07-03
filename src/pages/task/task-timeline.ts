@@ -6,6 +6,10 @@ import { MyApp, Employee } from '../../app/app.component';
 import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../providers/task/task';
 import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../providers/project/project';
 import { Storage } from '@ionic/storage';
+
+import "dhtmlx-gantt";
+import {} from '@types/dhtmlxgantt';
+
 /**
  * Generated class for the TaskPage page.
  *
@@ -21,6 +25,16 @@ export class TaskTimelineComponent {
     ganttgrid : ElementRef;
     @ViewChild("ganttheadergrid")
     ganttheadergrid : ElementRef;
+    @ViewChild("ganttdategrid")
+    ganttdategrid : ElementRef;
+
+    @ViewChild("verticalScroll")
+    verticalScroll : ElementRef;
+    @ViewChild("horizontalScroll")
+    horizontalScroll : ElementRef;
+
+    @ViewChild("gantt_here")
+    ganttContainer : ElementRef;
 
     companyUserMap: Map<string, Employee> = MyApp.companyUsers;
 
@@ -37,8 +51,7 @@ export class TaskTimelineComponent {
         private events: Events,
         private loadingController: LoadingController,
         private renderer : Renderer) {
-        this.dataTime = Array(50);
-
+        this.dataTime = Array(150);
     }
     ngOnChanges(arg: any) {
         if (arg.projects.currentValue instanceof Array) {
@@ -67,6 +80,7 @@ export class TaskTimelineComponent {
                     }
                 }
             }
+            gantt.init(this.ganttContainer.nativeElement);
         }
     }
     openDetail(task: Task) {
@@ -89,14 +103,33 @@ export class TaskTimelineComponent {
         return complete + "/" + total;
     }
 
-    onScroll(events){
-        if(this.ganttgrid.nativeElement.scrollLeft == 0){
-            this.renderer.setElementClass(this.ganttheadergrid.nativeElement,"scroll",false);
-        }else{
-            this.renderer.setElementClass(this.ganttheadergrid.nativeElement,"scroll",true);
-            this.ganttheadergrid.nativeElement.top = this.ganttgrid.nativeElement.scrollTop;
-        }
+    //處理垂直移動
+    onScrollVertical(events){
+        let scrollTop = events.target.scrollTop;
+        this.ganttheadergrid.nativeElement.scrollTop = scrollTop;
+        this.ganttdategrid.nativeElement.scrollTop = scrollTop;
+    }   
+    //處理水平移動(不用移動Gantt Header Grid)
+    onScrollHorizontal(events){
+        let scrollLeft = events.target.scrollLeft;
+        this.ganttdategrid.nativeElement.scrollLeft = scrollLeft;
         
+    }
+    //當滑鼠直接SCROLL將垂直的部分進行可以同步動作
+    mouseWheelOnGanttdategrid(events){
+        if(events.deltaY < 0){//向上
+            if(this.verticalScroll.nativeElement.scrollTop-90 > 0){
+                this.verticalScroll.nativeElement.scrollTop = this.verticalScroll.nativeElement.scrollTop -　90;
+            }else{
+                this.verticalScroll.nativeElement.scrollTop = 0;
+            }
+        }else{//向下
+            if(this.verticalScroll.nativeElement.scrollTop +　90 < this.verticalScroll.nativeElement.scrollHeight){
+                this.verticalScroll.nativeElement.scrollTop = this.verticalScroll.nativeElement.scrollTop +　90;
+            }else{
+                this.verticalScroll.nativeElement.scrollTop = this.verticalScroll.nativeElement.scrollHeight;
+            }
+        }
     }
 }
 

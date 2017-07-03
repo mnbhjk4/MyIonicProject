@@ -22,5 +22,9 @@ module.exports = {
   copyCalendar:{
       src: '{{ROOT}}/node_modules/angular2-calendar/dist/css/angular2-calendar.css',
       dest: '{{BUILD}}'
+  },
+  copyDHTMLXGantt:{
+    scr:'{{ROOT}}/node_modules/dhtmlx-gantt/codebase/dhtmlxgantt.css',
+    dest:'{{BUILD}}'
   }
 }

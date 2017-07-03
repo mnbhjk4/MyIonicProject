@@ -35,6 +35,7 @@ import { TaskTimelineComponent } from '../pages/task/task-timeline';
 import { ProjectProvider } from '../providers/project/project';
 import { UserListComponent } from '../components/user-list/user-list';
 import { OrganizeProvider } from '../providers/organize/organize';
+import { MouseWheelDirective } from '../directives/mouse-wheel/mouse-wheel';
 @NgModule({
   declarations: [
     MyApp,
@@ -53,7 +54,8 @@ import { OrganizeProvider } from '../providers/organize/organize';
     PriorityComponent,
     UserInfoComponent,
     TaskBlockComponent,
-    TaskTimelineComponent
+    TaskTimelineComponent,
+    MouseWheelDirective
   ],
   imports: [
     BrowserModule,
