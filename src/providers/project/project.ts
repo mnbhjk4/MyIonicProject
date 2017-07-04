@@ -15,10 +15,10 @@ export class ProjectProvider {
   constructor(public http: Http) {
   }
 
-  getProjectByUid(uid : string){
+  getProjectByUid(uid: string) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append("uid", uid);
-    return this.http.post(this.server+"/project/geProjectByUid", urlSearchParams.toString()).map((res) =>res.json());
+    return this.http.post(this.server + "/project/geProjectByUid", urlSearchParams.toString()).map((res) => res.json());
   }
 
 }
@@ -28,7 +28,7 @@ export class Project {
   customerId: string;
   attachUuid: string;
   permissionId: string;
-  taskList:Array<Task> = [];
+  taskList: Array<Task> = [];
   ownerList: Array<ProjectOwner> = [];
   statusList: Array<ProjectStatus> = [];
   static fromObject(src: any) {
@@ -37,7 +37,7 @@ export class Project {
     obj.customerId = src.customerId;
     obj.attachUuid = src.attachUuid;
     obj.permissionId = src.permissionId;
-   if (src.ownerList != null && src.ownerList instanceof Array) {
+    if (src.ownerList != null && src.ownerList instanceof Array) {
       for (let index = 0; index < src.ownerList.length; index++) {
         let owner = ProjectOwner.fromObject(src.ownerList[index]);
         obj.ownerList.push(owner);
@@ -64,8 +64,14 @@ export class ProjectOwner {
     obj.ownerSerial = src.ownerSerial;
     obj.projectNo = src.projectNo;
     obj.uid = src.uid;
-    obj.joinDate = src.joinDate;
-    obj.leaveDate = src.leaveDate;
+    if (src.joinDate != null) {
+      obj.joinDate = new Date(src.joinDate);
+    }
+    if (src.leaveDate != null) {
+      obj.leaveDate = new Date(src.leaveDate);
+    }
+
+
     return obj;
   }
 }
@@ -75,20 +81,34 @@ export class ProjectStatus {
   projectNo: string;
   projectName: string;
   startDate: Date;
+  dueDate : Date;
   endDate: Date;
   updateDate: Date;
   alarmDate: Date;
   description: string;
-  priority:number;
+  priority: number;
   static fromObject(src: any) {
     let obj = new ProjectStatus();
     obj.statusUuid = src.statusUuid;
     obj.projectNo = src.projectNo;
     obj.projectName = src.projectName;
-    obj.startDate = src.startDate;
-    obj.endDate = src.endDate;
-    obj.updateDate = src.updateDate;
-    obj.alarmDate = src.alarmDate;
+    if (src.startDate != null) {
+      obj.startDate = new Date(src.startDate);
+    }
+    if (src.endDate != null) {
+      obj.endDate = new Date(src.endDate);
+    }
+    if (src.updateDate != null) {
+      obj.updateDate = new Date(src.updateDate);
+    }
+    if (src.alarmDate != null) {
+      obj.alarmDate = new Date(src.alarmDate);
+    }
+      if (src.dueDate != null) {
+      obj.dueDate = new Date(src.dueDate);
+    }
+
+
     obj.description = src.description;
     obj.priority = src.priority;
     return obj;

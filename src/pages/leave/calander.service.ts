@@ -56,9 +56,9 @@ export class CalanderService {
   getWeekNumber(date: Date) {
     let copyDate = new Date(date);
     copyDate.setHours(0, 0, 0, 0);
-    copyDate.setDate(copyDate.getDate() + 4 - (copyDate.getDate() || 7));
+    copyDate.setDate(copyDate.getDate() -copyDate.getDay());
     let yearStart = new Date(copyDate.getFullYear(), 0, 1);
-    var weekNo = Math.ceil((((copyDate.getMilliseconds() - yearStart.getMilliseconds()) / 86400000) + 1) / 7);
+    var weekNo = Math.ceil((((copyDate.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
     return weekNo;
   }
 

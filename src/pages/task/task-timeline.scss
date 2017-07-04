@@ -1,3 +1,62 @@
+.gantt-col-header-grid{
+    position: relative;
+    width:100%;
+    height:120px;
+    border:solid 1px black;
+    display: flex;
+    .header-col{
+        position: absolute;
+        display:flex;
+        width:20%;
+        height: 100%;
+        border:solid 1px black;
+    }
+    .date-col{
+        position:absolute;
+        left: 20%;
+        width:80%;
+        height:100%;
+        border:solid 1px black;
+        overflow: hidden;
+        .top-col{
+            display: flex;
+            border:solid 1px black;
+           height:30px;
+           .year{
+               border: solid 1px black;
+               text-align: center;
+           }
+        }
+        .middle-col{
+            display: flex;
+            border:solid 1px black;
+            height:30px;
+            .month{
+                border:solid 1px black;
+                text-align: center;
+            }
+        }
+        .bottom-col{
+            display: flex;
+            border:solid 1px black;
+            height:30px;
+            .week{
+                border:solid 1px black;
+                text-align: center;
+            }
+        }
+        .day-col{
+            display: flex;
+            border:solid 1px black;
+            height:30px;
+            .week{
+                border:solid 1px black;
+                text-align: center;
+            }
+        }
+    }
+}
+
 .gantt-grid{
     position: relative;
     width:100%;
@@ -12,11 +71,12 @@
         height: 560px;
         border:solid 1px black;
         overflow : hidden;
-
         .header-row{
-            display: flex;
             height:20px;
             border:solid 1px black;
+        }
+        .row-cell{
+            display: flex;
         }
     }
      .gantt-date-grid{
@@ -29,6 +89,9 @@
         .date-row{
             display: flex;
             height:20px;
+            .date-cell{
+                display:flex;
+            }
             .date-name{
                 width:120px;
                 height:20px;
