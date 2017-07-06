@@ -16,42 +16,22 @@
                             <tr [ngSwitch]="task.taskStatusList[0].priority">
                                 <th *ngSwitchCase="'1'" class="planner-task-table-title-1">
                                     <font>{{task.name}}</font>
-                                    <button><ion-icon name="ios-code-working"></ion-icon></button>
                                 </th>
                                 <th *ngSwitchCase="'2'" class="planner-task-table-title-2">
                                     <font>{{task.name}}</font>
-                                    <button><ion-icon name="ios-code-working"></ion-icon></button>
                                 </th>
                                 <th *ngSwitchCase="'3'" class="planner-task-table-title-3">
                                     <font>{{task.name}}</font>
-                                    <button><ion-icon name="ios-code-working"></ion-icon></button>
                                 </th>
                                 <th *ngSwitchCase="'4'" class="planner-task-table-title-4">
                                     <font>{{task.name}}</font>
-                                    <button><ion-icon name="ios-code-working"></ion-icon></button>
                                 </th>
                                 <th *ngSwitchCase="'5'" class="planner-task-table-title-5">
                                     <font>{{task.name}}</font>
-                                    <button><ion-icon name="ios-code-working"></ion-icon></button>
                                 </th>
                                 <th *ngSwitchCase="'6'" class="planner-task-table-title-6">
                                     <font>{{task.name}}</font>
-                                    <button><ion-icon name="ios-code-working"></ion-icon></button>
                                 </th>
-                            </tr>
-                            <tr *ngFor="let subtask of task.subTaskList">
-                                <td class="planner-task-content">
-                                    <div [ngSwitch]="subtask.taskStatusList[0].status">
-                                        <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"></ion-icon>
-                                        <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"></ion-icon>
-                                        <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"></ion-icon>
-                                        <ion-icon *ngSwitchDefault name="ios-help-circle"></ion-icon>
-                                        {{subtask.name}}
-                                    </div>
-                                    <div *ngFor="let subowner of subtask.taskOwnerList">
-                                        {{this.companyUserMap.get(subowner.uid).employeesInfo.lastName}}
-                                    </div>
-                                </td>
                             </tr>
                             <tr class="planner-task-status-summary">
                                 <td>
@@ -70,6 +50,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <td class="planner-task-owner">
                                     <div *ngFor="let own of task.taskOwnerList">
@@ -77,6 +58,23 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr *ngIf="task.subTaskList.length > 0"><th>Working list</th></tr>
+                            <tr *ngFor="let subtask of task.subTaskList">
+                                <td class="planner-task-content">
+                                    <div [ngSwitch]="subtask.taskStatusList[0].status">
+                                        <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"></ion-icon>
+                                        <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"></ion-icon>
+                                        <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"></ion-icon>
+                                        <ion-icon *ngSwitchDefault name="ios-help-circle"></ion-icon>
+                                        {{subtask.name}}
+                                    </div>
+                                    <div *ngFor="let subowner of subtask.taskOwnerList">
+                                        {{this.companyUserMap.get(subowner.uid).employeesInfo.lastName}}
+                                    </div>
+                                    <div class="subtask-priority planner-task-table-title-{{subtask.taskStatusList[0].priority}}"></div>
+                                </td>
+                            </tr>
+                            
                         </table>
                     </td>
                 </tr>

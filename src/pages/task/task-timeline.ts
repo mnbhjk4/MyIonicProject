@@ -20,21 +20,12 @@ import { CalanderService } from "..//leave/calander.service";
     templateUrl: 'task-timeline.html',
 })
 export class TaskTimelineComponent {
-    @ViewChild("ganttgrid")
-    ganttgrid: ElementRef;
     @ViewChild("ganttheadergrid")
     ganttheadergrid: ElementRef;
     @ViewChild("ganttdategrid")
     ganttdategrid: ElementRef;
     @ViewChild("ganttDateCol")
     ganttDateCol : ElementRef;
-
-    @ViewChildren("project")
-    projectElements: ElementRef;
-    @ViewChildren("task")
-    taskElements: ElementRef;
-    @ViewChildren("subtask")
-    subtaskElements: ElementRef;
 
     @ViewChild("verticalScroll")
     verticalScroll: ElementRef;
@@ -46,9 +37,9 @@ export class TaskTimelineComponent {
     rowDetailList: Array<RowDetail> = [];
     totalWidthArray = new Array(0);
     rowHeight = 0;
-    rowHeigtBase = 30; 
-    rowWidth = 24;
-    rowWidthBase = 140;
+    rowHeigtBase = 40; 
+    rowWidth = 0;
+    rowWidthBase = 30;
 
     minDate = new Date();
     //顯示時間
@@ -118,13 +109,22 @@ export class TaskTimelineComponent {
                 }
             }
             this.refreshRowHeight();
+            //一律將minDate移到星期一(Week start day)
+            if(minDate.getDay() != 1){
+                if(minDate.getDay() == 0){
+                    minDate.setDate(minDate.getDate()+1);
+                }else{
+                    let distance = minDate.getDay() - 1;
+                    minDate.setDate(minDate.getDate() - distance);
+                }
+            }
             this.minDate = new Date(minDate);
             this.dataRange(minDate,maxDate);
            
         let totalLength = 0;
            for(let index = 0 ;index < this.dateList.length;index++){
                let date = this.dateList[index];
-               totalLength+= date.week.length;
+               totalLength+= date.day.length;
            }
            this.rowWidth = totalLength;
            this.totalWidthArray = new Array(totalLength);
@@ -146,6 +146,7 @@ export class TaskTimelineComponent {
         //年
         dateList.month.push((minDate.getMonth() + 1));
         dateList.week.push(week);
+        let monthDay = 0;
         while(minDate.getTime() < maxDate.getTime()){
             //年
             if(year != minDate.getFullYear()){
@@ -165,16 +166,9 @@ export class TaskTimelineComponent {
                  week = newweek;
             }   
             //日
-            while(minDate.getDay() != 1){
-                dateList.day.push(minDate.getDate());
-                let newDate = minDate.getDate()+1;
-                minDate.setDate(newDate);
-            }
-             if(minDate.getDay() == 1){//周一要近一天
-                dateList.day.push(minDate.getDate());
-                let newDate = minDate.getDate()+1;
-                minDate.setDate(newDate);
-            }
+            dateList.day.push(minDate.getDate());
+            let newDate = minDate.getDate()+1;
+            minDate.setDate(newDate);
         }
     }
 
@@ -289,14 +283,23 @@ export class TaskTimelineComponent {
         let array = [];
         if(type == "month"){
             for(let i=0;i<date.length;i++){
+                let totalDay = date[i].day.length;
                 for(let j=0 ; j<date[i].month.length;j++){
-                    array.push({d:date[i].month[j],length:date[i].week.length});
+                    let monthDay = new Date(date[i].year,date[i].month[j],0).getDate();
+                    let length = 0;
+                    if(totalDay <= monthDay){
+                        length = totalDay;
+                    }else{
+                        length = monthDay;
+                        totalDay = totalDay - monthDay;
+                    }
+                    array.push({d:date[i].month[j],length:length});
                 }
             }
         }else if(type == "week"){
             for(let i=0;i<date.length;i++){
                 for(let j=0 ; j<date[i].week.length;j++){
-                      array.push(date[i].week[j]);
+                      array.push({d:date[i].week[j],length:date[i].day.length});
                 }
               
             }
@@ -317,11 +320,11 @@ export class TaskTimelineComponent {
             if(startDate == null || dueDate == null || priority == null) return {};
            
 
-            let startDay = Math.abs(((startDate.getTime() - this.minDate.getTime())/86400000));
-            let dueDay = Math.abs(((dueDate.getTime() - this.minDate.getTime())/86400000)) ;
+            let startDay = Math.ceil(((startDate.getTime() - this.minDate.getTime())/86400000));
+            let dueDay = Math.ceil(((dueDate.getTime() - this.minDate.getTime())/86400000)) ;
             let css = {position:'absolute',
-                left:(Math.ceil(startDay * (this.rowWidthBase / 7)))+'px',
-                width:(Math.ceil(dueDay - startDay) * (this.rowWidthBase / 7))+'px',
+                left:(Math.ceil(startDay * (this.rowWidthBase)))+'px',
+                width:(Math.ceil(dueDay - startDay) * (this.rowWidthBase))+'px',
                 background:this.getPriorityColor(priority)};
             return css;
         }else if(row.type == 'task'){
@@ -329,11 +332,11 @@ export class TaskTimelineComponent {
             let dueDate = row.task.taskStatusList[0].dueDate;
             let priority = row.task.taskStatusList[0].priority;
             if(startDate == null || dueDate == null || priority == null) return {};
-            let startDay = Math.abs(((startDate.getTime() - this.minDate.getTime())/86400000));
-            let dueDay = Math.abs(((dueDate.getTime() - this.minDate.getTime())/86400000)) ;
+            let startDay = Math.ceil(((startDate.getTime() - this.minDate.getTime())/86400000));
+            let dueDay = Math.ceil(((dueDate.getTime() - this.minDate.getTime())/86400000)) ;
             let css = {position:'absolute',
-                left:(Math.ceil(startDay * (this.rowWidthBase/7)))+'px',
-                width:(Math.ceil(dueDay - startDay) * (this.rowWidthBase/7))+'px',
+                left:(Math.ceil(startDay * (this.rowWidthBase)))+'px',
+                width:(Math.ceil(dueDay - startDay) * (this.rowWidthBase))+'px',
                 background:this.getPriorityColor(priority)};
             return css;
         }else if(row.type == 'subtask'){
@@ -341,16 +344,27 @@ export class TaskTimelineComponent {
             let dueDate = row.subtask.taskStatusList[0].dueDate;
             let priority = row.subtask.taskStatusList[0].priority;
             if(startDate == null || dueDate == null || priority == null) return {};
-            let startDay = Math.abs(((startDate.getTime() - this.minDate.getTime())/86400000));
-            let dueDay = Math.abs(((dueDate.getTime() - this.minDate.getTime())/86400000)) ;
+            let startDay = Math.ceil(((startDate.getTime() - this.minDate.getTime())/86400000));
+            let dueDay = Math.ceil(((dueDate.getTime() - this.minDate.getTime())/86400000)) ;
             let css = {position:'absolute',
-                left:(Math.ceil(startDay * (this.rowWidthBase/7)))+'px',
-                width:(Math.ceil(dueDay - startDay) * (this.rowWidthBase/7))+'px',
+                left:(Math.ceil(startDay * (this.rowWidthBase)))+'px',
+                width:(Math.ceil(dueDay - startDay) * (this.rowWidthBase))+'px',
                 background:this.getPriorityColor(priority)};
             return css;
         }
 
         return "";
+    }
+    dateColorArrayMarkerToday(){
+        let tody = Math.ceil(((new Date().getTime() - this.minDate.getTime())/86400000));
+        let css = {position:'absolute',
+                top:0,
+                left:(Math.ceil(tody * (this.rowWidthBase)))+'px',
+                width:this.rowWidthBase+'px',
+                height:(this.rowHeight * this.rowHeigtBase) +'px',
+                border: 'solid 5px #4866CC'
+        };
+        return css;
     }
 
     getPriorityColor(priority){

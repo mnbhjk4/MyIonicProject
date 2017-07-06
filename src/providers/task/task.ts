@@ -69,7 +69,7 @@ export class Task {
     }
     if (src.taskStatusList instanceof Array) {
       for (let index = 0; index < src.taskStatusList.length; index++) {
-        let task_status = TaskStatus.fromObject(src.taskStatusList[index]);
+        let task_status = TaskStatus.fromObject(src.taskStatusList[index]);     
         obj.taskStatusList.push(task_status);
       }
     }
@@ -103,7 +103,7 @@ export class TaskStatus {
   taskNo: string = "";
   updateTime: Date;
   status: string = "";
-  priority: string = "";
+  priority: string = "6";
   startDate: Date;
   dueDate: Date;
   alarmDate: Date;

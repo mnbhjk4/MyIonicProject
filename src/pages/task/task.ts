@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, Loading } from 'ionic-angular';
 import { TaskDetailComponent } from '../../components/task-detail/task-detail'
 import { ManageTaskDetailComponent } from '../../components/manage-task-detail/manage-task-detail';
@@ -66,14 +66,12 @@ export class TaskPage {
     this.projectProvider.getProjectByUid(uid).subscribe(data => {
       if (data != null && data instanceof Array) {
         for (let index = 0; index < data.length; index++) {
-          let project = Project.fromObject(data[index]);
+          let project = Project.fromObject(data[index].project);
+          for (let taskIndex = 0; taskIndex < data[index].task.length; taskIndex++) {
+            let task = Task.fromObject(data[index].task[taskIndex]);
+            project.taskList.push(task);
+          }
           this.projects.push(project);
-          this.taskProvider.getTaskByProjectNo(project.projectNo).subscribe((taskArray) => {
-            for (let taskIndex = 0; taskIndex < taskArray.length; taskIndex++) {
-              let task = Task.fromObject(taskArray[taskIndex]);
-              project.taskList.push(task);
-            }
-          });
         }
         this.loading.dismiss();
       }

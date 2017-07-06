@@ -1,14 +1,66 @@
-user-list {
-    $popover-ios-width : 100%;
+
+
+.header{
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index:1;
+    .header-title{
+        .title{
+            font-size:2em;
+            color:white;
+            padding-top:20px;
+            position: absolute;
+            width:100%;
+            height:80px;
+            background: blue;
+            top:0;
+            left: 0;
+        }
+        .close-bt{
+            position: absolute;
+            top: 0px;
+            right: 50px;
+            width:5px;
+            height:5px;
+            background: blue;
+        }
+    }
+    .header-searcher{
+        ion-searchbar{
+            position: absolute;
+            width:80%;
+            top:85px;
+            left: 0px;
+        }
+        button{
+            position: absolute;
+            top:85px;
+            width:20%;
+            right: 0px;
+        }
+    }
 }
-
-
-.short_name{
-    color : white;
-    font-size:1.5em;
-    text-align: center;
-    text-shadow: 1px;
-    background:#4789FC;
-    width:40px;
-    height:40px;
+.user-grid{
+    padding-top:150px;
+    .info-label{
+         display:flex;
+    }
+    .user-item:hover{
+        background:lightgray;
+    }
+    .full_name{
+        padding-top:10px;
+        padding-left:10px;
+    }
+    .short_name{
+        color : white;
+        font-size:1.75em;
+        text-align: center;
+        text-shadow: 1px;
+        text-align: center;
+        background:#4789FC;
+        width:40px;
+        height:40px;
+    }
 }

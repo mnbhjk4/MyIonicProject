@@ -62,19 +62,19 @@
     <ion-row warp>
       <div *ngFor="let owner of task.taskOwnerList">
         <ion-col>
-          <ion-label>
+          <ion-label class="owner-label">
             <div *ngIf="this.companyUsers.get(owner.uid) != null &&
                 this.companyUsers.get(owner.uid).employeesInfo.image != null;else elseblock">
               <img [attr.src]="this.companyUsers.get(owner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
             </div>
             <ng-template #elseblock>
-              <div class="short_name">{{this.loginProvider.getShortName(this.companyUsers.get(owner.uid).employeesInfo.lastName)}}</div>
+              <div class="short-name-div"><div class="short-name">{{this.loginProvider.getShortName(this.companyUsers.get(owner.uid).employeesInfo.lastName)}}</div></div>
             </ng-template>
-            {{this.companyUsers.get(owner.uid).employeesInfo.lastName}}
+            <div class="full-name">{{this.companyUsers.get(owner.uid).employeesInfo.lastName}}</div>
           </ion-label>
         </ion-col>
       </div>
-      <ion-col><button ion-button title="Add owner" (click)="selectUsers(task)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
+     <ion-col><button ion-button title="Add owner" (click)="selectUsers(task)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
     </ion-row>
     <ion-row>
       <ion-col><button ion-button title="Upload" (click)="selectUsers(task)"><ion-icon name="md-cloud-upload"></ion-icon></button></ion-col>

@@ -1,32 +1,36 @@
 <!-- Generated template for the UserListComponent component -->
-<ion-grid style="width:300px">
-    <ion-row  class="index-title">
-       Please select owner
-      <button ion-button (click)="closeWithoutSave()"><ion-icon name="ios-close"></ion-icon></button>
-    </ion-row>
-    <ion-row>
-      <ion-col col-9>
-        <ion-searchbar (ionInput)="getCompanyUser($event)"></ion-searchbar>
-      </ion-col>
-      <ion-col col-3><button ion-button title="Add owner" (click)="close()"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-list>
-          <ion-item *ngFor="let user of this.filterCompanyUser">
-            <ion-checkbox [(ngModel)]="user.selected" (ionChange)="updateUser(user.id)"></ion-checkbox>
-            <ion-label *ngIf="user.img != null ;else elseblock"> 
-              <img [src]="user.img" style="width: 40px; height: 40px;">{{user.name}}
+<div class="header">
+  <div class="header-title">
+    <div class="title">Please select owner</div>
+    <div class="close-bt"><button ion-button (click)="closeWithoutSave()"><ion-icon name="ios-close"></ion-icon></button></div>
+  </div>
+  <div class="header-searcher">
+    <ion-searchbar (ionInput)="getCompanyUser($event)"></ion-searchbar>
+    <button ion-button title="Add owner" (click)="close()"><ion-icon name="md-person-add"></ion-icon></button>
+  </div>
+
+</div>
+
+
+<ion-grid class="user-grid">
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-item class="user-item" *ngFor="let user of this.filterCompanyUser">
+          <ion-checkbox [(ngModel)]="user.selected" (ionChange)="updateUser(user.id)"></ion-checkbox>
+          <ion-label class="info-label" *ngIf="user.img != null ;else elseblock">
+            <img class="short_img" [src]="user.img" style="width: 40px; height: 40px;">
+            <div class="full_name">{{user.name}}</div>
+          </ion-label>
+          <ng-template #elseblock>
+            <ion-label class="info-label">
+              <div class="short_name">{{this.loginProvider.getShortName(user.name)}}</div>
+              <div class="full_name">{{user.name}}</div>
             </ion-label>
-            <ng-template #elseblock>
-              <ion-label> 
-                <div class="short_name">{{this.loginProvider.getShortName(user.name)}}</div>
-                {{user.name}}
-              </ion-label>
-            </ng-template>
-              
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          </ng-template>
+
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>

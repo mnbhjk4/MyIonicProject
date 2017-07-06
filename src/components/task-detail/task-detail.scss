@@ -45,18 +45,29 @@ task-detail {
     height: 100%;
     
 }
-
-.short_name{
-    color : white;
-    font-size:1.5em;
+.owner-label{
+    margin:10px 10px 10px 10px;
     text-align: center;
-    text-shadow: 1px;
-    background:#4789FC;
-    padding-top:10%;
-    width:40px;
-    height:40px;
+    width:100px;
+    .full-name{
+        text-align: center;
+    }
+    .short-name-div{
+        padding-left: 30px;
+         .short-name{
+            color : white;
+            font-size:1.75em;
+            text-align: center;
+            text-shadow: 1px;
+            text-align: center;
+            background:#4789FC;
+            width:40px;
+            height:40px;
+        }
+    }
 }
 
-.priorityPopup .popover-content{
-    width:400px;
+
+.contact-popover .popover-content{
+    width: 400px !important;
 }

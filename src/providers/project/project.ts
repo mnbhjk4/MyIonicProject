@@ -46,6 +46,7 @@ export class Project {
     if (src.statusList != null && src.statusList instanceof Array) {
       for (let index = 0; index < src.statusList.length; index++) {
         let status = ProjectStatus.fromObject(src.statusList[index]);
+       
         obj.statusList.push(status);
       }
     }
@@ -110,6 +111,7 @@ export class ProjectStatus {
 
 
     obj.description = src.description;
+    
     obj.priority = src.priority;
     return obj;
   }

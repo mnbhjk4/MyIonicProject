@@ -13,31 +13,34 @@
     </ion-row>
     <ion-row>
         <ion-col>
+            <!-- 上半部的日期顯示欄-->
             <div class="gantt-col-header-grid">
+                <!-- 表頭顯示-->
                 <div class="header-col">
                     <div class="task-name">Task name</div>
                     <div class="owner">Owner</div>
                     <div class="owner">Owner</div>
                 </div>
+                <!-- 日期顯示-->
                 <div #ganttDateCol class="date-col">
                     <div [style.width]="(rowWidth* rowWidthBase)+'px'">
                         <div class="top-col">
-                           <div class="year" *ngFor="let d of this.dateList"  [style.width]="(rowWidthBase * d.week.length)+'px'">
+                           <div class="year" *ngFor="let d of this.dateList"  [style.width]="(rowWidthBase * d.day.length)+'px'">
                                {{d.year}}
                             </div>
                         </div>
                         <div class="middle-col" >
-                            <div class="month"  *ngFor="let month of listOfListRow(this.dateList,'month')" [style.width]="(rowWidthBase * month.length)+'px'">
+                            <div class="month"  *ngFor="let month of listOfListRow(this.dateList,'month')" [style.width]="(rowWidthBase * month.length )+'px'">
                                 {{month.d}}
                             </div>
                         </div>
-                        <div class="bottom-col" >
-                             <div  class="week" *ngFor="let week of listOfListRow(this.dateList,'week')"  [style.width]="rowWidthBase+'px'">
-                                 {{week}}
+                        <!--<div class="bottom-col" >
+                             <div  class="week" *ngFor="let week of listOfListRow(this.dateList,'week')"  [style.width]="(rowWidthBase * 7) +'px'">
+                                 {{week.d}}
                             </div>
-                        </div>
+                        </div>-->
                         <div class="day-col" >
-                             <div  class="day" *ngFor="let day of listOfListRow(this.dateList,'day')"  [style.width]="(rowWidthBase/7)+'px'">
+                             <div  class="day" *ngFor="let day of listOfListRow(this.dateList,'day')"  [style.width]="rowWidthBase +'px'">
                                  {{day}}
                             </div>
                         </div>
@@ -48,29 +51,31 @@
     </ion-row>
     <ion-row>
         <ion-col>
-            <div class="gantt-grid" #ganttgrid>
+            <!-- 下方顯示資訊Table-->
+            <div class="gantt-grid" >
+                <!-- 顯示Project資訊的Table-->
                 <div class="gantt-header-grid" #ganttheadergrid mouseWheel (mouseWheelUp)="mouseWheelOnGanttdategrid($event)" (mouseWheelDown)="mouseWheelOnGanttdategrid($event)">
                     <div *ngFor="let row of rowDetailList" class="header-row {{row.parentNo}}" [ngSwitch]="row.type" [ngClass]="hideShowRow(row)">
-                        <div class="row-cell" #project *ngSwitchCase="'project'" (click)="toggleRow($event,row)">
+                        <div class="row-cell cell-project"  *ngSwitchCase="'project'" (click)="toggleRow($event,row)">
                             <div class="header-name">
                                 <ion-icon name="ios-arrow-forward"></ion-icon>{{row.name}}</div>
                             <div class="header-owner">{{row.project.projectNo}}</div>
                         </div>
-                        <div class="row-cell" #task *ngSwitchCase="'task'" (click)="toggleRow($event,row)">
+                        <div class="row-cell cell-task" *ngSwitchCase="'task'" (click)="toggleRow($event,row)">
                             <div class="header-name">
                                 <ion-icon name="ios-arrow-forward" *ngIf="row.task.subTaskList.length > 0"></ion-icon>{{row.name}}</div>
                             <div class="header-owner">{{row.name}}</div>
+                            <button ion-button (click)="openDetail(row.task)"><ion-icon name="ios-create-outline"></ion-icon></button>
                         </div>
-                        <div class="row-cell" #subtask *ngSwitchCase="'subtask'">
+                        <div class="row-cell cell-subtask" *ngSwitchCase="'subtask'">
                             <div class="header-name">{{row.name}}</div>
                             <div class="header-owner">{{row.name}}</div>
                         </div>
                     </div>
                 </div>
-
+                <!--顯示Project Gantt資訊的Table -->
                 <div mouseWheel class="gantt-date-grid" #ganttdategrid (mouseWheelUp)="mouseWheelOnGanttdategrid($event)" (mouseWheelDown)="mouseWheelOnGanttdategrid($event)">
-
-                    <div [style.width]="(rowWidth* rowWidthBase)+'px'" *ngFor="let row of rowDetailList" class="date-row {{row.parentNo}}" [ngSwitch]="row.type"
+                    <div [style.width]="(rowWidth* rowWidthBase)+'px'" *ngFor="let row of this.rowDetailList" class="date-row {{row.parentNo}}" [ngSwitch]="row.type"
                         [ngClass]="hideShowRow(row)">
                         <div class="date-cell" *ngSwitchCase="'project'">
                             <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
@@ -79,25 +84,24 @@
                         </div>
                         <div class="date-cell" *ngSwitchCase="'task'">
                             <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
-                                
                             </div>
                         </div>
                         <div class="date-cell" *ngSwitchCase="'subtask'">
                              <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
-                                
                             </div>
                         </div>
-
                     </div>
+                    <div class="date-cell today" [ngStyle]="dateColorArrayMarkerToday()"></div>
                 </div>
+                <!-- 垂直的卷軸-->
                 <div #verticalScroll class="scroll-vertical" (scroll)="onScrollVertical($event)">
                     <div class="vertical-div" [style.height]="(rowHeight * rowHeigtBase) +'px'"></div>
                 </div>
+                <!-- 水平的卷軸-->
                 <div #horizontalScroll class="scroll-horizontal" (scroll)="onScrollHorizontal($event)">
                     <div class="horizontal-div" [style.width]="((rowWidth * rowWidthBase)+rowWidthBase)+'px'"></div>
                 </div>
             </div>
-
         </ion-col>
     </ion-row>
 </ion-grid>

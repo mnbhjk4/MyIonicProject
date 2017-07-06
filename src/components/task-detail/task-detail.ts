@@ -78,7 +78,7 @@ export class TaskDetailComponent {
     for (let index = 0; index < taskOwnerList.length; index++) {
       selectedOwner.push(taskOwnerList[index].uid);
     }
-    let popover = this.popoverController.create(UserListComponent, { selectedOwner: selectedOwner }, { enableBackdropDismiss: false });
+    let popover = this.popoverController.create(UserListComponent, { selectedOwner: selectedOwner }, { enableBackdropDismiss: false,cssClass: 'contact-popover' });
     popover.present({
 
     });
@@ -196,7 +196,8 @@ export class TaskDetailComponent {
 
 @Component({
   selector: 'task-detail',
-  template: ` <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
+  template: `
+   <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
         <div *ngIf="priority == '1';else else1">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
