@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http ,RequestOptions, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-
+import * as myApp from '../../app/app.component';
 /*
   Generated class for the OrganizeProvider provider.
 
@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class OrganizeProvider {
-  private server: string = "http://erp.raytrex.com:8080";
+  private server: string = myApp.webservice_url;
 
   constructor(public http: Http) {
     console.log('Hello OrganizeProvider Provider');

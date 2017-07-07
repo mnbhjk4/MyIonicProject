@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { MyApp } from '../../app/app.component';
 import { Http ,RequestOptions, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-
+import * as myApp from '../../app/app.component';
 
 
 /*
@@ -16,7 +16,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class LoginProvider {
-  private server: string = "http://erp.raytrex.com:8080";
+  private server: string = myApp.webservice_url;
 
   constructor(private msSloginProvider: MSloginProvider
     , private platform: Platform

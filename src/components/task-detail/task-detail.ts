@@ -37,10 +37,17 @@ export class TaskDetailComponent {
       this.task = obj;
     }
   }
+  getUser(uid : string){
+    let employee = this.companyUsers.get(uid);
+    if(employee == null){
+       employee = new Employee();
+    }
+    return employee;
+  }
 
   pop(){
     let loader = this.loadingController.create({
-      content : "Saveing data..."
+      content : "Saving data..."
     });
     loader.present();
      this.taskProvider.saveTask(this.task).subscribe((data)=>{
@@ -191,6 +198,24 @@ export class TaskDetailComponent {
       }
     });
     task.tempComment = new TaskComment();
+  }
+
+  checkDefault(statusList : any,type : string){
+    if(type == "startDate"){
+      if(statusList.startDate == null){
+        statusList.startDate = new Date().toISOString();
+      }
+    }else if(type == "dueDate"){
+      
+      if(statusList.dueDate == null){
+        statusList.dueDate = new Date().toISOString();
+      }
+    }else if(type == "alertDate"){
+      
+      if(statusList.alertDate == null){
+        statusList.alertDate = new Date().toISOString();
+      }
+    }
   }
 }
 

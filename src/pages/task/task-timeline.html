@@ -74,32 +74,27 @@
                     </div>
                 </div>
                 <!--顯示Project Gantt資訊的Table -->
-                <div mouseWheel class="gantt-date-grid" #ganttdategrid (mouseWheelUp)="mouseWheelOnGanttdategrid($event)" (mouseWheelDown)="mouseWheelOnGanttdategrid($event)">
-                    <div [style.width]="(rowWidth* rowWidthBase)+'px'" *ngFor="let row of this.rowDetailList" class="date-row {{row.parentNo}}" [ngSwitch]="row.type"
-                        [ngClass]="hideShowRow(row)">
-                        <div class="date-cell" *ngSwitchCase="'project'">
-                            <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
-                                
+                
+                <div mouseWheel class="gantt-date-grid" #ganttdategrid (mouseWheelUp)="mouseWheelOnGanttdategrid($event)" (mouseWheelDown)="mouseWheelOnGanttdategrid($event)" >
+                    <ion-scroll #scroll scrollX="true" scrollY="true"  [style.height]="'500px'">
+                        <div [style.width]="(rowWidth* rowWidthBase)+'px'" *ngFor="let row of this.rowDetailList" class="date-row {{row.parentNo}}" [ngSwitch]="row.type"
+                            [ngClass]="hideShowRow(row)">
+                            <div class="date-cell" *ngSwitchCase="'project'">
+                                <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
+                                    
+                                </div>
+                            </div>
+                            <div class="date-cell" *ngSwitchCase="'task'">
+                                <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
+                                </div>
+                            </div>
+                            <div class="date-cell" *ngSwitchCase="'subtask'">
+                                <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
+                                </div>
                             </div>
                         </div>
-                        <div class="date-cell" *ngSwitchCase="'task'">
-                            <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
-                            </div>
-                        </div>
-                        <div class="date-cell" *ngSwitchCase="'subtask'">
-                             <div class="date-name" [ngStyle]="dateColorArrayMarker(row)">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date-cell today" [ngStyle]="dateColorArrayMarkerToday()"></div>
-                </div>
-                <!-- 垂直的卷軸-->
-                <div #verticalScroll class="scroll-vertical" (scroll)="onScrollVertical($event)">
-                    <div class="vertical-div" [style.height]="(rowHeight * rowHeigtBase) +'px'"></div>
-                </div>
-                <!-- 水平的卷軸-->
-                <div #horizontalScroll class="scroll-horizontal" (scroll)="onScrollHorizontal($event)">
-                    <div class="horizontal-div" [style.width]="((rowWidth * rowWidthBase)+rowWidthBase)+'px'"></div>
+                        <div class="date-cell today" [ngStyle]="dateColorArrayMarkerToday()"></div>
+                    </ion-scroll>
                 </div>
             </div>
         </ion-col>

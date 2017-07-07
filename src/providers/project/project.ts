@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Task } from '../task/task';
 import 'rxjs/add/operator/map';
-
+import * as myApp from '../../app/app.component';
 /*
   Generated class for the ProjectProvider provider.
 
@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class ProjectProvider {
-  private server: string = "http://erp.raytrex.com:8080";
+  private server: string = myApp.webservice_url;
   constructor(public http: Http) {
   }
 

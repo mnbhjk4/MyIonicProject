@@ -9,6 +9,10 @@ import { MSloginProvider } from '../providers/login/login-mslogin';
 import { JwtHelper } from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
 
+export const webservice_url = "http://192.168.11.55:8080";
+// export const webservice_url = "https://192.168.11.55/erp.service";
+export const reply_url = "https://192.168.11.55:8100";
+// export const reply_url = "https://192.168.11.55/frontier";
 @Component({
   templateUrl: 'app.html'
 })

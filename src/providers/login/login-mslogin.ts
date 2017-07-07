@@ -4,6 +4,7 @@ import { MyApp } from '../../app/app.component';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
+import * as myApp from '../../app/app.component';
 
 /*
   Generated class for the LoginMsloginProvider provider.
@@ -18,14 +19,14 @@ const client_secret: string = 'JmAXcEV54v1kbG2jTuA4JwW';
 const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.ReadBasic.All'
 @Injectable()
 export class MSloginProvider {
-  private server: string = "http://erp.raytrex.com:8080";
+  private server: string = myApp.webservice_url;
   public redirect_url: string = 'raytrexerp://MyERP';
   constructor(public http: Http, private storage: Storage) {
 
   }
   gotoAzureLogin() {
     if (MyApp.platformType == "web") {
-      this.redirect_url = "http://localhost:8100";
+      this.redirect_url = myApp.reply_url;
     } else {
       this.redirect_url = "raytrexerp://MyERP";
     }
@@ -42,7 +43,7 @@ export class MSloginProvider {
   getToken(code: string) {
     //確認Platform為那一種(web 或 原生APP)
     if (MyApp.platformType == "web") {
-      this.redirect_url = "http://localhost:8100";
+      this.redirect_url = myApp.reply_url;
     } else {
       this.redirect_url = "raytrexerp://MyERP";
     }
@@ -51,20 +52,14 @@ export class MSloginProvider {
     let myHeader = new Headers();
     requestOptions.headers = myHeader;
     myHeader.append('Content-Type', 'application/json');
-
-    let parames: URLSearchParams = new URLSearchParams();
-    parames.append("scope", scope);
-    parames.append("code", code);
-    parames.append("redirectUri", this.redirect_url);
-    requestOptions.search = parames;
-    return this.http.post(this.server+"/adal/getToken",null, requestOptions)
+    return this.http.post(this.server+"/adal/getToken",JSON.stringify({scope:scope,code:code,redirectUri:this.redirect_url}), requestOptions)
       .map(res => res.json());
 
   }
   getTokenByRefreshToken(refresh_token: string) {
     //確認Platform為那一種(web 或 原生APP)
     if (MyApp.platformType == "web") {
-      this.redirect_url = "http://localhost:8100";
+      this.redirect_url = myApp.reply_url;
     } else {
       this.redirect_url = "raytrexerp://MyERP";
     }
@@ -103,7 +98,7 @@ export class MSloginProvider {
 
   logout() {
     if (MyApp.platformType == "web") {
-      this.redirect_url = "http://localhost:8100";
+      this.redirect_url = myApp.reply_url;
     } else {
       this.redirect_url = "raytrexerp://MyERP";
     }

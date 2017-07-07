@@ -59,7 +59,7 @@
 .gantt-grid{
     position: relative;
     width:100%;
-    height:600px;
+    height:500px;
     white-space: nowrap;
     overflow: hidden;
     border:solid 1px black;
@@ -103,6 +103,9 @@
         width:80%;
         height: 560px;
         overflow:hidden;
+        .scroll-content{
+            padding:0px !important;
+        }
         .date-row{
             display: flex;
             height:40px;
@@ -120,9 +123,12 @@
     }
    .scroll-vertical{
         position: absolute;
-        right: 0;
+        top:0px;
+        right: 0px;
         overflow-y:scroll;
+        width:18px;
         height:100%;
+        z-index: 1000;
         .vertical-div{
             display:block;
             width:18px;
@@ -130,12 +136,26 @@
    }
    .scroll-horizontal{
         position: absolute;
-        bottom:0;
+        bottom:0px;
         overflow-x: scroll;
+        height:18px;
         width:100%;
+        z-index: 1000;
         .horizontal-div{
             display:block;
             height: 18px;
         }
    }
+}
+
+@media(device-width: 768px) and (device-height: 1024px){
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    }
 }

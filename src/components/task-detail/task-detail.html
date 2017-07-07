@@ -63,9 +63,9 @@
       <div *ngFor="let owner of task.taskOwnerList">
         <ion-col>
           <ion-label class="owner-label">
-            <div *ngIf="this.companyUsers.get(owner.uid) != null &&
-                this.companyUsers.get(owner.uid).employeesInfo.image != null;else elseblock">
-              <img [attr.src]="this.companyUsers.get(owner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
+            <div *ngIf="getUser(owner.uid) != null &&
+                getUser(owner.uid).employeesInfo.image != null;else elseblock">
+              <img [attr.src]="getUser(owner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
             </div>
             <ng-template #elseblock>
               <div class="short-name-div"><div class="short-name">{{this.loginProvider.getShortName(this.companyUsers.get(owner.uid).employeesInfo.lastName)}}</div></div>
@@ -98,16 +98,16 @@
     <ion-row warp>
       <ion-col>
         <ion-label>Start date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="task.taskStatusList[0].startDate"></ion-datetime>
+        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Start date" [(ngModel)]="task.taskStatusList[0].startDate"></ion-datetime>
       </ion-col>
 
       <ion-col>
         <ion-label>Due date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="task.taskStatusList[0].dueDate"></ion-datetime>
+        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Due date" [(ngModel)]="task.taskStatusList[0].dueDate"></ion-datetime>
       </ion-col>
       <ion-col>
         <ion-label>Alert date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="task.taskStatusList[0].alertDate"></ion-datetime>
+        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Alert date" [(ngModel)]="task.taskStatusList[0].alertDate"></ion-datetime>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -143,14 +143,14 @@
           <ion-row warp>
             <ion-col *ngFor="let subowner of subtask.taskOwnerList">
               <ion-label>
-                <div *ngIf="this.companyUsers.get(subowner.uid) != null &&
-                this.companyUsers.get(subowner.uid).employeesInfo.image != null;else elseblock">
-                  <img [attr.src]="this.companyUsers.get(subowner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
+                <div *ngIf="getUser(subowner.uid) != null &&
+                getUser(subowner.uid).employeesInfo.image != null;else elseblock">
+                  <img [attr.src]="getUser(subowner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
                 </div>
                 <ng-template #elseblock>
-                  <div class="short_name">{{this.loginProvider.getShortName(this.companyUsers.get(subowner.uid).employeesInfo.lastName)}}</div>
+                  <div class="short_name">{{this.loginProvider.getShortName(getUser(subowner.uid).employeesInfo.lastName)}}</div>
                 </ng-template>
-                {{this.companyUsers.get(subowner.uid).employeesInfo.lastName}}
+                {{getUser(subowner.uid).employeesInfo.lastName}}
               </ion-label>
             </ion-col>
             <ion-col><button ion-button title="Add owner" (click)="selectUsers(subtask)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
@@ -166,17 +166,17 @@
             <ion-col>
               <ion-label>Start Date</ion-label>
               <ion-col name="md-calendar"></ion-col>
-              <ion-datetime class="subtask-start-date" displayFormat="MM/DD/YYYY" [(ngModel)]="subtask.taskStatusList[0].startDate"></ion-datetime>
+              <ion-datetime class="subtask-start-date" displayFormat="YYYY/MM/DD" min="2010" max="2099" [(ngModel)]="subtask.taskStatusList[0].startDate"></ion-datetime>
             </ion-col>
             <ion-col>
               <ion-label>Due Date</ion-label>
               <ion-col name="md-calendar"></ion-col>
-              <ion-datetime class="subtask-due-date" displayFormat="MM/DD/YYYY" [(ngModel)]="subtask.taskStatusList[0].dueDate"></ion-datetime>
+              <ion-datetime class="subtask-due-date" displayFormat="YYYY/MM/DD" min="2010" max="2099" [(ngModel)]="subtask.taskStatusList[0].dueDate"></ion-datetime>
             </ion-col>
             <ion-col>
               <ion-label>Alert Date</ion-label>
               <ion-col name="md-calendar"></ion-col>
-              <ion-datetime class="subtask-due-date" displayFormat="MM/DD/YYYY" [(ngModel)]="subtask.taskStatusList[0].alertDate"></ion-datetime>
+              <ion-datetime class="subtask-due-date" displayFormat="YYYY/MM/DD" min="2010" max="2099" [(ngModel)]="subtask.taskStatusList[0].alertDate"></ion-datetime>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -199,7 +199,7 @@
             <ion-col>
               <div>{{subComment.comment}}</div>
               <div>{{subComment.commentDate}}</div>
-              <div>{{ this.companyUsers.get(subComment.uid).employeesInfo.lastName}}</div>
+              <div>{{ getUser(subComment.uid).employeesInfo.lastName}}</div>
               <div *ngIf="subComment.attachUid != '' && subComment.attachUid != null">
                 <div>Test!</div>
               </div>
@@ -242,10 +242,7 @@
       <ion-col>
         <div>{{comment.comment}}</div>
         <div>{{comment.commentDate}}</div>
-        <div>{{ this.companyUsers.get(comment.uid).employeesInfo.lastName}}</div>
-        <div *ngIf="comment.attachUid != '' && comment.attachUid != null">
-          <div>Test!</div>
-        </div>
+        <div>{{ getUser(comment.uid).employeesInfo.lastName}}</div>
       </ion-col>
     </ion-row>
   </ion-grid>
