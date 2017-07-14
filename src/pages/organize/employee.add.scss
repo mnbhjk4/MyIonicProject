@@ -1,0 +1,15 @@
+page-organize-employeeadd{
+    .employee-info{
+        min-width: 300px;
+    }
+    ion-label{
+        width:100px;
+    }
+    ion-label {
+        -webkit-flex: initial;
+        -ms-flex: initial;
+        flex: initial;
+        max-width: 200px;
+        pointer-events: none;
+    }
+}

@@ -1,0 +1,103 @@
+<ion-header>
+    <ion-navbar [hideBackButton]="true">
+        <ion-title>Add Employee</ion-title>
+        <button ion-button (click)="save()"><ion-icon name="md-checkmark" ></ion-icon></button>
+        <button ion-button (click)="cancel()"><ion-icon name="md-close" ></ion-icon></button>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-row warp>
+            <ion-col>
+                <ion-list class="info-grid">
+                    <ion-item>
+                        <ion-label>員工編號</ion-label>
+                        <ion-input [(ngModel)]="employee.empNo"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>E-Mail</ion-label>
+                        <ion-input [(ngModel)]="employee.mail"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>姓</ion-label>
+                        <ion-input [(ngModel)]="employee.employeesInfo.firstName"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>名</ion-label>
+                        <ion-input [(ngModel)]="employee.employeesInfo.lastName"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>生日</ion-label>
+                        <ion-datetime displayFromat="YYYY-MM-DD" [(ngModel)]="employee.employeesInfo.birthDate"></ion-datetime>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>性別</ion-label>
+                        <ion-select [(ngModel)]="employee.employeesInfo.gender">
+                            <ion-option value="male">Male</ion-option>
+                            <ion-option value="female">Female</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>聯絡地址</ion-label>
+                        <ion-input [(ngModel)]="employee.employeesInfo.contactAddr1"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>戶籍地址</ion-label>
+                        <ion-input [(ngModel)]="employee.employeesInfo.contactAddr2"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>聯絡電話</ion-label>
+                        <ion-input [(ngModel)]="employee.employeesInfo.contactPhone1"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>戶籍電話</ion-label>
+                        <ion-input [(ngModel)]="employee.employeesInfo.contactPhone2"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>就職日</ion-label>
+                        <ion-datetime displayFromat="YYYY-MM-DD" [(ngModel)]="employee.employeesInfo.hireDate"></ion-datetime>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>員工證照</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+            <ion-col>
+                <ion-grid class="role-grid">
+                    <ion-row>
+                        <ion-col>選擇職稱</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col></ion-col><ion-col>職稱</ion-col><ion-col>部門</ion-col>
+                    </ion-row>
+                    <ion-row *ngFor="let role of roles">
+                        <ion-col><ion-checkbox [(ngModel)]="role.selected"></ion-checkbox></ion-col><ion-col>{{role.roleName}}</ion-col><ion-col>{{role.department.name}}</ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-grid class="permission-grid">
+                    <ion-row>
+                        <ion-col>選擇權限</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col><ion-label>Create</ion-label></ion-col>
+                        <ion-col><ion-label>Upate</ion-label></ion-col>
+                        <ion-col><ion-label>Read</ion-label></ion-col>
+                        <ion-col><ion-label>Delete</ion-label></ion-col>
+                        <ion-col><ion-label>Function name</ion-label></ion-col>
+                    </ion-row>
+                    <ion-row *ngFor="let functionMap of functionMaps">
+                        <ion-col><ion-checkbox [(ngModel)]="functionMap.create"></ion-checkbox></ion-col>
+                        <ion-col><ion-checkbox [(ngModel)]="functionMap.update"></ion-checkbox></ion-col>
+                        <ion-col><ion-checkbox [(ngModel)]="functionMap.read"></ion-checkbox></ion-col>
+                        <ion-col><ion-checkbox [(ngModel)]="functionMap.delete"></ion-checkbox></ion-col>
+                        <ion-col><ion-label>{{functionMap.functionName}}</ion-label></ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

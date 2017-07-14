@@ -21,6 +21,7 @@ export class MyApp {
   public static platformType = "web";
   public static targetUser: Employee = null;
   public static companyUsers: Map<string, Employee> = new Map<string, Employee>();
+  public static permissionList: Array<Permission> = [];
   jwtHelper: JwtHelper = new JwtHelper();
   rootPage: any;
 
@@ -89,7 +90,7 @@ export class MyApp {
               this.storage.remove("code");
               MyApp.tokenType = "Microsoft";
               this.storage.set("access_obj", access_obj).then(() => {
-                 this.redirectToIndex(access_obj.access_token,decodeToken.oid);
+                this.redirectToIndex(access_obj.access_token, decodeToken.oid);
               });
 
             } else {
@@ -145,7 +146,7 @@ export class MyApp {
                       access_obj.state = "Microsoft";
                       this.storage.set("access_obj", access_obj).then(() => {
                         MyApp.tokenType = "Microsoft";
-                        this.redirectToIndex(access_obj.access_token,decodeToken.oid);
+                        this.redirectToIndex(access_obj.access_token, decodeToken.oid);
                       });
 
                     }
@@ -156,7 +157,7 @@ export class MyApp {
               }
             } else {
               MyApp.tokenType = state;
-              this.redirectToIndex(access_obj.access_token,access_token.oid);
+              this.redirectToIndex(access_obj.access_token, access_token.oid);
             }
           }
         } else {
@@ -216,7 +217,7 @@ export class Employee {
     e.empNo = src.empNo;
     e.employeesInfo = EmployeeInfo.fromObject(src.employeesInfo);
     if (src.roles instanceof Array) {
-      for (let i=0; i< src.roles.length;i++) {
+      for (let i = 0; i < src.roles.length; i++) {
         e.roles.push(EmployeeRoles.fromObject(src.roles[i]));
       }
     }
@@ -283,7 +284,7 @@ export class Role {
   roleId: string;
   roleName: string;
   roleLevel: string;
-  department : Department;
+  department: Department;
   public static fromObject(src: any): Role {
     let e = new Role();
     e.depId = src.depId;
@@ -310,5 +311,37 @@ export class Department {
     e.parentDepId = src.parentDepId;
 
     return e;
+  }
+}
+
+export class Permission {
+  permissionSerial: string;
+  permissionId: string;
+  roleId: string;
+  uid: string;
+  functionName: string;
+  create: number;
+  update: number;
+  read: number;
+  delete: number;
+
+  static hasPermission(pemissionKey: string) {
+    let p = pemissionKey.split("_");
+    let hasCreate = false;
+    let hasUpdate = false;
+    let hasRead = false;
+    let hasDelete = false;
+    if (p.length > 1) {
+      for (let index = 0; index < MyApp.permissionList.length; index++) {
+        let ownP = MyApp.permissionList[index];
+        if (ownP.functionName == p[1]) {
+          hasCreate = p[0] == '-' || (ownP.create >= Number(p[0]));
+          hasUpdate = p[0] == '-' || (ownP.update >= Number(p[0]));
+          hasRead = p[0] == '-' || (ownP.read >= Number(p[0]));
+          hasDelete = p[0] == '-' || (ownP.delete >= Number(p[0]));
+        }
+      }
+    }
+    return hasCreate && hasUpdate && hasRead && hasDelete;
   }
 }

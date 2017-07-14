@@ -1,10 +1,9 @@
 import { Component,Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, Loading } from 'ionic-angular';
-import { TaskDetailComponent } from '../../components/task-detail/task-detail'
-import { ManageTaskDetailComponent } from '../../components/manage-task-detail/manage-task-detail';
-import { MyApp, Employee } from '../../app/app.component';
-import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../providers/task/task';
-import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../providers/project/project';
+import { TaskDetailComponent } from '../../task/task-detail';
+import { MyApp, Employee } from '../../../app/app.component';
+import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../../providers/task/task';
+import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../../providers/project/project';
 import { Storage } from '@ionic/storage';
 /**
  * Generated class for the TaskPage page.
@@ -13,10 +12,10 @@ import { Storage } from '@ionic/storage';
  * on Ionic pages and navigation.
  */
 @Component({
-    selector: 'task-block',
-    templateUrl: 'task-block.html',
+    selector: 'project-block',
+    templateUrl: 'project-block.html',
 })
-export class TaskBlockComponent {
+export class ProjectBlockComponent {
     companyUserMap: Map<string, Employee> = MyApp.companyUsers;
     
     @Input()
@@ -34,7 +33,7 @@ export class TaskBlockComponent {
         this.navCtrl.push(TaskDetailComponent, { task: task });
     }
     openManageTaskDetail(task_id: string, title: string) {
-        this.navCtrl.push(ManageTaskDetailComponent, { task_id: task_id, title: title });
+        this.navCtrl.push(TaskDetailComponent, { task_id: task_id, title: title });
     }
 
 

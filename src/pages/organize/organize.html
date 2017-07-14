@@ -7,6 +7,13 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab (click)="addEmployee()"><ion-icon name="md-person-add" ></ion-icon></button>
+    </ion-fab-list>
+
+  </ion-fab>
   <ion-grid>
       <ion-row class="organize-tree" *ngFor="let departmentArray of this.deparmentTreeList; let i = index">
         <ion-col class="organize-depart-col" *ngFor="let department of departmentArray">

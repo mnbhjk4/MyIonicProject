@@ -7,8 +7,8 @@ import { MSloginProvider} from '../../providers/login/login-mslogin';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  constructor(public navController: NavController 
-  ,private msLoginProvider : MSloginProvider) {
+  constructor(public navController: NavController ,
+  private msLoginProvider : MSloginProvider) {
   }
 
   ionViewDidLoad() {

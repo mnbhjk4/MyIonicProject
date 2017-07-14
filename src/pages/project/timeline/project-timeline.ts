@@ -1,12 +1,11 @@
 import { Component, Input, ViewChild, ElementRef, Renderer, ViewChildren } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, Loading, Scroll } from 'ionic-angular';
-import { TaskDetailComponent } from '../../components/task-detail/task-detail'
-import { ManageTaskDetailComponent } from '../../components/manage-task-detail/manage-task-detail';
-import { MyApp, Employee } from '../../app/app.component';
-import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../providers/task/task';
-import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../providers/project/project';
+import { TaskDetailComponent } from '../../task/task-detail'
+import { MyApp, Employee } from '../../../app/app.component';
+import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../../providers/task/task';
+import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../../providers/project/project';
 import { Storage } from '@ionic/storage';
-import { CalanderService } from "..//leave/calander.service";
+import { CalanderService } from "../../leave/calander.service";
 
 
 /**
@@ -16,10 +15,10 @@ import { CalanderService } from "..//leave/calander.service";
  * on Ionic pages and navigation.
  */
 @Component({
-    selector: 'task-timeline',
-    templateUrl: 'task-timeline.html',
+    selector: 'project-timeline',
+    templateUrl: 'project-timeline.html',
 })
-export class TaskTimelineComponent {
+export class ProjectTimelineComponent {
     @ViewChild(Scroll)
     scroll: Scroll;
     @ViewChild("ganttheadergrid")
@@ -146,7 +145,7 @@ export class TaskTimelineComponent {
         this.navCtrl.push(TaskDetailComponent, { task: task });
     }
     openManageTaskDetail(task_id: string, title: string) {
-        this.navCtrl.push(ManageTaskDetailComponent, { task_id: task_id, title: title });
+        this.navCtrl.push(TaskDetailComponent, { task_id: task_id, title: title });
     }
 
     dataRange(minDate: Date, maxDate: Date) {

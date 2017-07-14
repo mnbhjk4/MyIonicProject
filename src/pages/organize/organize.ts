@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams,ViewController,PopoverController  }
 import { MyApp, Department, Employee, Role, EmployeeRoles } from '../../app/app.component';
 import { OrganizeProvider } from '../../providers/organize/organize';
 import { LoginProvider } from '../../providers/login/login';
+import { EmployeeAddComponent } from './employee.add';
 /**
  * Generated class for the OrganizePage page.
  *
@@ -85,6 +86,10 @@ export class OrganizePage {
   showEmployeeInfo(employee : Employee){
     let pop = this.popoverController.create(UserInfoComponent,{employee:employee},{});
     pop.present();
+  }
+
+  addEmployee(){
+    this.navCtrl.push(EmployeeAddComponent);
   }
 }
 

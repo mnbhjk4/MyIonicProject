@@ -4,14 +4,13 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { MenuController, Nav } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-import { ListPage } from '../list/list';
+import { ListPage } from './list';
 import { LeavePage } from '../leave/leave';
 import { LoginPage } from '../login/login';
 import { OrganizePage } from '../organize/organize';
 import { LoginProvider } from '../../providers/login/login';
 import { ProjectPage } from '../project/project';
 import { PlannerPage } from '../planner/planner';
-import { TaskPage } from '../task/task';
 import { MyApp,Employee } from "../../app/app.component";
 /**
  * Generated class for the IndexPage page.
@@ -40,7 +39,6 @@ export class IndexPage {
     this.pages = [
       { title: 'Index', icon: 'ios-home-outline', component: ListPage },
       { title: 'Project', icon: 'ios-boat-outline', component: ProjectPage },
-      { title: 'Task', icon: 'ios-link-outline', component: TaskPage },
       { title: 'Leave system', icon: 'ios-bicycle-outline', component: LeavePage },
       { title: 'Organize', icon: 'ios-people-outline', component: OrganizePage }
     ];

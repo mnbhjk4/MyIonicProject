@@ -148,9 +148,9 @@
                   <img [attr.src]="getUser(subowner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
                 </div>
                 <ng-template #elseblock>
-                  <div class="short_name">{{this.loginProvider.getShortName(getUser(subowner.uid).employeesInfo.lastName)}}</div>
+                  <div class="short-name-div"><div class="short-name">{{this.loginProvider.getShortName(getUser(subowner.uid).employeesInfo.lastName)}}</div></div>
                 </ng-template>
-                {{getUser(subowner.uid).employeesInfo.lastName}}
+                 <div class="full-name">{{this.companyUsers.get(subowner.uid).employeesInfo.lastName}}</div>
               </ion-label>
             </ion-col>
             <ion-col><button ion-button title="Add owner" (click)="selectUsers(subtask)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>

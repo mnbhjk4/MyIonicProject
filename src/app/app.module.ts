@@ -1,60 +1,56 @@
+/**
+ * Angular2 module import
+ */
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+/**
+ * Ionic module import
+ */
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-
-import { ItemDetailsPage } from '../pages/item-details/item-details';
-import { ListPage } from '../pages/list/list';
-import { IndexPage } from '../pages/index/index';
-import { LoginPage } from '../pages/login/login';
-import { LeavePage } from '../pages/leave/leave';
-import { PlannerPage } from '../pages/planner/planner';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { IonicStorageModule } from '@ionic/storage';
 
+/**
+ * Cordova module import
+ */
 import { Camera } from '@ionic-native/camera';
 
+/**
+ * Frontier module import
+ */
+import { MyApp } from './app.component';
+import { LoginPage } from '../pages/login/login';
+import { LeavePage } from '../pages/leave/leave';
+import { TaskDetailComponent, PriorityComponent } from '../pages/task/task-detail';
+import { UserListComponent } from '../components/user-list/user-list';
+import { IndexPageModule } from '../pages/index/index.module';
+import { OrganizePageModule } from '../pages/organize/organize.module';
+import { ProjectPageModule } from '../pages/project/project.module';
+
+/**
+ * Forniter provider import
+ */
 import { LoginProvider } from '../providers/login/login';
 import { MSloginProvider } from '../providers/login/login-mslogin';
 import { CalanderService } from '../pages/leave/calander.service';
-
-import { OrganizePage, UserInfoComponent } from '../pages/organize/organize';
-import { ProjectPage } from '../pages/project/project';
-import { IonicStorageModule } from '@ionic/storage';
-import { TaskDetailComponent, PriorityComponent } from '../components/task-detail/task-detail';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule } from 'angular2-calendar';
-import { ManageTaskDetailComponent } from '../components/manage-task-detail/manage-task-detail';
 import { TaskProvider } from '../providers/task/task';
-import { TaskPage } from '../pages/task/task';
-import { TaskBlockComponent } from '../pages/task/task-block';
-import { TaskTimelineComponent } from '../pages/task/task-timeline';
 import { ProjectProvider } from '../providers/project/project';
-import { UserListComponent } from '../components/user-list/user-list';
 import { OrganizeProvider } from '../providers/organize/organize';
 import { MouseWheelDirective } from '../directives/mouse-wheel/mouse-wheel';
+
 @NgModule({
   declarations: [
     MyApp,
-    ItemDetailsPage,
-    ListPage,
-    IndexPage,
     LoginPage,
     LeavePage,
-    OrganizePage,
-    ProjectPage,
-    PlannerPage,
     TaskDetailComponent,
-    ManageTaskDetailComponent,
-    TaskPage,
     UserListComponent,
     PriorityComponent,
-    UserInfoComponent,
-    TaskBlockComponent,
-    TaskTimelineComponent,
     MouseWheelDirective
   ],
   imports: [
@@ -67,27 +63,18 @@ import { MouseWheelDirective } from '../directives/mouse-wheel/mouse-wheel';
     FormsModule,
     IonicStorageModule.forRoot(),
     BrowserAnimationsModule,
-    CalendarModule.forRoot()
+    IndexPageModule,
+    OrganizePageModule,
+    ProjectPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ItemDetailsPage,
-    ListPage,
     LoginPage,
-    IndexPage,
     LeavePage,
-    OrganizePage,
-    ProjectPage,
-    PlannerPage,
     TaskDetailComponent,
-    ManageTaskDetailComponent,
-    TaskPage,
     UserListComponent,
     PriorityComponent,
-    UserInfoComponent,
-    TaskBlockComponent,
-    TaskTimelineComponent
   ],
   providers: [
     StatusBar,
