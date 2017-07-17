@@ -1,7 +1,8 @@
 import { Component,Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, Loading } from 'ionic-angular';
 import { TaskDetailComponent } from '../../task/task-detail';
-import { MyApp, Employee } from '../../../app/app.component';
+import { MyApp } from '../../../app/app.component';
+import { Employee} from '../../../providers/organize/organize';
 import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../../providers/task/task';
 import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../../providers/project/project';
 import { Storage } from '@ionic/storage';

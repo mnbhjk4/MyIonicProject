@@ -1,9 +1,10 @@
 import { Component, ViewChildren, QueryList, ElementRef, Pipe } from '@angular/core';
 import { NavParams, PopoverController, PopoverOptions, Select, Events,NavController,ViewController,LoadingController  } from 'ionic-angular';
 import { Task, TaskStatus, TaskComment, TaskOwner,TaskProvider } from '../../providers/task/task';
-import { MyApp, Employee } from '../../app/app.component';
+import { MyApp } from '../../app/app.component';
 import { UserListComponent } from '../../components/user-list/user-list';
 import { LoginProvider } from '../../providers/login/login';
+import { Employee,EmployeeInfo } from '../../providers/organize/organize';
 
 /**
  * Generated class for the TaskDetailComponent component.

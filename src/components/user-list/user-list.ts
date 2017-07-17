@@ -1,7 +1,9 @@
 import { Component,Pipe, PipeTransform } from '@angular/core';
 import { ViewController } from 'ionic-angular';
-import { MyApp,Employee,EmployeeInfo } from '../../app/app.component';
+import { MyApp } from '../../app/app.component';
+
 import { LoginProvider } from '../../providers/login/login';
+import { Employee,EmployeeInfo } from '../../providers/organize/organize';
 /**
  * Generated class for the UserListComponent component.
  *

@@ -1,7 +1,7 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-title class="index-title">
-      <img [src]="targetUser.employeesInfo.image" style="width: 40px; height: 40px;">
+      <img [src]="'data:image/gif;base64,'+targetUser.employeesInfo.image" style="width: 40px; height: 40px;">
       <font style="">{{targetUser.employeesInfo.lastName}}</font>
     </ion-title>
     

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController,PopoverController  } from 'ionic-angular';
-import { MyApp, Department, Employee, Role, EmployeeRoles } from '../../app/app.component';
+import { MyApp } from '../../app/app.component';
+import { Employee,EmployeeInfo,Department,EmployeeRoles ,Role} from '../../providers/organize/organize';
 import { OrganizeProvider } from '../../providers/organize/organize';
 import { LoginProvider } from '../../providers/login/login';
 import { EmployeeAddComponent } from './employee.add';
@@ -38,10 +39,10 @@ export class OrganizePage {
               let department = Department.fromObject(departmentSrc);
               let employeeArray: Array<Employee> = [];
               this.companyUsers.forEach((value) => {
-                if (value.roles.length > 0) {
+                if (value.roleList.length > 0) {
                  
-                  for (let v = 0; v < value.roles.length; v++) {
-                    let role = value.roles[v];
+                  for (let v = 0; v < value.roleList.length; v++) {
+                    let role = value.roleList[v];
                     if (role.role.depId == department.depId) {
                       employeeArray.push(value);
                     }
@@ -50,17 +51,17 @@ export class OrganizePage {
                 }
               });
               employeeArray.sort( (a : Employee ,b: Employee)=>{
-                if(a.roles.length > 0 && b.roles.length > 0){
+                if(a.roleList.length > 0 && b.roleList.length > 0){
                   let aMinLv = 999;
-                  for(let i=0 ; i < a.roles.length ; i++){
-                    if(a.roles[i].role != null && Number(a.roles[i].role.roleLevel) < aMinLv){
-                      aMinLv = Number(a.roles[i].role.roleLevel);
+                  for(let i=0 ; i < a.roleList.length ; i++){
+                    if(a.roleList[i].role != null && Number(a.roleList[i].role.roleLevel) < aMinLv){
+                      aMinLv = Number(a.roleList[i].role.roleLevel);
                     }
                   }
                   let bMinLv = 999;
-                  for(let i=0 ; i < b.roles.length ; i++){
-                     if(b.roles[i].role != null && Number(b.roles[i].role.roleLevel) < bMinLv){
-                      bMinLv = Number(b.roles[i].role.roleLevel);
+                  for(let i=0 ; i < b.roleList.length ; i++){
+                     if(b.roleList[i].role != null && Number(b.roleList[i].role.roleLevel) < bMinLv){
+                      bMinLv = Number(b.roleList[i].role.roleLevel);
                     }
                   }
                   if(aMinLv > bMinLv){
@@ -99,7 +100,7 @@ export class OrganizePage {
   <ion-grid>
     <ion-row>
       <ion-col *ngIf="employee.employeesInfo.image != null && employee.employeesInfo.image.length > 0;else elseblock">
-        <img [src]="employee.employeesInfo.image" style="width: 200px; height: 200px;">
+        <img [src]="'data:image/gif;base64,'+employee.employeesInfo.image" style="width: 200px; height: 200px;">
       </ion-col>
       <ng-template #elseblock>
         <ion-col>

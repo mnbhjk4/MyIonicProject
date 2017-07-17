@@ -64,8 +64,8 @@
         <ion-col>
           <ion-label class="owner-label">
             <div *ngIf="getUser(owner.uid) != null &&
-                getUser(owner.uid).employeesInfo.image != null;else elseblock">
-              <img [attr.src]="getUser(owner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
+                getUser(owner.uid).employeesInfo.image != '';else elseblock">
+              <img [attr.src]="'data:image/gif;base64,'+getUser(owner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
             </div>
             <ng-template #elseblock>
               <div class="short-name-div"><div class="short-name">{{this.loginProvider.getShortName(this.companyUsers.get(owner.uid).employeesInfo.lastName)}}</div></div>
@@ -144,8 +144,8 @@
             <ion-col *ngFor="let subowner of subtask.taskOwnerList">
               <ion-label>
                 <div *ngIf="getUser(subowner.uid) != null &&
-                getUser(subowner.uid).employeesInfo.image != null;else elseblock">
-                  <img [attr.src]="getUser(subowner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
+                getUser(subowner.uid).employeesInfo.image != '';else elseblock">
+                  <img [attr.src]="'data:image/gif;base64,'+getUser(subowner.uid).employeesInfo.image" style="width: 40px; height: 40px;">
                 </div>
                 <ng-template #elseblock>
                   <div class="short-name-div"><div class="short-name">{{this.loginProvider.getShortName(getUser(subowner.uid).employeesInfo.lastName)}}</div></div>

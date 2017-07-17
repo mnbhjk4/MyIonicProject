@@ -53,7 +53,7 @@ export class OrganizeProvider {
     return this.http.post(this.server + "/organize/getAllFunctionMap", null, requestOptions)
       .map(res => res.json());
   }
-  addEmployee(employee:Employee,permissionList : Array<Permission>){
+  addEmployee(employee:Employee,permissionList : Array<Permission>,access_token:string){
     let requestOptions = new RequestOptions();
 
     let myHeader = new Headers();
@@ -63,6 +63,7 @@ export class OrganizeProvider {
     let parames: URLSearchParams = new URLSearchParams();
     parames.append("employee",JSON.stringify(employee));
     parames.append("permissionList",JSON.stringify(permissionList));
+    parames.append("access_token",access_token);
     requestOptions.search = parames;
     return this.http.post(this.server + "/employee/addEmployee", null, requestOptions)
       .map(res => res.json());
@@ -73,16 +74,16 @@ export class Employee {
   uid: string = "";
   empNo: string = "";
   employeesInfo: EmployeeInfo = new EmployeeInfo();
-  roles: Array<EmployeeRoles> = [];
+  roleList: Array<EmployeeRoles> = [];
 
   public static fromObject(src: any): Employee {
     let e = new Employee();
     e.uid = src.uid;
     e.empNo = src.empNo;
     e.employeesInfo = EmployeeInfo.fromObject(src.employeesInfo);
-    if (src.roles instanceof Array) {
-      for (let i = 0; i < src.roles.length; i++) {
-        e.roles.push(EmployeeRoles.fromObject(src.roles[i]));
+    if (src.roleList instanceof Array) {
+      for (let i = 0; i < src.roleList.length; i++) {
+        e.roleList.push(EmployeeRoles.fromObject(src.roleList[i]));
       }
     }
     return e;

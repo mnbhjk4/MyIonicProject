@@ -11,7 +11,8 @@ import { OrganizePage } from '../organize/organize';
 import { LoginProvider } from '../../providers/login/login';
 import { ProjectPage } from '../project/project';
 import { PlannerPage } from '../planner/planner';
-import { MyApp,Employee } from "../../app/app.component";
+import { MyApp } from "../../app/app.component";
+import { Employee} from '../../providers/organize/organize';
 /**
  * Generated class for the IndexPage page.
  *

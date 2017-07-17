@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController,AlertController } from 'ionic-angular';
 import { OrganizeProvider, Employee, EmployeeRoles, Role,Permission, FunctionMap } from '../../providers/organize/organize';
+import { Storage } from '@ionic/storage';
+import {MyApp} from '../../app/app.component';
 
 
 @Component({
@@ -15,7 +17,9 @@ export class EmployeeAddComponent {
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public loadingController: LoadingController,
-        private organizeProvider: OrganizeProvider) {
+        private organizeProvider: OrganizeProvider,
+        private storage : Storage,
+        private alertController : AlertController) {
     }
     ionViewDidLoad() {
         this.organizeProvider.getAllRoles().subscribe((data) => {
@@ -46,8 +50,8 @@ export class EmployeeAddComponent {
             let r = this.roles[index];
             if (r["selected"]) {
                 let er = new EmployeeRoles();
-                er.roleId = r.roleId;
-                this.employee.roles.push(er);
+                er.role = r;
+                this.employee.roleList.push(er);
             }
         }
         console.log(this.employee);
@@ -72,11 +76,26 @@ export class EmployeeAddComponent {
                 permissionList.push(p);
             }
         }
-        this.organizeProvider.addEmployee(this.employee,permissionList).subscribe((data)=>{
-
+        this.storage.get("access_obj").then(value=>{
+             this.organizeProvider.addEmployee(this.employee,permissionList,value.access_token).subscribe((data)=>{
+                if(data.length > 0){
+                     saveing.dismiss();
+                     let alert = this.alertController.create({
+                        title:'Save successed',
+                        buttons:[{
+                            text:'Back',
+                            handler:()=>{
+                                MyApp.companyUsers = data;
+                                 this.navCtrl.pop();
+                            }
+                        }]
+                     });
+                   alert.present();
+                }
+            });
         });
-        saveing.dismiss();
-        this.navCtrl.pop();
+       
+       
     }
     cancel() {
         this.navCtrl.pop();
