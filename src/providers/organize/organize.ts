@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Headers, URLSearchParams } from '@angular/http';
+import { Http, RequestOptions, Headers, URLSearchParams} from '@angular/http';
 import { MyApp } from '../../app/app.component';
 import 'rxjs/add/operator/map';
 import * as myApp from '../../app/app.component';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 /*
   Generated class for the OrganizeProvider provider.
 
@@ -13,7 +14,9 @@ import * as myApp from '../../app/app.component';
 export class OrganizeProvider {
   private server: string = myApp.webservice_url;
 
-  constructor(public http: Http) {
+  constructor(
+    public http: Http,
+    private fileTransfer :FileTransfer) {
     console.log('Hello OrganizeProvider Provider');
   }
   
@@ -68,6 +71,43 @@ export class OrganizeProvider {
     return this.http.post(this.server + "/employee/addEmployee", null, requestOptions)
       .map(res => res.json());
   }
+
+  getEmployee(uid:string){
+    let requestOptions = new RequestOptions();
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+
+    let parames: URLSearchParams = new URLSearchParams();
+    parames.append("uid",uid);
+ 
+    requestOptions.search = parames;
+    return this.http.post(this.server + "/employee/getEmployee", null, requestOptions)
+      .map(res => res.json());
+  }
+
+  uploadImage(access_token:string,uid:string ,file:File){
+    let requestOptions = new RequestOptions();
+    let headers = new Headers();
+    // headers.append('Content-Type', 'multipart/form-data');
+    requestOptions.headers = headers;
+    let formData = new FormData();
+    formData.append("file",file,file.name);
+    formData.append("access_token",access_token);
+    formData.append("uid",uid);
+    return this.http.post(this.server+"/adal/uploadOwnPhoto",formData);
+  }
+
+  getRTXNo(){
+    let requestOptions = new RequestOptions();
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+    let parames: URLSearchParams = new URLSearchParams();
+    requestOptions.search = parames;
+    return this.http.post(this.server + "/employee/getRTXNo", null, requestOptions)
+      .map(res => res.json());
+  }
 }
 
 export class Employee {
@@ -75,6 +115,7 @@ export class Employee {
   empNo: string = "";
   employeesInfo: EmployeeInfo = new EmployeeInfo();
   roleList: Array<EmployeeRoles> = [];
+  permission : Array<Permission> = [];
 
   public static fromObject(src: any): Employee {
     let e = new Employee();
@@ -150,6 +191,7 @@ export class Role {
   roleName: string;
   roleLevel: string;
   department: Department;
+  permissionList : Array<Permission> = [];
   public static fromObject(src: any): Role {
     let e = new Role();
     e.depId = src.depId;
@@ -157,6 +199,12 @@ export class Role {
     e.roleName = src.roleName;
     e.roleLevel = src.roleLevel;
     e.department = Department.fromObject(src.department);
+    if(src.permissionList instanceof Array){
+      for(let index=0;index <　src.permissionList.length;index++){
+        e.permissionList.push(Permission.fromObject(src.permissionList[index]));
+      }
+    }
+    
     return e;
   }
 }

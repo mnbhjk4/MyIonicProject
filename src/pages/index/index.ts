@@ -1,16 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Http, RequestOptions, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { MenuController, Nav } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { ListPage } from './list';
 import { LeavePage } from '../leave/leave';
-import { LoginPage } from '../login/login';
 import { OrganizePage } from '../organize/organize';
 import { LoginProvider } from '../../providers/login/login';
 import { ProjectPage } from '../project/project';
-import { PlannerPage } from '../planner/planner';
 import { MyApp } from "../../app/app.component";
 import { Employee} from '../../providers/organize/organize';
 /**
@@ -46,8 +44,6 @@ export class IndexPage {
   }
 
   ionViewDidLoad() {
-   
-
   }
 
   openPage(page) {

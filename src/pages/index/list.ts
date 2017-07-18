@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
 import { Subject } from 'rxjs/Subject';
 import { CalendarEvent } from 'angular2-calendar';

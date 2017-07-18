@@ -16,7 +16,7 @@ const client_id: string = '7c3abeb3-bb33-435a-9ad6-d63ff39e8179';
 const tenantid: string = 'raytrex.onmicrosoft.com';
 
 const client_secret: string = 'JmAXcEV54v1kbG2jTuA4JwW';
-const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.ReadBasic.All'
+const scope: string = 'openid offline_access profile email User.Read Mail.Read Calendars.Read Contacts.Read People.Read Tasks.Read User.ReadBasic.All User.ReadWrite'
 @Injectable()
 export class MSloginProvider {
   private server: string = myApp.webservice_url;

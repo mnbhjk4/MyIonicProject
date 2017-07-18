@@ -14,6 +14,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 /**
  * Cordova module import
@@ -86,7 +87,8 @@ import { MouseWheelDirective } from '../directives/mouse-wheel/mouse-wheel';
     CalanderService,
     TaskProvider,
     ProjectProvider,
-    OrganizeProvider
+    OrganizeProvider,
+    FileTransfer
   ],
   exports: [LeavePage]
 })

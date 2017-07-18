@@ -9,13 +9,13 @@ import { MyApp } from '../../app/app.component';
     selector: 'page-organize-employeeadd',
     templateUrl: 'employee.add.html',
 })
-export class EmployeeAddComponent {
+export class EmployeeModifyComponent {
     @ViewChildren("box")
     box: QueryList<Checkbox>;
     employee: Employee = new Employee();
     roles: Array<Role> = [];
     functionMaps: Array<FunctionMap> = [];
-
+    targetUid = "";
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public loadingController: LoadingController,
@@ -23,6 +23,7 @@ export class EmployeeAddComponent {
         private storage: Storage,
         private alertController: AlertController
     ) {
+        this.targetUid = this.navParams.get("uid");
     }
     ionViewDidLoad() {
         this.organizeProvider.getAllRoles().subscribe((data) => {
@@ -34,18 +35,28 @@ export class EmployeeAddComponent {
                     this.roles.push(role);
                 }
             }
-        });
-        this.organizeProvider.getAllFunctionMap().subscribe((data) => {
-            if (data instanceof Array) {
-                for (let index = 0; index < data.length; index++) {
-                    let d = data[index];
-                    this.functionMaps.push(FunctionMap.fromObject(d));
+            this.organizeProvider.getAllFunctionMap().subscribe((data) => {
+                if (data instanceof Array) {
+                    for (let index = 0; index < data.length; index++) {
+                        let d = data[index];
+                        this.functionMaps.push(FunctionMap.fromObject(d));
+                    }
                 }
-            }
+                this.organizeProvider.getEmployee(this.targetUid).subscribe(data => {
+                    this.employee = Employee.fromObject(data);
+                    this.employee.roleList.forEach((value, index, array) => {
+                        for (let index = 0; index < this.roles.length; index++) {
+                            if(value.role.roleId == this.roles[index].roleId){
+                                this.roles[index]["selected"] = true;
+                            }
+                        }
+                    });
+                    
+                });
+            });
         });
-        this.organizeProvider.getRTXNo().subscribe(data=>{
-            this.employee.empNo = data;
-        });
+
+
     }
     save() {
         let saveing = this.loadingController.create({
