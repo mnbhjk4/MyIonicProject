@@ -1,0 +1,38 @@
+project-editor,project-priority-detail{
+    .priority-1{
+        background:#F000FF;width:35px;
+    }
+    .priority-2{
+        background:#FF4800;width:35px;
+    }
+    .priority-3{
+        background:#FFA200;width:35px;
+    }
+    .priority-4{
+        background:#B6E903;width:35px;
+    }
+    .priority-5{
+        background:#01AB99;width:35px;
+    }
+    .priority-6{
+        background:#00DEFF;width:35px;
+    }
+
+    .short-name{
+        color : white;
+        font-size:1.75em;
+        text-align: center;
+        text-shadow: 1px;
+        text-align: center;
+        background:#4789FC;
+        width:40px;
+        height:40px;
+    }
+
+    .subtask-priority{
+        position: absolute;
+        width:100%;
+        height: 100%;
+        
+    }
+} 

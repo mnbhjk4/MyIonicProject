@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar [hideBackButton]="true">
 
-    <ion-title>{{task.name}}</ion-title>
+    <ion-title>{{project.statusList[0].projectName}}</ion-title>
     <div>
       <button ion-button (click)="pop()">
         <ion-icon name="ios-arrow-back"></ion-icon>
       </button>
       <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
-        <div *ngIf="task.taskStatusList[0].priority == '1';else else1">
+        <div *ngIf="project.statusList[0].priority == '1';else else1">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
         <ng-template #else1>
@@ -15,7 +15,7 @@
         </ng-template>
       </button>
       <button ion-button icon-only class="priority-2" (click)="changePriority('2')">
-         <div *ngIf="task.taskStatusList[0].priority  == '2';else else2">
+         <div *ngIf="project.statusList[0].priority  == '2';else else2">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
         <ng-template #else2>
@@ -23,7 +23,7 @@
         </ng-template>
       </button>
       <button ion-button icon-only class="priority-3" (click)="changePriority('3')">
-        <div *ngIf="task.taskStatusList[0].priority  == '3';else else3">
+        <div *ngIf="project.statusList[0].priority  == '3';else else3">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
         <ng-template #else3>
@@ -31,7 +31,7 @@
         </ng-template>
       </button>
       <button ion-button icon-only class="priority-4" (click)="changePriority('4')">
-        <div *ngIf="task.taskStatusList[0].priority  == '4';else else4">
+        <div *ngIf="project.statusList[0].priority  == '4';else else4">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
         <ng-template #else4>
@@ -39,7 +39,7 @@
         </ng-template>
       </button>
       <button ion-button icon-only class="priority-5" (click)="changePriority('5')">
-        <div *ngIf="task.taskStatusList[0].priority  == '5';else else5">
+        <div *ngIf="project.statusList[0].priority  == '5';else else5">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
         <ng-template #else5>
@@ -47,7 +47,7 @@
         </ng-template>
       </button>
       <button ion-button icon-only class="priority-6" (click)="changePriority('6')">
-        <div *ngIf="task.taskStatusList[0].priority  == '6';else else6">
+        <div *ngIf="project.statusList[0].priority  == '6';else else6">
           <ion-icon name="ios-checkmark" ></ion-icon>
         </div>
         <ng-template #else6>
@@ -60,7 +60,7 @@
 <ion-content>
   <ion-grid>
     <ion-row warp>
-      <div *ngFor="let owner of task.taskOwnerList">
+      <div *ngFor="let owner of project.ownerList">
         <ion-col>
           <ion-label class="owner-label">
             <div *ngIf="getUser(owner.uid) != null &&
@@ -76,48 +76,31 @@
           </ion-label>
         </ion-col>
       </div>
-      <ion-col><button ion-button title="Add owner" (click)="selectUsers(task)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
+      <ion-col><button ion-button title="Add owner" (click)="selectProjectUsers(project)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
     </ion-row>
     <ion-row>
-      <ion-col><button ion-button title="Upload" (click)="selectUsers(task)"><ion-icon name="md-cloud-upload"></ion-icon></button></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-label>Task status</ion-label>
-        <ion-select [(ngModel)]="task.taskStatusList[0].status">
-          <ion-option value="Not Action">
-            Not Action
-          </ion-option>
-          <ion-option value="Progressing">
-            Progressing
-          </ion-option>
-          <ion-option value="Done">
-            Done
-          </ion-option>
-        </ion-select>
-      </ion-col>
+      <ion-col><button ion-button title="Upload" (click)="selectProjectUsers(project)"><ion-icon name="md-cloud-upload"></ion-icon></button></ion-col>
     </ion-row>
     <ion-row warp>
       <ion-col>
         <ion-label>Start date</ion-label>
-        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Start date" [(ngModel)]="task.taskStatusList[0].startDate"></ion-datetime>
+        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Start date" [(ngModel)]="project.statusList[0].startDate"></ion-datetime>
       </ion-col>
 
       <ion-col>
         <ion-label>Due date</ion-label>
-        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Due date" [(ngModel)]="task.taskStatusList[0].dueDate"></ion-datetime>
+        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Due date" [(ngModel)]="project.statusList[0].dueDate"></ion-datetime>
       </ion-col>
       <ion-col>
         <ion-label>Alert date</ion-label>
-        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Alert date" [(ngModel)]="task.taskStatusList[0].alertDate"></ion-datetime>
+        <ion-datetime displayFormat="YYYY/MM/DD" pickerFormat="YYYY-MMM-DD" doneText="Select Alert date" [(ngModel)]="project.statusList[0].alertDate"></ion-datetime>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-label>Sub Task</ion-label>
+      <ion-label>Task</ion-label>
     </ion-row>
-    <div *ngFor="let subtask of task.subTaskList">
-
-      <ion-row *ngIf="subtask.taskStatusList[0].status != 'DELETE'" style="border:solid 1px black">
+    <div *ngFor="let subtask of this.project.taskList">
+      <ion-row style="border:solid 1px black" *ngIf="subtask.taskStatusList[0].status != 'DELETE'">
         <ion-col col-1>
           <div class="priority-{{subtask.taskStatusList[0].priority}} subtask-priority" (click)="chgSubtaskPriority(subtask)">
 
@@ -159,7 +142,7 @@
                   <div class="full-name">{{this.companyUsers.get(subowner.uid).employeesInfo.lastName}}</div>
                 </ion-label>
               </ion-col>
-              <ion-col><button ion-button title="Add owner" (click)="selectUsers(subtask)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
+              <ion-col><button ion-button title="Add owner" (click)="selectTaskUsers(subtask)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
             </ion-row>
 
             <ion-row>
@@ -217,8 +200,8 @@
           <ion-fab>
             <button class="subtask-up-config" ion-fab><ion-icon name="md-settings" ></ion-icon></button>
             <ion-fab-list>
-              <button class="subtask-up-button" ion-button (click)="upTaskIndex(task,subtask)"><ion-icon name="ios-arrow-dropup-circle" ></ion-icon></button>
-              <button class="subtask-down-button" ion-button (click)="downTaskIndex(task,subtask)"><ion-icon name="ios-arrow-dropdown-circle" ></ion-icon></button>
+              <button class="subtask-up-button" ion-button (click)="upTaskIndex(subtask)"><ion-icon name="ios-arrow-dropup-circle" ></ion-icon></button>
+              <button class="subtask-down-button" ion-button (click)="downTaskIndex(subtask)"><ion-icon name="ios-arrow-dropdown-circle" ></ion-icon></button>
               <button class="subtask-upload-button" ion-button (click)="upload(subtask)"><ion-icon name="md-cloud-upload" ></ion-icon></button>
               <button class="subtask-remove-button" ion-button (click)="removeRow(subtask)"><ion-icon name="md-remove" ></ion-icon></button>
             </ion-fab-list>
@@ -232,24 +215,7 @@
     <ion-row>
       <ion-col>
         <ion-label>Description</ion-label>
-        <ion-textarea class="detail-description" row="5" [(ngModel)]="task.taskStatusList[0].description"></ion-textarea>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-label>Comment</ion-label>
-        <ion-input class="task-comment" [(ngModel)]="task.tempComment.comment"></ion-input>
-      </ion-col>
-      <ion-col col-1>
-        <button ion-button (click)="uploadComment(task.tempComment)"><ion-icon name="md-cloud-upload"></ion-icon></button>
-        <button ion-button (click)="commitComment(task)"><ion-icon name="ios-redo"></ion-icon></button>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let comment of task.taskCommentList">
-      <ion-col>
-        <div>{{comment.comment}}</div>
-        <div>{{comment.commentDate}}</div>
-        <div>{{ getUser(comment.uid).employeesInfo.lastName}}</div>
+        <ion-textarea class="detail-description" row="5" [(ngModel)]="project.statusList[0].description"></ion-textarea>
       </ion-col>
     </ion-row>
   </ion-grid>

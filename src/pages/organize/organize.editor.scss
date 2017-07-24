@@ -1,0 +1,32 @@
+page-organize-editor{
+    .editor{
+        position: relative;
+        border: solid 1px black;
+        padding-top:52px;
+        .editor-header{
+            background: #F8F8F8;
+            width:100%;
+            font-size:12px;
+            position: fixed;
+            top: 52px;
+            left: 0;
+            z-index: 10;
+            ion-col{
+                border: solid 1px black;
+            }
+            
+        }
+        ion-row{
+            border: solid 1px black;
+            ion-col{
+                border:solid 1px black;
+            }
+        }
+
+        // .department-role div,.department-role-bt div{
+        //     height: 50px;
+        //      border: solid 1px black;
+        // }
+    }
+
+}

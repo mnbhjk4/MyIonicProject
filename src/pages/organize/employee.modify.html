@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar [hideBackButton]="true">
         <ion-title>Modify Employee</ion-title>
-        <button ion-button (click)="save()"><ion-icon name="md-checkmark" ></ion-icon></button>
+        <button ion-button type="submit" form="info-form"><ion-icon name="md-checkmark" ></ion-icon></button>
         <button ion-button (click)="cancel()"><ion-icon name="md-close" ></ion-icon></button>
     </ion-navbar>
 </ion-header>
@@ -9,59 +9,55 @@
     <ion-grid>
         <ion-row warp>
             <ion-col>
-                <ion-list class="info-grid">
+                <form #form="ngForm" id="info-form" class="info-form" (ngSubmit)="save(form)">
                     <ion-item>
                         <ion-label>員工編號</ion-label>
-                        <ion-input [(ngModel)]="employee.empNo" required></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.empNo" name="empNo" required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>E-Mail</ion-label>
-                        <ion-input [(ngModel)]="employee.mail" required></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.mail" name="mail" required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>姓</ion-label>
-                        <ion-input [(ngModel)]="employee.employeesInfo.firstName" required></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.employeesInfo.firstName" name="firstName" required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>名</ion-label>
-                        <ion-input [(ngModel)]="employee.employeesInfo.lastName" required></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.employeesInfo.lastName" name="lastName" required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>生日</ion-label>
-                        <ion-datetime displayFromat="YYYY-MM-DD" [(ngModel)]="employee.employeesInfo.birthDate" required></ion-datetime>
+                        <ion-datetime class="form-control" displayFromat="YYYY-MM-DD" [(ngModel)]="employee.employeesInfo.birthDate" name="birthDate" required></ion-datetime>
                     </ion-item>
                     <ion-item>
                         <ion-label>性別</ion-label>
-                        <ion-select [(ngModel)]="employee.employeesInfo.gender">
+                        <ion-select class="form-control" [(ngModel)]="employee.employeesInfo.gender" name="gender" required>
                             <ion-option value="M">Male</ion-option>
                             <ion-option value="F">Female</ion-option>
                         </ion-select>
                     </ion-item>
                     <ion-item>
                         <ion-label>聯絡地址</ion-label>
-                        <ion-input [(ngModel)]="employee.employeesInfo.contactAddr1" required></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.employeesInfo.contactAddr1" name="contactAddr1" required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>戶籍地址</ion-label>
-                        <ion-input [(ngModel)]="employee.employeesInfo.contactAddr2"></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.employeesInfo.contactAddr2" name="contactAddr2" ></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>聯絡電話</ion-label>
-                        <ion-input [(ngModel)]="employee.employeesInfo.contactPhone1" required></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.employeesInfo.contactPhone1" name="contactPhone1"  required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>戶籍電話</ion-label>
-                        <ion-input [(ngModel)]="employee.employeesInfo.contactPhone2"></ion-input>
+                        <ion-input class="form-control" [(ngModel)]="employee.employeesInfo.contactPhone2" name="contactPhone2" ></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>就職日</ion-label>
-                        <ion-datetime displayFromat="YYYY-MM-DD" [(ngModel)]="employee.employeesInfo.hireDate" required></ion-datetime>
+                        <ion-datetime class="form-control" displayFromat="YYYY-MM-DD" [(ngModel)]="employee.employeesInfo.hireDate" name="hireDate" required></ion-datetime>
                     </ion-item>
-                    <ion-item>
-                        <ion-label>員工證照</ion-label>
-                         <input type="file" (change)="uploadFile($event)"/>
-                    </ion-item>
-                </ion-list>
+                </form>
                
             </ion-col>
             <ion-col>

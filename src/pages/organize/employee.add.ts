@@ -1,5 +1,5 @@
 import { Component, ViewChildren, QueryList } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, Checkbox } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, Checkbox,Events } from 'ionic-angular';
 import { OrganizeProvider, Employee, EmployeeRoles, Role, Permission, FunctionMap } from '../../providers/organize/organize';
 import { Storage } from '@ionic/storage';
 import { MyApp } from '../../app/app.component';
@@ -21,7 +21,8 @@ export class EmployeeAddComponent {
         public loadingController: LoadingController,
         private organizeProvider: OrganizeProvider,
         private storage: Storage,
-        private alertController: AlertController
+        private alertController: AlertController,
+        private events : Events
     ) {
     }
     ionViewDidLoad() {
@@ -60,13 +61,12 @@ export class EmployeeAddComponent {
                 this.employee.roleList.push(er);
             }
         }
-        console.log(this.employee);
         let permissionList: Array<Permission> = [];
         for (let index = 0; index < this.functionMaps.length; index++) {
             let f = this.functionMaps[index];
+            let p = new Permission()
+            p.functionName = f.functionName;
             if (f["create"] || f["update"] || f["read"] || f["delete"]) {
-                let p = new Permission()
-                p.functionName = f.functionName;
                 if (f["create"]) {
                     p.create = 0;
                 }
@@ -79,8 +79,8 @@ export class EmployeeAddComponent {
                 if (f["delete"]) {
                     p.delete = 0;
                 }
-                permissionList.push(p);
             }
+            permissionList.push(p);
         }
         this.storage.get("access_obj").then(value => {
             this.organizeProvider.addEmployee(this.employee, permissionList, value.access_token).subscribe((data) => {
@@ -92,6 +92,7 @@ export class EmployeeAddComponent {
                             text: 'Back',
                             handler: () => {
                                 MyApp.companyUsers = data;
+                                this.events.publish("refresh:organize");
                                 this.navCtrl.pop();
                             }
                         }]
@@ -106,18 +107,6 @@ export class EmployeeAddComponent {
     cancel() {
         this.navCtrl.pop();
     }
-    uploadFile(event) {
-        let files: FileList = event.target.files;
-        if (files.length > 0) {
-            let file = files.item(0);
-            this.storage.get("access_obj").then(value => {
-                this.organizeProvider.uploadImage(value.access_token, value.uid, file).subscribe((data) => {
-                    console.log(data);
-                });
-            });
-        }
-    }
-
     changePermission(role: Role, event) {
         if (event.checked) {
             if (role != null && role.permissionList.length > 0) {

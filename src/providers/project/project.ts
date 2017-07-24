@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http,URLSearchParams } from '@angular/http';
+import { Http,URLSearchParams,RequestOptions,Headers } from '@angular/http';
 import { Task } from '../task/task';
 import 'rxjs/add/operator/map';
 import * as myApp from '../../app/app.component';
@@ -21,6 +21,16 @@ export class ProjectProvider {
     return this.http.post(this.server + "/project/geProjectByUid", urlSearchParams.toString()).map((res) => res.json());
   }
 
+  saveProject(project : Project){
+     let requestOptions = new RequestOptions();
+    let headers = new Headers();
+    //headers.append('Content-Type', 'multipart/form-data');
+    requestOptions.headers = headers;
+    let formData = new FormData();
+    formData.append("project",JSON.stringify(project));
+    formData.append("taskList",JSON.stringify(project.taskList));
+    return this.http.post(this.server+"/project/saveProject",formData).map((res) => res.json());;
+  }
 }
 
 export class Project {
@@ -58,18 +68,18 @@ export class ProjectOwner {
   ownerSerial: number;
   projectNo: string;
   uid: string;
-  joinDate: Date;
-  leaveDate: Date;
+  joinDate: string;
+  leaveDate: string;
   static fromObject(src: any) {
     let obj = new ProjectOwner();
     obj.ownerSerial = src.ownerSerial;
     obj.projectNo = src.projectNo;
     obj.uid = src.uid;
     if (src.joinDate != null) {
-      obj.joinDate = new Date(src.joinDate);
+      obj.joinDate = src.joinDate;
     }
     if (src.leaveDate != null) {
-      obj.leaveDate = new Date(src.leaveDate);
+      obj.leaveDate = src.leaveDate;
     }
 
 
@@ -81,35 +91,36 @@ export class ProjectStatus {
   statusUuid: string;
   projectNo: string;
   projectName: string;
-  startDate: Date;
-  dueDate : Date;
-  endDate: Date;
-  updateDate: Date;
-  alarmDate: Date;
+  startDate: string;
+  dueDate : string;
+  endDate: string;
+  updateDate: string;
+  alarmDate: string;
+  status:string;
   description: string;
-  priority: number;
+  priority: string;
   static fromObject(src: any) {
     let obj = new ProjectStatus();
     obj.statusUuid = src.statusUuid;
     obj.projectNo = src.projectNo;
     obj.projectName = src.projectName;
     if (src.startDate != null) {
-      obj.startDate = new Date(src.startDate);
+      obj.startDate = src.startDate;
     }
     if (src.endDate != null) {
-      obj.endDate = new Date(src.endDate);
+      obj.endDate = src.endDate;
     }
     if (src.updateDate != null) {
-      obj.updateDate = new Date(src.updateDate);
+      obj.updateDate = src.updateDate;
     }
     if (src.alarmDate != null) {
-      obj.alarmDate = new Date(src.alarmDate);
+      obj.alarmDate = src.alarmDate;
     }
       if (src.dueDate != null) {
-      obj.dueDate = new Date(src.dueDate);
+      obj.dueDate = src.dueDate;
     }
 
-
+    obj.status=src.status;
     obj.description = src.description;
     
     obj.priority = src.priority;

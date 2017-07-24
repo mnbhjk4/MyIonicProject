@@ -121,7 +121,7 @@ export class TaskDetailComponent {
   removeRow(task: Task) {
     for (let i = 0; i < this.task.subTaskList.length; i++) {
       if (this.task.subTaskList[i].taskNo == task.taskNo) {
-        this.task.subTaskList.splice(i, 1);
+        this.task.subTaskList[i].taskStatusList[0].status = "DELETE";
       }
     }
   }
@@ -221,7 +221,7 @@ export class TaskDetailComponent {
 }
 
 @Component({
-  selector: 'task-detail',
+  selector: 'task-priority-detail',
   template: `
    <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
         <div *ngIf="priority == '1';else else1">

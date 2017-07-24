@@ -11,13 +11,19 @@
     <button ion-fab mini><ion-icon name="add"></ion-icon></button>
     <ion-fab-list>
       <button ion-fab (click)="addEmployee()"><ion-icon name="md-person-add" ></ion-icon></button>
+      <button ion-fab (click)="editOrganize()"><ion-icon name="md-cog" ></ion-icon></button>
     </ion-fab-list>
 
   </ion-fab>
   <ion-grid>
       <ion-row class="organize-tree" *ngFor="let departmentArray of this.deparmentTreeList; let i = index">
-        <ion-col class="organize-depart-col" *ngFor="let department of departmentArray">
-          <table>
+        <ion-col class="organize-depart-col" *ngFor="let department of departmentArray;let di = index" >
+          <div style="width:100%;max-widt:200px" *ngIf="department.depId != null" [ngClass]="{'rootDepartmemnt':i == 0,
+            'department':i!=0,
+            'department-first-child':di == 0,
+            'department-last-child':di == (departmentArray.length-1),
+            'department-fisrt-child':(department.depId == null)}">
+             <table style="width:100%">
             <tr>
               <th>{{department.name}}</th>
             </tr>
@@ -27,7 +33,15 @@
               </td>
             </tr>
           </table>
+          </div>
+         
         </ion-col>
       </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>No Role employees</ion-row>
+    <ion-row warp *ngFor="let employee of this.noRoleEmployeeList">
+      <ion-col class="no-role-employee" (click)="showEmployeeInfo(employee)"> {{employee.employeesInfo.lastName}}</ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

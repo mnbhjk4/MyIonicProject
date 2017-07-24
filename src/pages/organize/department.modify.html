@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar [hideBackButton]="true">
+        <ion-title>Modify Department</ion-title>
+        <button ion-button type="submit" form="modifyDepartmentForm"><ion-icon name="md-checkmark" ></ion-icon></button>
+        <button ion-button (click)="cancel()"><ion-icon name="md-close" ></ion-icon></button>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <form (ngSubmit)="modifyDepartment()" id="modifyDepartmentForm">
+        <ion-item>
+            <ion-label>Department NO</ion-label>
+            <ion-input [(ngModel)]="department.depNo" name="depNo">
+
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Department Name</ion-label>
+            <ion-input [(ngModel)]="department.name" name="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Region</ion-label>
+            <ion-select [(ngModel)]="department.region" name="region"></ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Parent Department No</ion-label>
+            <ion-select [(ngModel)]="department.parentDepId" name="parentDepId">
+                    <ion-option *ngFor="let d of departmnetList" [value]="d.depId">{{d.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+    </form>
+</ion-content>

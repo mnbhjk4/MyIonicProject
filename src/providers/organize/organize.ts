@@ -17,7 +17,6 @@ export class OrganizeProvider {
   constructor(
     public http: Http,
     private fileTransfer :FileTransfer) {
-    console.log('Hello OrganizeProvider Provider');
   }
   
   getDepartmentsTree() {
@@ -71,6 +70,21 @@ export class OrganizeProvider {
     return this.http.post(this.server + "/employee/addEmployee", null, requestOptions)
       .map(res => res.json());
   }
+  saveEmployee(employee:Employee,permissionList : Array<Permission>,access_token:string){
+    let requestOptions = new RequestOptions();
+
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+
+    let form = new FormData();
+    form.append("employee",JSON.stringify(employee));
+    form.append("permissionList",JSON.stringify(permissionList));
+    form.append("access_token",access_token);
+
+    return this.http.post(this.server + "/employee/saveEmployee", form)
+      .map(res => res.json());
+  }
 
   getEmployee(uid:string){
     let requestOptions = new RequestOptions();
@@ -89,10 +103,10 @@ export class OrganizeProvider {
   uploadImage(access_token:string,uid:string ,file:File){
     let requestOptions = new RequestOptions();
     let headers = new Headers();
-    // headers.append('Content-Type', 'multipart/form-data');
+    //headers.append('Content-Type', 'multipart/form-data');
     requestOptions.headers = headers;
     let formData = new FormData();
-    formData.append("file",file,file.name);
+    formData.append("image",file,file.name);
     formData.append("access_token",access_token);
     formData.append("uid",uid);
     return this.http.post(this.server+"/adal/uploadOwnPhoto",formData);
@@ -108,11 +122,58 @@ export class OrganizeProvider {
     return this.http.post(this.server + "/employee/getRTXNo", null, requestOptions)
       .map(res => res.json());
   }
+
+  getDepartmentList(){
+    let requestOptions = new RequestOptions();
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+    let parames: URLSearchParams = new URLSearchParams();
+    requestOptions.search = parames;
+    return this.http.post(this.server + "/organize/getDepartmentList", null, requestOptions)
+      .map(res => res.json());
+  }
+
+  getPermissionByRole(roleId:string){
+    let requestOptions = new RequestOptions();
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+    let parames: URLSearchParams = new URLSearchParams();
+    parames.append("roleId",roleId);
+    requestOptions.search = parames;
+    
+    return this.http.post(this.server + "/organize/getPermissionByRole", null, requestOptions)
+      .map(res => res.json());
+  }
+  
+  saveDepartment(department : Department){
+    let requestOptions = new RequestOptions();
+    let myHeader = new Headers();
+    requestOptions.headers = myHeader;
+    myHeader.append('Content-Type', 'application/json');
+    let parames: URLSearchParams = new URLSearchParams();
+    parames.append("department",JSON.stringify(department));
+    requestOptions.search = parames;
+    
+    return this.http.post(this.server + "/organize/saveDepartment", null, requestOptions)
+      .map(res => res.json());
+  }
+  saveRole(role : Role,permissionList:Array<Permission>){
+    let requestOptions = new RequestOptions();
+    let myHeader = new Headers();
+    let form = new FormData();
+    form.append("role",JSON.stringify(role));
+    form.append("permissionList",JSON.stringify(permissionList));
+    return this.http.post(this.server + "/organize/saveRole", form, requestOptions)
+      .map(res => res.json());
+  }
 }
 
 export class Employee {
   uid: string = "";
   empNo: string = "";
+  mail : string = "";
   employeesInfo: EmployeeInfo = new EmployeeInfo();
   roleList: Array<EmployeeRoles> = [];
   permission : Array<Permission> = [];
@@ -121,6 +182,7 @@ export class Employee {
     let e = new Employee();
     e.uid = src.uid;
     e.empNo = src.empNo;
+    e.mail = src.mail;
     e.employeesInfo = EmployeeInfo.fromObject(src.employeesInfo);
     if (src.roleList instanceof Array) {
       for (let i = 0; i < src.roleList.length; i++) {
@@ -136,15 +198,15 @@ export class EmployeeInfo {
   firstName: string = "";
   midName: string = "";
   lastName: string = "";
-  birthDate: Date;
+  birthDate: string;
   preferredLanguage: string = "";
   gender: string = "";
   contactAddr1: string = "";
   contactAddr2: string = "";
   contactPhone1: string = "";
   contactPhone2: string = "";
-  hireDate: Date
-  leaveDate: Date;
+  hireDate: string;
+  leaveDate: string;
   image: string = "";
 
   public static fromObject(src: any): EmployeeInfo {

@@ -1,27 +1,42 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { OrganizePage,UserInfoComponent } from './organize';
+import { OrganizePage  } from './organize';
+import { UserInfoComponent } from './userinfo';
 import { EmployeeAddComponent } from './employee.add';
 import { EmployeeModifyComponent } from './employee.modify';
-
+import { OrganizeEditorComponent } from './organize.editor';
+import { DepartmentAddComponent } from './department.add';
+import { RoleAddComponent } from './role.add'
+import { DepartmentModifyComponent } from './department.modify';
+import { RoleModifyComponent } from './role.modify'
 
 @NgModule({
   declarations: [
     OrganizePage,
     EmployeeAddComponent,
     UserInfoComponent,
-    EmployeeModifyComponent
+    EmployeeModifyComponent,
+    OrganizeEditorComponent,
+    DepartmentAddComponent,
+    RoleAddComponent,
+    DepartmentModifyComponent,
+    RoleModifyComponent
   ],
   imports: [
     IonicPageModule.forChild(OrganizePage),
   ],
-  entryComponents:[
+  entryComponents: [
     EmployeeAddComponent,
     UserInfoComponent,
-    EmployeeModifyComponent
+    EmployeeModifyComponent,
+    OrganizeEditorComponent,
+    DepartmentAddComponent,
+    RoleAddComponent,
+    DepartmentModifyComponent,
+    RoleModifyComponent
   ],
   exports: [
     OrganizePage
   ]
 })
-export class OrganizePageModule {}
+export class OrganizePageModule { }

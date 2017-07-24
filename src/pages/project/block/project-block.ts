@@ -6,6 +6,7 @@ import { Employee} from '../../../providers/organize/organize';
 import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../../providers/task/task';
 import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../../providers/project/project';
 import { Storage } from '@ionic/storage';
+import {ProjectEditorComponent } from '../projecteditor/projecteditor';
 /**
  * Generated class for the TaskPage page.
  *
@@ -36,7 +37,9 @@ export class ProjectBlockComponent {
     openManageTaskDetail(task_id: string, title: string) {
         this.navCtrl.push(TaskDetailComponent, { task_id: task_id, title: title });
     }
-
+    openProjectEditor(project : Project){
+        this.navCtrl.push(ProjectEditorComponent,{project:project});
+    }
 
     setProgess(task: Task) {
         let total = task.subTaskList.length;

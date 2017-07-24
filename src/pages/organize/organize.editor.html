@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Edit Organize</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-grid class="editor">
+        <ion-row class="editor-header">
+            <ion-col>Parent Department</ion-col>
+            <ion-col>Department</ion-col>
+            <ion-col>Roles</ion-col>
+            <ion-col><button ion-button (click)="addDepartment()">Add Department</button></ion-col>
+        </ion-row>
+        <ion-row class="editor-row" *ngFor="let department of departmentList">
+            <ion-col class="department-bt">
+                <div *ngIf="department.pDep != null">
+                    {{department.pDep.name}}
+                </div>
+            </ion-col>
+            <ion-col class="department-name">
+                {{department.name}}
+            </ion-col>
+            <ion-col class="department-role">
+                <div  *ngFor="let role of department.roleList">{{role.roleName}}</div>
+            </ion-col>
+            <ion-col class="department-role-bt">
+                <div *ngFor="let role of department.roleList"><button ion-button  (click)="modifyRole(role,department)">Modify Role</button></div>
+                <div ><button ion-button (click)="addRole(department)">Add Role</button><button ion-button (click)="modifyDepartment(department)">Modify Department</button></div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar [hideBackButton]="true">
+        <ion-title>Add Role</ion-title>
+        <button ion-button type="submit" form="roleAddForm"><ion-icon name="md-checkmark" ></ion-icon></button>
+        <button ion-button (click)="cancel()"><ion-icon name="md-close" ></ion-icon></button>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <form (ngSubmit)="addRole()" id="roleAddForm">
+        <ion-item>
+            <ion-label>Role Name</ion-label>
+            <ion-input [(ngModel)]="role.roleName" name="roleName">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Role Level</ion-label>
+            <ion-select [(ngModel)]="role.roleLevel" name="roleLevel">
+                <ion-option *ngFor="let i of roleLevel;let ind = index" [value]="ind+1">{{ind+1}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Department Name</ion-label>
+            <ion-label>{{this.department.name}}</ion-label>
+        </ion-item>
+    </form>
+    <ion-grid>
+        <ion-row>
+            <ion-col>Create</ion-col>
+            <ion-col>Update</ion-col>
+            <ion-col>Read</ion-col>
+            <ion-col>Delete</ion-col>
+            <ion-col>Function Name</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let f of functionMapList">
+            <ion-col><ion-checkbox #check class="create-box" [attr.func]="f.functionName"></ion-checkbox></ion-col>
+            <ion-col><ion-checkbox #check class="update-box"  [attr.func]="f.functionName"></ion-checkbox></ion-col>
+            <ion-col><ion-checkbox #check class="read-box"  [attr.func]="f.functionName"></ion-checkbox></ion-col>
+            <ion-col><ion-checkbox #check class="delete-box"  [attr.func]="f.functionName"></ion-checkbox></ion-col>
+            <ion-col>{{f.functionName}}</ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
