@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http,URLSearchParams,RequestOptions,Headers } from '@angular/http';
+import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 import { Task } from '../task/task';
+import { Permission, EmployeeInfo, Employee, EmployeeRoles } from '../organize/organize';
 import 'rxjs/add/operator/map';
 import * as myApp from '../../app/app.component';
 /*
@@ -21,15 +22,25 @@ export class ProjectProvider {
     return this.http.post(this.server + "/project/geProjectByUid", urlSearchParams.toString()).map((res) => res.json());
   }
 
-  saveProject(project : Project){
-     let requestOptions = new RequestOptions();
+  saveProject(project: Project) {
+    let requestOptions = new RequestOptions();
     let headers = new Headers();
     //headers.append('Content-Type', 'multipart/form-data');
     requestOptions.headers = headers;
     let formData = new FormData();
-    formData.append("project",JSON.stringify(project));
-    formData.append("taskList",JSON.stringify(project.taskList));
-    return this.http.post(this.server+"/project/saveProject",formData).map((res) => res.json());;
+    formData.append("project", JSON.stringify(project));
+    formData.append("taskList", JSON.stringify(project.taskList));
+    return this.http.post(this.server + "/project/saveProject", formData).map((res) => res.json());;
+  }
+
+  createProject(employee: Employee) {
+    let requestOptions = new RequestOptions();
+    let headers = new Headers();
+    //headers.append('Content-Type', 'multipart/form-data');
+    requestOptions.headers = headers;
+    let formData = new FormData();
+    formData.append("employee", JSON.stringify(employee));
+    return this.http.post(this.server + "/project/createNewProject", formData).map((res) => res.json());
   }
 }
 
@@ -56,7 +67,7 @@ export class Project {
     if (src.statusList != null && src.statusList instanceof Array) {
       for (let index = 0; index < src.statusList.length; index++) {
         let status = ProjectStatus.fromObject(src.statusList[index]);
-       
+
         obj.statusList.push(status);
       }
     }
@@ -92,11 +103,11 @@ export class ProjectStatus {
   projectNo: string;
   projectName: string;
   startDate: string;
-  dueDate : string;
+  dueDate: string;
   endDate: string;
   updateDate: string;
   alarmDate: string;
-  status:string;
+  status: string;
   description: string;
   priority: string;
   static fromObject(src: any) {
@@ -116,13 +127,13 @@ export class ProjectStatus {
     if (src.alarmDate != null) {
       obj.alarmDate = src.alarmDate;
     }
-      if (src.dueDate != null) {
+    if (src.dueDate != null) {
       obj.dueDate = src.dueDate;
     }
 
-    obj.status=src.status;
+    obj.status = src.status;
     obj.description = src.description;
-    
+
     obj.priority = src.priority;
     return obj;
   }

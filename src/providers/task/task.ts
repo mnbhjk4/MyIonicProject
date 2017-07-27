@@ -35,6 +35,7 @@ export class Task {
   attachUuid: string = "";
   permissionId: string = "";
   parentTaskNo: string = "";
+  type : string = "";
   taskStatusList: Array<TaskStatus> = [];
   taskOwnerList: Array<TaskOwner> = [];
   taskCommentList: Array<TaskComment> = [];
@@ -49,6 +50,7 @@ export class Task {
     obj.attachUuid = src.attachUuid;
     obj.permissionId = src.permissionId;
     obj.parentTaskNo = src.parentTaskNo;
+    obj.type = src.type;
     if (src.subTaskList instanceof Array) {
       for (let index = 0; index < src.subTaskList.length; index++) {
         let task = Task.fromObject(src.subTaskList[index]);

@@ -1,10 +1,10 @@
 import { Component, ViewChildren, QueryList, ElementRef, Pipe } from '@angular/core';
-import { NavParams, PopoverController, PopoverOptions, Select, Events,NavController,ViewController,LoadingController  } from 'ionic-angular';
-import { Task, TaskStatus, TaskComment, TaskOwner,TaskProvider } from '../../providers/task/task';
+import { NavParams, PopoverController, PopoverOptions, Select, Events, NavController, ViewController, LoadingController } from 'ionic-angular';
+import { Task, TaskStatus, TaskComment, TaskOwner, TaskProvider } from '../../providers/task/task';
 import { MyApp } from '../../app/app.component';
 import { UserListComponent } from '../../components/user-list/user-list';
 import { LoginProvider } from '../../providers/login/login';
-import { Employee,EmployeeInfo } from '../../providers/organize/organize';
+import { Employee, EmployeeInfo } from '../../providers/organize/organize';
 
 /**
  * Generated class for the TaskDetailComponent component.
@@ -20,8 +20,7 @@ export class TaskDetailComponent {
   @ViewChildren('subselect')
   subtaskBlock: QueryList<Select>;
 
-  @ViewChildren('subselectPriority')
-  subTaskPriority: QueryList<Select>;
+
 
   companyUsers: Map<string, Employee> = MyApp.companyUsers;
   task: Task = null;
@@ -29,64 +28,48 @@ export class TaskDetailComponent {
   constructor(private navParams: NavParams,
     private popoverController: PopoverController,
     private loginProvider: LoginProvider,
-    private taskProvider : TaskProvider,
+    private taskProvider: TaskProvider,
     private navCtrl: NavController,
-    private loadingController : LoadingController,
-    private events : Events ) {
+    private loadingController: LoadingController,
+    private events: Events) {
     let obj = this.navParams.get('task');
     if (obj instanceof Task) {
       this.task = obj;
     }
   }
-  getUser(uid : string){
+  getUser(uid: string) {
     let employee = this.companyUsers.get(uid);
-    if(employee == null){
-       employee = new Employee();
+    if (employee == null) {
+      employee = new Employee();
     }
     return employee;
   }
 
-  pop(){
+  pop() {
     let loader = this.loadingController.create({
-      content : "Saving data..."
+      content: "Saving data..."
     });
     loader.present();
-     this.taskProvider.saveTask(this.task).subscribe((data)=>{
-     if(data != null && (data instanceof Object || data.indexOf("Error") == -1)){
-       let newTask = Task.fromObject(data);
-       this.task = newTask;
-       loader.dismiss();
-       this.navCtrl.pop().then( a=>{
-         this.events.publish("refresh:project",{projectNo:this.task.projectNumber});
-       });
-     }
+    this.taskProvider.saveTask(this.task).subscribe((data) => {
+      if (data != null && (data instanceof Object || data.indexOf("Error") == -1)) {
+        let newTask = Task.fromObject(data);
+        this.task = newTask;
+        loader.dismiss();
+        this.navCtrl.pop().then(a => {
+          this.events.publish("refresh:project", { projectNo: this.task.projectNumber });
+        });
+      }
     });
-    
-  }
-  addRow(parentTask: Task) {
-    let newTask = new Task();
-    newTask.taskNo = "NEW" + this.newIndex;
-    newTask.customerId = parentTask.customerId;
-    newTask.parentTaskNo = parentTask.taskNo;
-    newTask.projectNumber = parentTask.projectNumber;
 
-    let initTaskStatus = new TaskStatus();
-    initTaskStatus.status = "Not Action";
-    initTaskStatus.priority = "6";
-    initTaskStatus.parentTaskNo = parentTask.taskNo;
-    initTaskStatus.taskNo = "NEW"+this.newIndex;
-    newTask.taskStatusList.push(initTaskStatus);
-    this.task.subTaskList.push(newTask);
-
-    this.newIndex = this.newIndex + 1;
   }
+
   selectUsers(task: Task) {
     let taskOwnerList = task.taskOwnerList;
     let selectedOwner: Array<string> = [];
     for (let index = 0; index < taskOwnerList.length; index++) {
       selectedOwner.push(taskOwnerList[index].uid);
     }
-    let popover = this.popoverController.create(UserListComponent, { selectedOwner: selectedOwner }, { enableBackdropDismiss: false,cssClass: 'contact-popover' });
+    let popover = this.popoverController.create(UserListComponent, { selectedOwner: selectedOwner }, { enableBackdropDismiss: false, cssClass: 'contact-popover' });
     popover.present({
 
     });
@@ -118,13 +101,7 @@ export class TaskDetailComponent {
     });
 
   }
-  removeRow(task: Task) {
-    for (let i = 0; i < this.task.subTaskList.length; i++) {
-      if (this.task.subTaskList[i].taskNo == task.taskNo) {
-        this.task.subTaskList[i].taskStatusList[0].status = "DELETE";
-      }
-    }
-  }
+
   changePriority(priority: string) {
     this.task.taskStatusList[0].priority = priority;
   }
@@ -166,23 +143,14 @@ export class TaskDetailComponent {
       }
     }
   }
-  chgSubtaskPriority(task: Task) {
-    let pop = this.popoverController.create(PriorityComponent, { priority: task.taskStatusList[0].priority }, { cssClass: "priorityPopup" });
 
-    pop.present();
-    pop.onDidDismiss((data) => {
-      if (data != null) {
-        task.taskStatusList[0].priority = data;
-      }
-    });
-  }
 
   uploadComment(taskComment: TaskComment) {
 
   }
 
   commitComment(task: Task) {
-    if(task.tempComment.comment == null || task.tempComment.comment.trim() == ''){
+    if (task.tempComment.comment == null || task.tempComment.comment.trim() == '') {
       return;
     }
     task.tempComment.commentDate = new Date();
@@ -201,91 +169,46 @@ export class TaskDetailComponent {
     task.tempComment = new TaskComment();
   }
 
-  checkDefault(statusList : any,type : string){
-    if(type == "startDate"){
-      if(statusList.startDate == null){
-        statusList.startDate = new Date().toISOString();
-      }
-    }else if(type == "dueDate"){
-      
-      if(statusList.dueDate == null){
-        statusList.dueDate = new Date().toISOString();
-      }
-    }else if(type == "alertDate"){
-      
-      if(statusList.alertDate == null){
-        statusList.alertDate = new Date().toISOString();
-      }
-    }
+  addNormalTask(parentTask: Task) {
+    let newTask = new Task();
+    newTask.taskNo = "NEW" + this.newIndex;
+    newTask.customerId = parentTask.customerId;
+    newTask.parentTaskNo = parentTask.taskNo;
+    newTask.projectNumber = parentTask.projectNumber;
+    newTask.type = "NORMAL_TASK";
+
+
+    let initTaskStatus = new TaskStatus();
+    initTaskStatus.status = "Not Action";
+    initTaskStatus.priority = "6";
+    initTaskStatus.parentTaskNo = parentTask.taskNo;
+    initTaskStatus.taskNo = "NEW" + this.newIndex;
+    newTask.taskStatusList.push(initTaskStatus);
+    this.task.subTaskList.push(newTask);
+
+    this.newIndex = this.newIndex + 1;
+  }
+
+  addQuotationTask(parentTask: Task) {
+    let newTask = new Task();
+    newTask.taskNo = "NEW" + this.newIndex;
+    newTask.customerId = parentTask.customerId;
+    newTask.parentTaskNo = parentTask.taskNo;
+    newTask.projectNumber = parentTask.projectNumber;
+    newTask.type = "QUOTATION_TASK";
+
+
+    let initTaskStatus = new TaskStatus();
+    initTaskStatus.status = "Not Action";
+    initTaskStatus.priority = "6";
+    initTaskStatus.parentTaskNo = parentTask.taskNo;
+    initTaskStatus.taskNo = "NEW" + this.newIndex;
+    newTask.taskStatusList.push(initTaskStatus);
+    this.task.subTaskList.push(newTask);
+
+    this.newIndex = this.newIndex + 1;
   }
 }
 
-@Component({
-  selector: 'task-priority-detail',
-  template: `
-   <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
-        <div *ngIf="priority == '1';else else1">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else1>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-2" (click)="changePriority('2')">
-         <div *ngIf="priority  == '2';else else2">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else2>
-         <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-3" (click)="changePriority('3')">
-        <div *ngIf="priority  == '3';else else3">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else3>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-4" (click)="changePriority('4')">
-        <div *ngIf="priority  == '4';else else4">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else4>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-5" (click)="changePriority('5')">
-        <div *ngIf="priority  == '5';else else5">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else5>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-6" (click)="changePriority('6')">
-        <div *ngIf="priority  == '6';else else6">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else6>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button (click)="applyPriority()"><ion-icon name="md-checkmark">Apply</ion-icon></button>`
-})
-export class PriorityComponent {
-  priority: string = "6";
-  constructor(public viewCtrl: ViewController) {
-    let nowPriority = this.viewCtrl.getNavParams().data["priority"];
-    this.priority = nowPriority;
-  }
 
-  changePriority(priority: string) {
-    this.priority = priority;
-  }
-
-  applyPriority() {
-    this.viewCtrl.dismiss(this.priority);
-  }
-}
 

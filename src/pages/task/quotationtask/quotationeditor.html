@@ -1,0 +1,123 @@
+<ion-header>
+    <ion-navbar [hideBackButton]="true">
+        <button ion-button (click)="pop()"><ion-icon name="md-apps"></ion-icon></button>
+        <ion-title>Quotation Editor</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <table class="quotation-table">
+        <tr>
+            <th>Product No</th>
+            <th>Product option</th>
+            <th>Description</th>
+            <th>Q'ty</th>
+            <th>Price</th>
+            <th>Exchange Rate</th>
+            <th>Markup Rate</th>
+            <th>List price</th>
+            <th>Note</th>
+        </tr>
+        <tr *ngFor="let q of quotationList;let i = index">
+            <td>
+                <ion-input class="product-input" type="text" [(ngModel)]="q.productNo" [value]="q.productNo" (change)="findProductNo($event,i)"></ion-input>
+            </td>
+            <td>
+                <ion-input class="product-opt-input" type="text" [(ngModel)]="q.productOption" [value]="q.productOption"></ion-input>
+            </td>
+            <td>
+                <ion-input class="description-input" type="text" [(ngModel)]="q.description" [value]="q.description"></ion-input>
+            </td>
+            <td>
+                <ion-input class="qty-input" type="number" [(ngModel)]="q.qty" [value]="q.qty" (change)="caluateListPrice(q)"></ion-input>
+            </td>
+            <td>
+                <ion-input class="price-input" type="number" [(ngModel)]="q.price" [value]="q.price" (change)="caluateListPrice(q)"></ion-input>
+            </td>
+            <td>
+                <ion-input class="exchangeRate-input" type="number" [(ngModel)]="q.exchangeRate" [value]="q.exchangeRate" (change)="caluateListPrice(q)"></ion-input>
+            </td>
+            <td>
+                <ion-input class="markup-input" type="number" [(ngModel)]="q.markuprate" [value]="q.markuprate" (change)="caluateListPrice(q)"></ion-input>
+            </td>
+            <td>
+                <ion-input class="listPrice-input" type="number" [(ngModel)]="q.listPrice" [value]="q.listPrice" (change)="refreshTotalPrice()"></ion-input>
+            </td>
+            <td>
+                <ion-input class="note-input" type="text" [(ngModel)]="q.note" [value]="q.note"></ion-input>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><button ion-button (click)="addQuotationRow()"><ion-icon name="md-add-circle"></ion-icon></button></td>
+            <td>
+                Total
+            </td>
+            <td colspan="2">
+                <ion-item>
+                    <ion-select #customerCurrency style="width:100%">
+                        <ion-option value="TWD" selected>TWD</ion-option>
+                        <ion-option value="USD">USD</ion-option>
+                        <ion-option value="CNY">CNY</ion-option>
+                        <ion-option value="JPY">JPY</ion-option>
+                        <ion-option value="HKD">HKD</ion-option>
+                        <ion-option value="AUD">AUD</ion-option>
+                        <ion-option value="SGD">SGD</ion-option>
+                        <ion-option value="VND">VND</ion-option>
+                        <ion-option value="PHP">PHP</ion-option>
+                        <ion-option value="EUR">EUR</ion-option>
+                    </ion-select>
+                </ion-item>
+            </td>
+            <td colspan="3">{{totalPrice}}</td>
+        </tr>
+    </table>
+    <table class="keysight-price-table">
+        <tr>
+            <th>Item</th>
+            <th>Product No</th>
+            <th>Product option</th>
+            <th>Description</th>
+            <th>List Price</th>
+            <th>Dicount Qualifier Group</th>
+            <th>Discount %</th>
+            <th>Net Price</th>
+            <th>Product Line</th>
+            <th>RMU Code</th>
+            <th>Last order date</th>
+        </tr>
+        <tr *ngFor="let kp of kpList">
+            <td>
+                <button ion-button (click)="addToQuotationEditor(kp)"><ion-icon name="md-add"></ion-icon></button>
+            </td>
+            <td>
+                <ion-label>{{kp.productNo}}</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.productOption}}</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.description}}</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.listPrice}}({{kp.listCurrency}})</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.discountQualifierGroup}}</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.discountPercentage}}</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.netPrice}}({{kp.netCurrency}})</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.productLine}}</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.rumCode}}</ion-label>
+            </td>
+            <td>
+                <ion-label>{{kp.lastOrderDate}}</ion-label>
+            </td>
+        </tr>
+    </table>
+</ion-content>

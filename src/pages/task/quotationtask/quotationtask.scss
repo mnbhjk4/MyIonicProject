@@ -1,0 +1,40 @@
+task-quotation{
+    .issue-for,.issue-by{
+        width:100%;
+        height:200px;
+    }
+    .quotation-table{
+        width: 100%;
+        th,td{
+            border: solid 1px black;
+        }
+        .item{
+            width:50px;
+            text-align: center;
+        }
+        .item-input input{
+            text-align: center;
+        }
+        .product-desc{
+            width:60%;
+        }
+        .unit-price-bt{
+            width:100%;
+        }
+        .unit-price{
+            width:100px;
+        }
+        .qtr{
+            width:10%;
+        }
+        .extended-price{
+            width:10%;
+        }
+    }
+    .header-quotation-info,.header-paymenet-info{
+        ion-col{
+            border: solid 1px black;
+            text-align: center;
+        }
+    }
+}

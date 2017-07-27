@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, Loading } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
-import { Employee} from '../../providers/organize/organize';
+import { Employee } from '../../providers/organize/organize';
 import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../providers/task/task';
 import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../providers/project/project';
 import { Storage } from '@ionic/storage';
+import { ProjectEditorComponent }from './projecteditor/projecteditor';
 /**
  * Generated class for the TaskPage page.
  *
@@ -73,6 +74,12 @@ export class ProjectPage {
         }
         this.loading.dismiss();
       }
+    });
+  }
+
+  createNewProject() {
+    this.projectProvider.createProject(MyApp.targetUser).subscribe(data => {
+      this.navCtrl.push(ProjectEditorComponent, { project: Project.fromObject(data) });
     });
   }
 }

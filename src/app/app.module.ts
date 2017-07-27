@@ -27,12 +27,12 @@ import { Camera } from '@ionic-native/camera';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { LeavePage } from '../pages/leave/leave';
-import { TaskDetailComponent, PriorityComponent } from '../pages/task/task-detail';
+
 import { UserListComponent } from '../components/user-list/user-list';
 import { IndexPageModule } from '../pages/index/index.module';
 import { OrganizePageModule } from '../pages/organize/organize.module';
 import { ProjectPageModule } from '../pages/project/project.module';
-
+import { TaskDetailComponentModule} from '../pages/task/task-detail.module';
 /**
  * Forniter provider import
  */
@@ -42,16 +42,16 @@ import { CalanderService } from '../pages/leave/calander.service';
 import { TaskProvider } from '../providers/task/task';
 import { ProjectProvider } from '../providers/project/project';
 import { OrganizeProvider } from '../providers/organize/organize';
+import {CustomerProvider} from '../providers/customer/customer';
 import { MouseWheelDirective } from '../directives/mouse-wheel/mouse-wheel';
+import { QuotationProvider } from '../providers/quotation/quotation';
 
 @NgModule({
   declarations: [
     MyApp,
     LoginPage,
     LeavePage,
-    TaskDetailComponent,
     UserListComponent,
-    PriorityComponent,
     MouseWheelDirective
   ],
   imports: [
@@ -66,16 +66,15 @@ import { MouseWheelDirective } from '../directives/mouse-wheel/mouse-wheel';
     BrowserAnimationsModule,
     IndexPageModule,
     OrganizePageModule,
-    ProjectPageModule
+    ProjectPageModule,
+    TaskDetailComponentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     LoginPage,
     LeavePage,
-    TaskDetailComponent,
-    UserListComponent,
-    PriorityComponent,
+    UserListComponent
   ],
   providers: [
     StatusBar,
@@ -88,7 +87,9 @@ import { MouseWheelDirective } from '../directives/mouse-wheel/mouse-wheel';
     TaskProvider,
     ProjectProvider,
     OrganizeProvider,
-    FileTransfer
+    CustomerProvider,
+    FileTransfer,
+    QuotationProvider
   ],
   exports: [LeavePage]
 })

@@ -1,7 +1,8 @@
 <ion-header>
   <ion-navbar [hideBackButton]="true">
 
-    <ion-title>{{project.statusList[0].projectName}}</ion-title>
+    <ion-title><input class="project-name-input" type="text" [(ngModel)]="project.statusList[0].projectName" [value]="project.statusList[0].projectName"
+      /></ion-title>
     <div>
       <button ion-button (click)="pop()">
         <ion-icon name="ios-arrow-back"></ion-icon>
@@ -58,6 +59,30 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+  <ion-item>
+    <ion-label>國家</ion-label>
+    <ion-select #customerCountry (ionChange)="getAllCusomterRegion(customerCountry.value)">
+      <ion-option *ngFor="let c of country" [value]="c">{{c}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>地區</ion-label>
+    <ion-select #customerRegion (ionChange)="getAllCusomterCompany(customerCountry.value,customerRegion.value)">
+      <ion-option *ngFor="let r of region" [value]="r">{{r}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>公司</ion-label>
+    <ion-select #customerCompany (ionChange)="getAllCusomterTarget(customerCountry.value,customerRegion.value,customerCompany.value)">
+      <ion-option *ngFor="let com of company" [value]="com">{{com}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>客戶</ion-label>
+    <ion-select #customer >
+      <ion-option *ngFor="let t of targeusers" [value]="t.customerId">{{t.name}}</ion-option>
+    </ion-select>
+  </ion-item>
   <ion-grid>
     <ion-row warp>
       <div *ngFor="let owner of project.ownerList">

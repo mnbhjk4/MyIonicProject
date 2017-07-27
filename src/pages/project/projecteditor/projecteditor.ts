@@ -7,6 +7,8 @@ import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../../
 import { Storage } from '@ionic/storage';
 import { LoginProvider } from '../../../providers/login/login';
 import { UserListComponent } from '../../../components/user-list/user-list';
+import { CustomerProvider,Customer } from '../../../providers/customer/customer';
+import { PriorityComponent } from '../../task/priority';
 /**
  * Generated class for the TaskPage page.
  *
@@ -24,6 +26,14 @@ export class ProjectEditorComponent {
   newIndex: number = 1;
   companyUsers: Map<string, Employee> = MyApp.companyUsers;
   project: Project;
+
+  country: Array<string> = [];
+  region: Array<string> = [];
+  company: Array<string> = [];
+  targeusers: Array<Customer> = [];
+
+
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private projectProvider: ProjectProvider,
@@ -32,11 +42,12 @@ export class ProjectEditorComponent {
     private storage: Storage,
     private events: Events,
     private loadingController: LoadingController,
-    private loginProvider: LoginProvider, ) {
+    private loginProvider: LoginProvider,
+    private customerProvider: CustomerProvider) {
     this.project = this.navParams.get("project");
   }
   ionViewDidLoad() {
-
+    this.getAllCustomerCountry();
   }
 
   getUser(uid: string) {
@@ -51,13 +62,13 @@ export class ProjectEditorComponent {
       content: "Saving data..."
     });
     loader.present();
-    this.projectProvider.saveProject(this.project).subscribe((data)=>{
-       if (data != null && (data instanceof Object )) {
+    this.projectProvider.saveProject(this.project).subscribe((data) => {
+      if (data != null && (data instanceof Object)) {
         let newTask = Project.fromObject(data);
         this.project = newTask;
         loader.dismiss();
         this.navCtrl.pop().then(a => {
-          this.events.publish("refresh:project", { projectNo: this.project.projectNo});
+          this.events.publish("refresh:project", { projectNo: this.project.projectNo });
         });
       }
     });
@@ -152,7 +163,7 @@ export class ProjectEditorComponent {
     });
   }
   chgSubtaskPriority(task: Task) {
-    let pop = this.popoverController.create(ProjectPriorityComponent, { priority: task.taskStatusList[0].priority }, { cssClass: "priorityPopup" });
+    let pop = this.popoverController.create(PriorityComponent, { priority: task.taskStatusList[0].priority }, { cssClass: "priorityPopup" });
 
     pop.present();
     pop.onDidDismiss((data) => {
@@ -232,73 +243,48 @@ export class ProjectEditorComponent {
 
     this.newIndex = this.newIndex + 1;
   }
-}
 
-@Component({
-  selector: 'project-priority-detail',
-  template: `
-   <button ion-button icon-only class="priority-1" (click)="changePriority('1')">
-        <div *ngIf="priority == '1';else else1">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else1>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-2" (click)="changePriority('2')">
-         <div *ngIf="priority  == '2';else else2">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else2>
-         <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-3" (click)="changePriority('3')">
-        <div *ngIf="priority  == '3';else else3">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else3>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-4" (click)="changePriority('4')">
-        <div *ngIf="priority  == '4';else else4">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else4>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-5" (click)="changePriority('5')">
-        <div *ngIf="priority  == '5';else else5">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else5>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button icon-only class="priority-6" (click)="changePriority('6')">
-        <div *ngIf="priority  == '6';else else6">
-          <ion-icon name="ios-checkmark" ></ion-icon>
-        </div>
-        <ng-template #else6>
-          <ion-icon name="" ></ion-icon>
-        </ng-template>
-      </button>
-      <button ion-button (click)="applyPriority()"><ion-icon name="md-checkmark">Apply</ion-icon></button>`
-})
-export class ProjectPriorityComponent {
-  priority: string = "6";
-  constructor(public viewCtrl: ViewController) {
-    let nowPriority = this.viewCtrl.getNavParams().data["priority"];
-    this.priority = nowPriority;
+  getAllCustomerCountry() {
+    this.customerProvider.getAllCustomerCountry().subscribe(data => {
+      if (data instanceof Array) {
+        this.country.splice(0, this.country.length);
+        for (let index = 0; index < data.length; index++) {
+          this.country.push(data[index]);
+        }
+      }
+    });
   }
 
-  changePriority(priority: string) {
-    this.priority = priority;
+  getAllCusomterRegion(country: string) {
+    this.customerProvider.getAllCusomterRegion(country).subscribe(data => {
+      if (data instanceof Array) {
+        this.region.splice(0, this.region.length);
+        for (let index = 0; index < data.length; index++) {
+          this.region.push(data[index]);
+        }
+      }
+    });
   }
-
-  applyPriority() {
-    this.viewCtrl.dismiss(this.priority);
+  getAllCusomterCompany(country: string, region: string) {
+    this.customerProvider.getAllCusomterCompany(country, region).subscribe(data => {
+      if (data instanceof Array) {
+        this.company.splice(0, this.company.length);
+        for (let index = 0; index < data.length; index++) {
+          this.company.push(data[index]);
+        }
+      }
+    });
+  }
+  getAllCusomterTarget(country: string, region: string, name: string) {
+    this.customerProvider.getAllCusomterTarget(country, region, name).subscribe(data => {
+      if (data instanceof Array) {
+        this.targeusers.splice(0, this.targeusers.length);
+        for (let index = 0; index < data.length; index++) {
+          this.targeusers.push(Customer.fromObject(data[index]));
+        }
+      }
+    });
   }
 }
+
+

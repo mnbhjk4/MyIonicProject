@@ -106,7 +106,7 @@ export class OrganizeProvider {
     //headers.append('Content-Type', 'multipart/form-data');
     requestOptions.headers = headers;
     let formData = new FormData();
-    formData.append("image",file,file.name);
+    formData.append("file",file,file.name);
     formData.append("access_token",access_token);
     formData.append("uid",uid);
     return this.http.post(this.server+"/adal/uploadOwnPhoto",formData);
