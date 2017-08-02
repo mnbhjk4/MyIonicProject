@@ -1,92 +1,100 @@
 <ion-grid>
     <ion-row>
-        <div  *ngFor="let project of projects">
-        <ion-col class="planner-col" *ngIf="project.statusList[0].status != 'DELETE'">
-            <table class="planner-project-table">
-                <tr [ngSwitch]="project.statusList[0].priority" (click)="openProjectEditor(project)">
-                    <th *ngSwitchCase="'1'" class="planner-project-title-1" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
-                    <th *ngSwitchCase="'2'" class="planner-project-title-2" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
-                    <th *ngSwitchCase="'3'" class="planner-project-title-3" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
-                    <th *ngSwitchCase="'4'" class="planner-project-title-4" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
-                    <th *ngSwitchCase="'5'" class="planner-project-title-5" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
-                    <th *ngSwitchCase="'6'" class="planner-project-title-6" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
-                </tr>
-                <tr>
-                    <td>
-                        <div *ngFor="let task of project.taskList">
-                            <table class="planner-task-table" *ngIf="task.taskStatusList[0].status != 'DELETE'" (click)="openDetail(task)">
-                                <tr [ngSwitch]="task.taskStatusList[0].priority">
-                                    <th *ngSwitchCase="'1'" class="planner-task-table-title-1">
-                                        <font>{{task.name}}</font>
-                                    </th>
-                                    <th *ngSwitchCase="'2'" class="planner-task-table-title-2">
-                                        <font>{{task.name}}</font>
-                                    </th>
-                                    <th *ngSwitchCase="'3'" class="planner-task-table-title-3">
-                                        <font>{{task.name}}</font>
-                                    </th>
-                                    <th *ngSwitchCase="'4'" class="planner-task-table-title-4">
-                                        <font>{{task.name}}</font>
-                                    </th>
-                                    <th *ngSwitchCase="'5'" class="planner-task-table-title-5">
-                                        <font>{{task.name}}</font>
-                                    </th>
-                                    <th *ngSwitchCase="'6'" class="planner-task-table-title-6">
-                                        <font>{{task.name}}</font>
-                                    </th>
-                                </tr>
-                                <tr class="planner-task-status-summary">
-                                    <td>
-                                        <div class="planner-task-status" [ngSwitch]="task.taskStatusList[0].status">
-                                            <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"></ion-icon>
-                                            <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"></ion-icon>
-                                            <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"></ion-icon>
-                                            <ion-icon *ngSwitchDefault name="ios-help-circle"></ion-icon>
-                                        </div>
-
-                                        <div class="planner-task-progress">
-                                            <font>{{this.setProgess(task)}}</font>
-                                        </div>
-                                        <div class="planner-task-due-date">
-                                            <font>{{task.taskStatusList[0].startDate | date: 'yyyy-MM-dd'}}</font>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="planner-task-owner">
-                                        <div *ngFor="let own of task.taskOwnerList">
-                                            {{this.companyUserMap.get(own.uid).employeesInfo.lastName}}
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr *ngIf="task.subTaskList.length > 0">
-                                    <th>Working list</th>
-                                </tr>
-                                <div *ngFor="let subtask of task.subTaskList">
-                                    <tr *ngIf="subtask.taskStatusList[0].status != 'DELETE'">
-                                        <td class="planner-task-content">
-                                            <div [ngSwitch]="subtask.taskStatusList[0].status">
+        <ion-col class="planner-col" *ngFor="let project of projects">
+            <div *ngIf="project.statusList[0].status != 'DELETE'">
+                <table class="planner-project-table">
+                    <tr [ngSwitch]="project.statusList[0].priority" (click)="openProjectEditor(project)">
+                        <th *ngSwitchCase="'1'" class="planner-project-title-1" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                        <th *ngSwitchCase="'2'" class="planner-project-title-2" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                        <th *ngSwitchCase="'3'" class="planner-project-title-3" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                        <th *ngSwitchCase="'4'" class="planner-project-title-4" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                        <th *ngSwitchCase="'5'" class="planner-project-title-5" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                        <th *ngSwitchCase="'6'" class="planner-project-title-6" [attr.title]="project.statusList[0].description">{{project.statusList[0].projectName}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div *ngFor="let task of project.taskList">
+                                <table class="planner-task-table" *ngIf="task.taskStatusList[0].status != 'DELETE'" (click)="openDetail(task)">
+                                    <tr [ngSwitch]="task.taskStatusList[0].priority">
+                                        <th *ngSwitchCase="'1'" class="planner-task-table-title-1">
+                                            <font>{{task.name}}</font>
+                                        </th>
+                                        <th *ngSwitchCase="'2'" class="planner-task-table-title-2">
+                                            <font>{{task.name}}</font>
+                                        </th>
+                                        <th *ngSwitchCase="'3'" class="planner-task-table-title-3">
+                                            <font>{{task.name}}</font>
+                                        </th>
+                                        <th *ngSwitchCase="'4'" class="planner-task-table-title-4">
+                                            <font>{{task.name}}</font>
+                                        </th>
+                                        <th *ngSwitchCase="'5'" class="planner-task-table-title-5">
+                                            <font>{{task.name}}</font>
+                                        </th>
+                                        <th *ngSwitchCase="'6'" class="planner-task-table-title-6">
+                                            <font>{{task.name}}</font>
+                                        </th>
+                                    </tr>
+                                    <tr class="planner-task-status-summary">
+                                        <td>
+                                            <div class="planner-task-status" [ngSwitch]="task.taskStatusList[0].status">
                                                 <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"></ion-icon>
                                                 <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"></ion-icon>
                                                 <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"></ion-icon>
                                                 <ion-icon *ngSwitchDefault name="ios-help-circle"></ion-icon>
-                                                {{subtask.name}}
                                             </div>
-                                            <div *ngFor="let subowner of subtask.taskOwnerList">
-                                                {{this.companyUserMap.get(subowner.uid).employeesInfo.lastName}}
+
+                                            <div class="planner-task-progress">
+                                                <font>{{this.setProgess(task)}}</font>
                                             </div>
-                                            <div class="subtask-priority planner-task-table-title-{{subtask.taskStatusList[0].priority}}"></div>
+                                            <div class="planner-task-due-date">
+                                                <font>{{task.taskStatusList[0].startDate | date: 'yyyy-MM-dd'}}</font>
+                                            </div>
                                         </td>
                                     </tr>
-                                </div>
 
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                                    <tr>
+                                        <td class="planner-task-owner">
+                                            <div *ngFor="let own of task.taskOwnerList">
+                                                {{this.companyUserMap.get(own.uid).employeesInfo.lastName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="task.subTaskList.length > 0">
+                                        <th>Working list</th>
+                                    </tr>
+
+                                    <tr *ngFor="let subtask of task.subTaskList">
+                                        <td *ngIf="subtask.taskStatusList[0].status != 'DELETE'" class="planner-task-content">
+                                            <table class="subtask-table">
+                                                <tr>
+                                                    <td>
+                                                        <div [ngSwitch]="subtask.taskStatusList[0].status">
+                                                            <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"></ion-icon>
+                                                            <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"></ion-icon>
+                                                            <ion-icon *ngSwitchCase="'Done'" name="ios-checkmark-circle"></ion-icon>
+                                                            <ion-icon *ngSwitchDefault name="ios-help-circle"></ion-icon>
+                                                            {{subtask.name}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="subtask-priority planner-task-table-title-{{subtask.taskStatusList[0].priority}}"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngFor="let subowner of subtask.taskOwnerList">
+                                                    <td>{{this.companyUserMap.get(subowner.uid).employeesInfo.lastName}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </ion-col>
-        </div>
     </ion-row>
 </ion-grid>

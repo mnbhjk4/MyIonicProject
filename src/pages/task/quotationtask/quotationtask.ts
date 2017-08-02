@@ -1,5 +1,5 @@
-import { Component, Input, ViewChildren, QueryList, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, LoadingController, Loading, PopoverController, Select, Button } from 'ionic-angular';
+import { Component, Input, ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, LoadingController, Loading, PopoverController, Select } from 'ionic-angular';
 import { MyApp } from '../../../app/app.component';
 import { Employee } from '../../../providers/organize/organize';
 import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../../providers/task/task';
@@ -8,19 +8,13 @@ import { PriorityComponent } from '../priority';
 import { UserListComponent } from '../../../components/user-list/user-list';
 import { QuotationEditorComponent } from './quotationeditor';
 import { Storage } from '@ionic/storage';
-import { QuotationProvider } from '../../../providers/quotation/quotation';
+import { QuotationProvider, Quotation, QuotationItem, QuotationItemDetail } from '../../../providers/quotation/quotation';
 
-/**
- * Generated class for the TaskPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @Component({
   selector: 'task-quotation',
   templateUrl: 'quotationtask.html',
 })
-export class QuotationTaskComponent {
+export class QuotationTaskComponent implements AfterViewInit {
   @Input('parentTask') parentTask: Task = new Task();
   @Input('subTask') subtask: Task = new Task();
 
@@ -30,7 +24,8 @@ export class QuotationTaskComponent {
   subTaskPriority: QueryList<Select>;
 
   companyUsers: Map<string, Employee> = MyApp.companyUsers;
-  quotationLineArray: Array<Line> = [];
+  quotationLineArray: Array<QuotationItem> = [];
+  quotation: Quotation = new Quotation();
   totalPrice = 0;
   currency = "TWD";
   constructor(private popoverController: PopoverController,
@@ -38,16 +33,38 @@ export class QuotationTaskComponent {
     private storage: Storage,
     private quotationProvider: QuotationProvider,
     private events: Events) {
-
   }
 
-  ionViewDidLoad() {
-    if (this.subtask.taskOwnerList.length == 0) {
-      let to = new TaskOwner();
-      to.uid = MyApp.targetUser.uid;
-      to.taskNo = this.subtask.taskNo;
-      this.subtask.taskOwnerList.push(to);
+  ngAfterViewInit() {
+    if (this.subtask != null) {
+
+      if (this.subtask.taskOwnerList.length == 0) {
+        let to = new TaskOwner();
+        to.uid = MyApp.targetUser.uid;
+        to.taskNo = this.subtask.taskNo;
+        this.subtask.taskOwnerList.push(to);
+      }
+      this.quotationProvider.getQuotation(this.subtask.taskNo).subscribe(data => {
+        if (data.quotation != null) {
+          this.quotation = Quotation.fromObject(data.quotation);
+          this.subtask["quotation"] = this.quotation;
+        }
+        if (data.quotationItemList != null && data.quotationItemList instanceof Array) {
+          for (let index = 0; index < data.quotationItemList.length; index++) {
+            this.quotationLineArray.push(QuotationItem.fromObject(data.quotationItemList[index]));
+          }
+          this.subtask["quotationItemList"] = this.quotationLineArray;
+        }
+      });
+
+      this.subtask["quotation"] = this.quotation;
+      this.subtask["quotationItemList"] = this.quotationLineArray;
+      this.subtask.type = "QUOTATION_TASK";
+      if (this.quotation.taskNo == null) {
+        this.quotation.taskNo = this.subtask.taskNo;
+      }
     }
+
   }
   upTaskIndex(parentTask: Task, goupChildrenTask: Task) {
     for (let index = 0; index < parentTask.subTaskList.length; index++) {
@@ -166,12 +183,12 @@ export class QuotationTaskComponent {
   }
 
   addQuotationRow(event) {
-    let line = new Line();
-    line.index = this.quotationLineArray.length - 1;
+    let line = new QuotationItem();
+    line.itemIndex = this.quotationLineArray.length - 1;
     this.quotationLineArray.push(line);
   }
 
-  openQuotationEditor(line: Line) {
+  openQuotationEditor(line: QuotationItem) {
     this.navcontroller.push(QuotationEditorComponent, { line: line });
   }
   openPriceFile(priceFile) {
@@ -188,42 +205,19 @@ export class QuotationTaskComponent {
       });
     }
   }
-  changeExtendPrice(line : Line){
-    let extendPrice =Number(line.unitPrice) * Number(line.qtr);
-    line.extendPrice = extendPrice;
+  changeExtendPrice(line: QuotationItem) {
+    let extenedPrice = Number(line.unitPrice) * Number(line.qtr);
+    line.extenedPrice = extenedPrice;
     this.refreshTotalPrice();
   }
-  refreshTotalPrice(){
+  refreshTotalPrice() {
     this.totalPrice = 0;
-    if(this.quotationLineArray != null && this.quotationLineArray[0].currency != null){
+    if (this.quotationLineArray != null && this.quotationLineArray[0].currency != null) {
       this.currency = this.quotationLineArray[0].currency;
     }
-    for(let index=0;index < this.quotationLineArray.length;index++){
+    for (let index = 0; index < this.quotationLineArray.length; index++) {
       let quotationLine = this.quotationLineArray[index];
-      this.totalPrice += Number(quotationLine.extendPrice);
+      this.totalPrice += Number(quotationLine.extenedPrice);
     }
   }
-}
-
-export class Line {
-  index: number;
-  item: number;
-  description: string = "";
-  unitPrice: string;
-  qtr: number;
-  extendPrice: number;
-  currency:string;
-  quotationList : Array<QuotationLine> = [];
-}
-
-export class QuotationLine {
-  productNo: string;
-  productOption: string;
-  description: string;
-  qty: number;
-  price: number;
-  exchangeRate: number;
-  markuprate: number;
-  listPrice: number;
-  note: string;
 }

@@ -37,7 +37,7 @@
                 <ion-input class="exchangeRate-input" type="number" [(ngModel)]="q.exchangeRate" [value]="q.exchangeRate" (change)="caluateListPrice(q)"></ion-input>
             </td>
             <td>
-                <ion-input class="markup-input" type="number" [(ngModel)]="q.markuprate" [value]="q.markuprate" (change)="caluateListPrice(q)"></ion-input>
+                <ion-input class="markup-input" type="number" [(ngModel)]="q.markupRate" [value]="q.markupRate" (change)="caluateListPrice(q)"></ion-input>
             </td>
             <td>
                 <ion-input class="listPrice-input" type="number" [(ngModel)]="q.listPrice" [value]="q.listPrice" (change)="refreshTotalPrice()"></ion-input>
@@ -53,8 +53,8 @@
             </td>
             <td colspan="2">
                 <ion-item>
-                    <ion-select #customerCurrency style="width:100%">
-                        <ion-option value="TWD" selected>TWD</ion-option>
+                    <ion-select [(ngModel)]="customerCurrency" style="width:100%">
+                        <ion-option value="TWD">TWD</ion-option>
                         <ion-option value="USD">USD</ion-option>
                         <ion-option value="CNY">CNY</ion-option>
                         <ion-option value="JPY">JPY</ion-option>

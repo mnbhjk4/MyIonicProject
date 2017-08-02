@@ -1,25 +1,25 @@
 import { Component,ViewChild, Input, ViewChildren, QueryList,ElementRef} from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, Loading, PopoverController, Select,Button } from 'ionic-angular';
 import { MyApp } from '../../../app/app.component';
-import { QuotationProvider,KeysightPrice } from '../../../providers/quotation/quotation';
-import { Line,QuotationLine } from './quotationtask';
+import { QuotationProvider,KeysightPrice ,Quotation,QuotationItem,QuotationItemDetail} from '../../../providers/quotation/quotation';
 @Component({
   selector: 'quotation-editor',
   templateUrl: 'quotationeditor.html',
 })
 export class QuotationEditorComponent{
-    @ViewChild("customerCurrency")
-    customerCurrency:Select;
+    // @ViewChild("customerCurrency")
+    // customerCurrency:Select;
 
-    quotationList : Array<QuotationLine> = [];
+    quotationList : Array<QuotationItemDetail> = [];
 
     kpList : Array<KeysightPrice> = [];
     targetIndex = -1;
     totalPrice = 0;
+    customerCurrency = "TWD";
 
     exchangeMap:any;
 
-    line:Line;
+    line:QuotationItem;
     constructor(
         private quotationProvider : QuotationProvider,
         private navController: NavController,
@@ -30,20 +30,20 @@ export class QuotationEditorComponent{
         });
         this.line = this.params.get("line");
         if(this.line != null){
-            this.quotationList = this.line.quotationList;
+            this.quotationList = this.line.quotationItemDetailList;
             this.refreshTotalPrice();
             this.targetIndex = this.quotationList.length-1;
         }
     }
     pop(){
         this.line.unitPrice = this.totalPrice.toString();
-        this.line.currency = this.customerCurrency.value;
+        this.line.currency = this.customerCurrency;
         this.navController.pop();
     }
 
 
     addQuotationRow(){
-        this.quotationList.push(new QuotationLine());
+        this.quotationList.push(new QuotationItemDetail());
     }
 
     findProductNo(event,index){
@@ -70,10 +70,10 @@ export class QuotationEditorComponent{
             q.description = keysightPrice.description;
             q.price = Number(keysightPrice.listPrice);
             q.qty = 1;
-            if(keysightPrice.listCurrency != null && this.customerCurrency.value != null){
+            if(keysightPrice.listCurrency != null && this.customerCurrency != null){
                 let sourceRate = this.exchangeMap[keysightPrice.listCurrency];
-                let targetRate = this.exchangeMap[this.customerCurrency.value];
-                if(this.customerCurrency.value == 'TWD'){
+                let targetRate = this.exchangeMap[this.customerCurrency];
+                if(this.customerCurrency == 'TWD'){
                     targetRate = 1;
                 }
                 if(sourceRate != null && targetRate != null){
@@ -87,9 +87,9 @@ export class QuotationEditorComponent{
         }
     }
 
-    caluateListPrice(quotation : QuotationLine){
-        if(quotation.qty > 0 && quotation.price > 0 && quotation.exchangeRate > 0 && quotation.markuprate > 0){
-            let listPrice = quotation.qty * ((quotation.price  * quotation.exchangeRate) * quotation.markuprate);
+    caluateListPrice(quotation : QuotationItemDetail){
+        if(quotation.qty > 0 && quotation.price > 0 && quotation.exchangeRate > 0 && quotation.markupRate > 0){
+            let listPrice = quotation.qty * ((quotation.price  * quotation.exchangeRate) * quotation.markupRate);
             quotation.listPrice = listPrice;
         }
         this.refreshTotalPrice();

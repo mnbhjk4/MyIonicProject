@@ -49,12 +49,12 @@ export class TaskDetailComponent {
     let loader = this.loadingController.create({
       content: "Saving data..."
     });
-    loader.present();
+    // loader.present();
     this.taskProvider.saveTask(this.task).subscribe((data) => {
       if (data != null && (data instanceof Object || data.indexOf("Error") == -1)) {
         let newTask = Task.fromObject(data);
         this.task = newTask;
-        loader.dismiss();
+        // loader.dismiss();
         this.navCtrl.pop().then(a => {
           this.events.publish("refresh:project", { projectNo: this.task.projectNumber });
         });

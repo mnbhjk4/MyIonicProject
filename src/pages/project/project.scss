@@ -8,7 +8,12 @@ task-block{
 .planner-col{
     min-width : 280px;
 }
-
+.subtask-table{
+    width:100%;
+    td{
+        width:100%;
+    }
+}
 .planner-project-table{
     width:100%;
     border: solid 1px #0F0F0F;
@@ -69,7 +74,7 @@ task-block{
     float:left;
 }
 .planner-task-content{
-
+    
     position: relative;
     text-align: center;
     padding-right: 5%;

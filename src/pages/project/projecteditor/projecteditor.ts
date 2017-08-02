@@ -1,5 +1,5 @@
 import { Component, Input, ViewChildren, QueryList } from '@angular/core';
-import { NavController, NavParams, Events, LoadingController, Loading, PopoverController, Select, ViewController } from 'ionic-angular';
+import { NavController, NavParams, Events, LoadingController, Loading, PopoverController, Select, ViewController,AlertController } from 'ionic-angular';
 import { MyApp } from '../../../app/app.component';
 import { Employee } from '../../../providers/organize/organize';
 import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../../providers/task/task';
@@ -43,7 +43,8 @@ export class ProjectEditorComponent {
     private events: Events,
     private loadingController: LoadingController,
     private loginProvider: LoginProvider,
-    private customerProvider: CustomerProvider) {
+    private customerProvider: CustomerProvider,
+    private alertController : AlertController) {
     this.project = this.navParams.get("project");
   }
   ionViewDidLoad() {
@@ -58,6 +59,23 @@ export class ProjectEditorComponent {
     return employee;
   }
   pop() {
+
+    if(this.project.statusList[0].projectName == ''){
+      let alert = this.alertController.create({
+        title:'Error',
+        subTitle:"Project name can't be empty."
+      });
+      alert.present();
+      return;
+    }
+    if(this.project.customerId == ''){
+      let alert = this.alertController.create({
+        title:'Error',
+        subTitle:"Customer can't be empty."
+      });
+      alert.present();
+      return;
+    }
     let loader = this.loadingController.create({
       content: "Saving data..."
     });

@@ -58,7 +58,8 @@
                     <div *ngFor="let row of rowDetailList" class="header-row {{row.parentNo}}" [ngSwitch]="row.type" [ngClass]="hideShowRow(row)">
                         <div class="row-cell cell-project"  *ngSwitchCase="'project'" (click)="toggleRow($event,row)">
                             <div class="header-name">
-                                <ion-icon name="ios-arrow-forward"></ion-icon>{{row.name}}</div>
+                                <ion-icon name="ios-arrow-forward"></ion-icon>{{row.name}}
+                            </div>
                             <div class="header-owner">{{row.project.projectNo}}</div>
                         </div>
                         <div class="row-cell cell-task" *ngSwitchCase="'task'" (click)="toggleRow($event,row)">

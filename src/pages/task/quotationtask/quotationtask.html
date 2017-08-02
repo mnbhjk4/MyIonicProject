@@ -53,17 +53,17 @@
                 <ion-col>
                     <ion-grid>
                         <ion-row>
-                            <ion-col col-8><img src="assets/public/login/image/logo.jpg"/></ion-col><ion-col col-4><ion-label>Customer Reference</ion-label><ion-label>Customer ID</ion-label><ion-input class="customer-id" type="text" value="2-009"></ion-input></ion-col>
+                            <ion-col col-8><img src="assets/public/login/image/logo.jpg"/></ion-col><ion-col col-4><ion-label>Customer Reference</ion-label><ion-label>Customer ID</ion-label><ion-input [(ngModel)]="quotation.customerId" class="customer-id" type="text" value="2-009"></ion-input></ion-col>
                         </ion-row>
                         <ion-row class="header-quotation-info">
-                            <ion-col><ion-label>Quotation Number</ion-label><ion-input class="quotation-no" type="text" value="QN20170725-1"></ion-input></ion-col>
-                            <ion-col><ion-label>Quotation Date</ion-label><ion-input class="quotation-date" type="date" value="2017/07/26"></ion-input></ion-col>
-                            <ion-col><ion-label>Expiration Date</ion-label><ion-input class="expiration-date" type="text" value="30 days"></ion-input></ion-col>
+                            <ion-col><ion-label>Quotation Number</ion-label><ion-input [(ngModel)]="quotation.quotationNo" class="quotation-no" type="text" [value]="quotation.quotationNo"></ion-input></ion-col>
+                            <ion-col><ion-label>Quotation Date</ion-label><ion-input  class="quotation-date" type="date" [value]="quotation.quotationDate | date:'yyyy-MM-dd'"></ion-input></ion-col>
+                            <ion-col><ion-label>Expiration Date</ion-label><ion-input [(ngModel)]="quotation.expirationDate" class="expiration-date" type="text" [value]="quotation.expirationDate"></ion-input></ion-col>
                         </ion-row>
                         <ion-row class="header-paymenet-info">
-                            <ion-col><ion-label>Payment Terms</ion-label><ion-input class="payment-terms" type="text" value="90% LC at sigh 10% OA 30 after FAT"></ion-input></ion-col>
-                            <ion-col><ion-label>Incoterms</ion-label><ion-input class="incoterms" type="text" value="CIP"></ion-input></ion-col>
-                            <ion-col><ion-label>Lead Time</ion-label><ion-input class="lead-time" type="text" value="ARO 6 months"></ion-input></ion-col>
+                            <ion-col><ion-label>Payment Terms</ion-label><ion-input [(ngModel)]="quotation.paymentTerms" class="payment-terms" type="text" [value]="quotation.paymentTerms"></ion-input></ion-col>
+                            <ion-col><ion-label>Incoterms</ion-label><ion-input [(ngModel)]="quotation.incoTerms" class="incoterms" type="text" [value]="quotation.incoTerms"></ion-input></ion-col>
+                            <ion-col><ion-label>Lead Time</ion-label><ion-input [(ngModel)]="quotation.leadTime" class="lead-time" type="text" [value]="quotation.leadTime"></ion-input></ion-col>
                         </ion-row>
                     </ion-grid>
                 </ion-col>
@@ -72,13 +72,13 @@
                 <ion-col>
                     <ion-grid>
                         <ion-row><ion-col>Customer Infomation (Issue for)<button ion-button class=""><ion-icon name="md-search"></ion-icon></button></ion-col></ion-row>
-                        <ion-row><ion-col><textarea class="issue-for">上海和輝光電有限公司 ARRAY廠整合科測試組\n陳世寶先生\n手機:185 16671256,137 88910037\nE-Mail:eric.chen@everdisplay.com\n地址:上海市金山區九工路1568號</textarea></ion-col></ion-row>
+                        <ion-row><ion-col><textarea [(ngModel)]="quotation.customerInfomation" class="issue-for"></textarea></ion-col></ion-row>
                     </ion-grid>
                 </ion-col>
                 <ion-col>
                     <ion-grid>
                         <ion-row><ion-col>Raytrex Quotation Issue by<button ion-button class=""><ion-icon name="md-search"></ion-icon></button></ion-col></ion-row>
-                        <ion-row><ion-col><textarea class="issue-by">黃朝毅 \n手機:184 1103 3261,+886 917672221\nE-Mail:joey_huang@raytrex.com\n地址:上海市金山區九工路1568號</textarea></ion-col></ion-row>
+                        <ion-row><ion-col><textarea [(ngModel)]="quotation.quotationIssueBy" class="issue-by"></textarea></ion-col></ion-row>
                     </ion-grid>
                 </ion-col>
             </ion-row>
@@ -93,7 +93,7 @@
                             <td class="product-desc"><ion-input class="product-desc-input" type="text" [(ngModel)]="line.description" [value]="line.description"></ion-input></td>
                             <td class="unit-price"><button ion-button class="unit-price-bt" (click)="openQuotationEditor(line)" >{{line.unitPrice}}</button></td>
                             <td class="qtr"><ion-input class="qtr-input" type="number" [(ngModel)]="line.qtr" [value]="line.qtr" (change)="changeExtendPrice(line)"></ion-input></td>
-                            <td class="extended-price"><ion-input class="extended-price-input" type="number" [(ngModel)]="line.extendPrice" [value]="line.extendPrice"></ion-input></td>
+                            <td class="extended-price"><ion-input class="extended-price-input" type="number" [(ngModel)]="line.extenedPrice" [value]="line.extenedPrice"></ion-input></td>
                         </tr>
                         <tr class="last-row"><td colspan="5"><button ion-button class="add-row-bt" (click)="addQuotationRow($event)"><ion-icon name="md-add-circle"></ion-icon></button></td></tr>
                         <tr><td colspan="2"></td><td colspan="2">LIST Total (USD)</td><td>{{totalPrice}}</td></tr>

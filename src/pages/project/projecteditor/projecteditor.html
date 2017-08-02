@@ -79,7 +79,7 @@
   </ion-item>
   <ion-item>
     <ion-label>客戶</ion-label>
-    <ion-select #customer >
+    <ion-select #customer [(ngModel)]="project.customerId">
       <ion-option *ngFor="let t of targeusers" [value]="t.customerId">{{t.name}}</ion-option>
     </ion-select>
   </ion-item>
