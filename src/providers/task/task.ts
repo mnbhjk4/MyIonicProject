@@ -3,6 +3,7 @@ import { Http, URLSearchParams, Headers } from '@angular/http';
 import { DatePipe } from '@angular/common';
 import 'rxjs/add/operator/map';
 import * as myApp from '../../app/app.component';
+import { MyApp } from '../../app/app.component';
 /*
   Generated class for the TaskProvider provider.
 
@@ -18,6 +19,7 @@ export class TaskProvider {
   getTaskByProjectNo(project_no: string) {
     let params = new Object();
     params["project_no"] = project_no;
+    params["uid"] = MyApp.targetUser.uid;
     return this.http.post(this.server + "/task/getTaskByProjectNo", JSON.stringify(params)).map((res) => res.json());
   }
 

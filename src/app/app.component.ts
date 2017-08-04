@@ -10,10 +10,10 @@ import { JwtHelper } from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
 import { Permission,EmployeeInfo,Employee,EmployeeRoles } from '../providers/organize/organize';
 
-export const webservice_url = "http://192.168.11.55:8080";
-// export const webservice_url = "https://192.168.11.56/erp.service";
-export const reply_url = "http://localhost:8100";
-// export const reply_url = "https://192.168.11.56/frontier";
+// export const webservice_url = "http://192.168.11.55:8080";
+export const webservice_url = "https://192.168.11.56/erp.service";
+// export const reply_url = "http://localhost:8100";
+export const reply_url = "https://192.168.11.56/frontier";
 @Component({
   templateUrl: 'app.html'
 })

@@ -1,10 +1,12 @@
+<ion-row>
+    <ion-label class="subtask-title" (click)="editTaskNameAndPriority(subtask)" [ngClass]="'priority-'+subtask.taskStatusList[0].priority">{{subtask.name}}</ion-label>
+</ion-row>
 <ion-row style="border:solid 1px black">
 
-    <ion-col col-1>
-        <div class="priority-{{this.subtask.taskStatusList[0].priority}} subtask-priority" (click)="chgSubtaskPriority(subtask)">
-           
-        </div>
-        <button ion-button (click)="selectTaskStatus(this.subtask.taskNo)">
+    <ion-col class="command-bt" col-1>
+        <div>
+
+            <button ion-button (click)="selectTaskStatus(this.subtask.taskNo)">
                 <div [ngSwitch]="this.subtask.taskStatusList[0].status">
                     <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"  ></ion-icon>
                     <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"  ></ion-icon>
@@ -12,21 +14,35 @@
                     <ion-icon *ngSwitchDefault name="ios-help-circle"  ></ion-icon>
                 </div>
         </button>
-        <ion-select #subselect id="{{this.subtask.taskNo}}" class="subtask-status" [(ngModel)]="this.subtask.taskStatusList[0].status" hidden>
-            <ion-option value="Not Action">
-                Not Action
-            </ion-option>
-            <ion-option value="Progressing">
-                Progressing
-            </ion-option>
-            <ion-option value="Done">
-                Done
-            </ion-option>
-        </ion-select>
+            <ion-select #subselect id="{{this.subtask.taskNo}}" class="subtask-status" [(ngModel)]="this.subtask.taskStatusList[0].status"
+                hidden>
+                <ion-option value="Not Action">
+                    Not Action
+                </ion-option>
+                <ion-option value="Progressing">
+                    Progressing
+                </ion-option>
+                <ion-option value="Done">
+                    Done
+                </ion-option>
+            </ion-select>
+        </div>
+        <input #priceFile type="file" style="display:none" (change)="uploadPriceFile($event)" />
+        <ion-fab>
+            <button class="subtask-up-config" ion-fab><ion-icon name="md-settings" ></ion-icon></button>
+            <ion-fab-list>
+                <button class="subtask-up-button" ion-button (click)="upTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropup-circle" ></ion-icon></button>
+                <button class="subtask-down-button" ion-button (click)="downTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropdown-circle" ></ion-icon></button>
+                <button class="subtask-upload-button" ion-button (click)="upload(subtask)"><ion-icon name="md-cloud-upload" ></ion-icon></button>
+                <button class="subtask-upload-button" ion-button (click)="openPriceFile(priceFile)"><ion-icon name="md-paper" ></ion-icon></button>
+                <button class="subtask-remove-button" ion-button (click)="removeRow(subtask)"><ion-icon name="md-remove" ></ion-icon></button>
+            </ion-fab-list>
+        </ion-fab>
     </ion-col>
     <ion-col>
         <ion-grid class="subtask-grid">
             <ion-row warp>
+                <ion-col col-1>Owner</ion-col>
                 <ion-col *ngFor="let subowner of subtask.taskOwnerList">
                     <ion-label>
                         <div *ngIf="getUser(subowner.uid) != null &&
@@ -46,24 +62,48 @@
 
             <ion-row>
                 <ion-col>
-                    <ion-label>Quotation Editor</ion-label>
-                </ion-col>
-            </ion-row>
-            <ion-row >
-                <ion-col>
                     <ion-grid>
                         <ion-row>
-                            <ion-col col-8><img src="assets/public/login/image/logo.jpg"/></ion-col><ion-col col-4><ion-label>Customer Reference</ion-label><ion-label>Customer ID</ion-label><ion-input [(ngModel)]="quotation.customerId" class="customer-id" type="text" value="2-009"></ion-input></ion-col>
+                            <ion-col col-8><img src="assets/public/login/image/logo.jpg" /></ion-col>
+                            <ion-col col-4>
+                                <ion-label>Customer Reference</ion-label>
+                                <ion-label>Customer ID</ion-label>
+                                <ion-input [(ngModel)]="quotation.customerId" class="customer-id"
+                                    type="text" value="2-009"></ion-input>
+                            </ion-col>
                         </ion-row>
                         <ion-row class="header-quotation-info">
-                            <ion-col><ion-label>Quotation Number</ion-label><ion-input [(ngModel)]="quotation.quotationNo" class="quotation-no" type="text" [value]="quotation.quotationNo"></ion-input></ion-col>
-                            <ion-col><ion-label>Quotation Date</ion-label><ion-input  class="quotation-date" type="date" [value]="quotation.quotationDate | date:'yyyy-MM-dd'"></ion-input></ion-col>
-                            <ion-col><ion-label>Expiration Date</ion-label><ion-input [(ngModel)]="quotation.expirationDate" class="expiration-date" type="text" [value]="quotation.expirationDate"></ion-input></ion-col>
+                            <ion-col>
+                                <ion-label>Quotation Number</ion-label>
+                                <ion-input [(ngModel)]="quotation.quotationNo" class="quotation-no"
+                                    type="text" [value]="quotation.quotationNo"></ion-input>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>Quotation Date</ion-label>
+                                <ion-input class="quotation-date" type="date" [value]="quotation.quotationDate | date:'yyyy-MM-dd'"></ion-input>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>Expiration Date</ion-label>
+                                <ion-input [(ngModel)]="quotation.expirationDate" class="expiration-date"
+                                    type="text" [value]="quotation.expirationDate"></ion-input>
+                            </ion-col>
                         </ion-row>
                         <ion-row class="header-paymenet-info">
-                            <ion-col><ion-label>Payment Terms</ion-label><ion-input [(ngModel)]="quotation.paymentTerms" class="payment-terms" type="text" [value]="quotation.paymentTerms"></ion-input></ion-col>
-                            <ion-col><ion-label>Incoterms</ion-label><ion-input [(ngModel)]="quotation.incoTerms" class="incoterms" type="text" [value]="quotation.incoTerms"></ion-input></ion-col>
-                            <ion-col><ion-label>Lead Time</ion-label><ion-input [(ngModel)]="quotation.leadTime" class="lead-time" type="text" [value]="quotation.leadTime"></ion-input></ion-col>
+                            <ion-col>
+                                <ion-label>Payment Terms</ion-label>
+                                <ion-input [(ngModel)]="quotation.paymentTerms" class="payment-terms"
+                                    type="text" [value]="quotation.paymentTerms"></ion-input>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>Incoterms</ion-label>
+                                <ion-input [(ngModel)]="quotation.incoTerms" class="incoterms" type="text"
+                                    [value]="quotation.incoTerms"></ion-input>
+                            </ion-col>
+                            <ion-col>
+                                <ion-label>Lead Time</ion-label>
+                                <ion-input [(ngModel)]="quotation.leadTime" class="lead-time" type="text"
+                                    [value]="quotation.leadTime"></ion-input>
+                            </ion-col>
                         </ion-row>
                     </ion-grid>
                 </ion-col>
@@ -71,14 +111,22 @@
             <ion-row>
                 <ion-col>
                     <ion-grid>
-                        <ion-row><ion-col>Customer Infomation (Issue for)<button ion-button class=""><ion-icon name="md-search"></ion-icon></button></ion-col></ion-row>
-                        <ion-row><ion-col><textarea [(ngModel)]="quotation.customerInfomation" class="issue-for"></textarea></ion-col></ion-row>
+                        <ion-row>
+                            <ion-col>Customer Infomation (Issue for)<button ion-button class=""><ion-icon name="md-search"></ion-icon></button></ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col><textarea [(ngModel)]="quotation.customerInfomation" class="issue-for"></textarea></ion-col>
+                        </ion-row>
                     </ion-grid>
                 </ion-col>
                 <ion-col>
                     <ion-grid>
-                        <ion-row><ion-col>Raytrex Quotation Issue by<button ion-button class=""><ion-icon name="md-search"></ion-icon></button></ion-col></ion-row>
-                        <ion-row><ion-col><textarea [(ngModel)]="quotation.quotationIssueBy" class="issue-by"></textarea></ion-col></ion-row>
+                        <ion-row>
+                            <ion-col>Raytrex Quotation Issue by<button ion-button class=""><ion-icon name="md-search"></ion-icon></button></ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col><textarea [(ngModel)]="quotation.quotationIssueBy" class="issue-by"></textarea></ion-col>
+                        </ion-row>
                     </ion-grid>
                 </ion-col>
             </ion-row>
@@ -86,19 +134,37 @@
                 <ion-col>
                     <table class="quotation-table">
                         <tr>
-                            <th>Item</th><th>Product Number/Description</th><th>Unit Price</th><th>Qtr</th><th>Extended Price</th>
+                            <th>Item</th>
+                            <th>Product Number/Description</th>
+                            <th>Unit Price</th>
+                            <th>Qtr</th>
+                            <th>Extended Price</th>
                         </tr>
                         <tr *ngFor="let line of quotationLineArray">
-                            <td class="item"><ion-input class="item-input" type="number" [(ngModel)]="line.item" [value]="line.item"></ion-input></td>
-                            <td class="product-desc"><ion-input class="product-desc-input" type="text" [(ngModel)]="line.description" [value]="line.description"></ion-input></td>
-                            <td class="unit-price"><button ion-button class="unit-price-bt" (click)="openQuotationEditor(line)" >{{line.unitPrice}}</button></td>
-                            <td class="qtr"><ion-input class="qtr-input" type="number" [(ngModel)]="line.qtr" [value]="line.qtr" (change)="changeExtendPrice(line)"></ion-input></td>
-                            <td class="extended-price"><ion-input class="extended-price-input" type="number" [(ngModel)]="line.extenedPrice" [value]="line.extenedPrice"></ion-input></td>
+                            <td class="item">
+                                <ion-input class="item-input" type="number" [(ngModel)]="line.item" [value]="line.item"></ion-input>
+                            </td>
+                            <td class="product-desc">
+                                <ion-input class="product-desc-input" type="text" [(ngModel)]="line.description" [value]="line.description"></ion-input>
+                            </td>
+                            <td class="unit-price"><button ion-button class="unit-price-bt" (click)="openQuotationEditor(line)">{{line.unitPrice}}</button></td>
+                            <td class="qtr">
+                                <ion-input class="qtr-input" type="number" [(ngModel)]="line.qtr" [value]="line.qtr" (change)="changeExtendPrice(line)"></ion-input>
+                            </td>
+                            <td class="extended-price">
+                                <ion-input class="extended-price-input" type="number" [(ngModel)]="line.extenedPrice" [value]="line.extenedPrice"></ion-input>
+                            </td>
                         </tr>
-                        <tr class="last-row"><td colspan="5"><button ion-button class="add-row-bt" (click)="addQuotationRow($event)"><ion-icon name="md-add-circle"></ion-icon></button></td></tr>
-                        <tr><td colspan="2"></td><td colspan="2">LIST Total (USD)</td><td>{{totalPrice}}</td></tr>
+                        <tr class="last-row">
+                            <td colspan="5"><button ion-button class="add-row-bt" (click)="addQuotationRow($event)"><ion-icon name="md-add-circle"></ion-icon></button></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td colspan="2">LIST Total ({{currency}})</td>
+                            <td>{{totalPrice}}</td>
+                        </tr>
                     </table>
-                    
+
                 </ion-col>
             </ion-row>
             <ion-row>
@@ -113,8 +179,11 @@
                     <ion-input class="subtask-comment" [(ngModel)]="subtask.tempComment.comment"></ion-input>
                 </ion-col>
                 <ion-col col-1>
-                    <button ion-button (click)="uploadComment(subtask.tempComment)"><ion-icon name="md-cloud-upload"></ion-icon></button>
-                    <button ion-button (click)="commitComment(subtask)"><ion-icon name="ios-redo"></ion-icon></button>
+                    <div class="comment-command-bt">
+                        <button ion-button (click)="uploadComment(subtask.tempComment)"><ion-icon name="md-cloud-upload"></ion-icon></button>
+                        <button ion-button (click)="commitComment(subtask)"><ion-icon name="ios-redo"></ion-icon></button>
+                    </div>
+                    
                 </ion-col>
             </ion-row>
             <ion-row *ngFor="let subComment of subtask.taskCommentList">
@@ -128,18 +197,5 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </ion-col>
-    <ion-col col-2>
-        <input #priceFile type="file" style="display:none" (change)="uploadPriceFile($event)"/>
-        <ion-fab>
-            <button class="subtask-up-config" ion-fab><ion-icon name="md-settings" ></ion-icon></button>
-            <ion-fab-list>
-                <button class="subtask-up-button" ion-button (click)="upTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropup-circle" ></ion-icon></button>
-                <button class="subtask-down-button" ion-button (click)="downTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropdown-circle" ></ion-icon></button>
-                <button class="subtask-upload-button" ion-button (click)="upload(subtask)"><ion-icon name="md-cloud-upload" ></ion-icon></button>
-                <button class="subtask-upload-button" ion-button (click)="openPriceFile(priceFile)"><ion-icon name="md-paper" ></ion-icon></button>
-                <button class="subtask-remove-button" ion-button (click)="removeRow(subtask)"><ion-icon name="md-remove" ></ion-icon></button>
-            </ion-fab-list>
-        </ion-fab>
     </ion-col>
 </ion-row>

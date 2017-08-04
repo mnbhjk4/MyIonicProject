@@ -55,6 +55,7 @@ export class QuotationTaskComponent implements AfterViewInit {
           }
           this.subtask["quotationItemList"] = this.quotationLineArray;
         }
+        this.refreshTotalPrice();
       });
 
       this.subtask["quotation"] = this.quotation;
@@ -212,12 +213,15 @@ export class QuotationTaskComponent implements AfterViewInit {
   }
   refreshTotalPrice() {
     this.totalPrice = 0;
-    if (this.quotationLineArray != null && this.quotationLineArray[0].currency != null) {
+    if (this.quotationLineArray != null && this.quotationLineArray.length > 0 && this.quotationLineArray[0].currency != null) {
       this.currency = this.quotationLineArray[0].currency;
     }
     for (let index = 0; index < this.quotationLineArray.length; index++) {
       let quotationLine = this.quotationLineArray[index];
-      this.totalPrice += Number(quotationLine.extenedPrice);
+      if(Number(quotationLine.extenedPrice) != NaN){
+         this.totalPrice += Number(quotationLine.extenedPrice);
+      }
+     
     }
   }
 }

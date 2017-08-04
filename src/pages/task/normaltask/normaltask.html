@@ -1,10 +1,10 @@
-<ion-row style="border:solid 1px black">
-
-    <ion-col col-1>
-        <div class="priority-{{this.subtask.taskStatusList[0].priority}} subtask-priority" (click)="chgSubtaskPriority(subtask)">
-           
-        </div>
-        <button ion-button (click)="selectTaskStatus(this.subtask.taskNo)">
+<ion-row>
+    <ion-label class="subtask-title" (click)="editTaskNameAndPriority(subtask)" [ngClass]="'priority-'+subtask.taskStatusList[0].priority">{{subtask.name}}</ion-label>
+</ion-row>
+<ion-row cstyle="border:solid 1px black">
+    <ion-col class="task-command-bt" col-1>
+        <div>
+            <button ion-button (click)="selectTaskStatus(this.subtask.taskNo)">
                 <div [ngSwitch]="this.subtask.taskStatusList[0].status">
                     <ion-icon *ngSwitchCase="'Not Action'" name="ios-close-circle"  ></ion-icon>
                     <ion-icon *ngSwitchCase="'Progressing'" name="ios-play"  ></ion-icon>
@@ -12,21 +12,33 @@
                     <ion-icon *ngSwitchDefault name="ios-help-circle"  ></ion-icon>
                 </div>
         </button>
-        <ion-select #subselect id="{{this.subtask.taskNo}}" class="subtask-status" [(ngModel)]="this.subtask.taskStatusList[0].status" hidden>
-            <ion-option value="Not Action">
-                Not Action
-            </ion-option>
-            <ion-option value="Progressing">
-                Progressing
-            </ion-option>
-            <ion-option value="Done">
-                Done
-            </ion-option>
-        </ion-select>
+            <ion-select #subselect id="{{this.subtask.taskNo}}" class="subtask-status" [(ngModel)]="this.subtask.taskStatusList[0].status"
+                hidden>
+                <ion-option value="Not Action">
+                    Not Action
+                </ion-option>
+                <ion-option value="Progressing">
+                    Progressing
+                </ion-option>
+                <ion-option value="Done">
+                    Done
+                </ion-option>
+            </ion-select>
+        </div>
+        <ion-fab>
+            <button class="subtask-up-config" ion-fab mini><ion-icon name="md-settings" ></ion-icon></button>
+            <ion-fab-list>
+                <button class="subtask-up-button" ion-button (click)="upTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropup-circle" ></ion-icon></button>
+                <button class="subtask-down-button" ion-button (click)="downTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropdown-circle" ></ion-icon></button>
+                <button class="subtask-upload-button" ion-button (click)="upload(subtask)"><ion-icon name="md-cloud-upload" ></ion-icon></button>
+                <button class="subtask-remove-button" ion-button (click)="removeRow(subtask)"><ion-icon name="md-remove" ></ion-icon></button>
+            </ion-fab-list>
+        </ion-fab>
     </ion-col>
     <ion-col>
         <ion-grid class="subtask-grid">
             <ion-row warp>
+                <ion-col col-1>Owner</ion-col>
                 <ion-col *ngFor="let subowner of subtask.taskOwnerList">
                     <ion-label>
                         <div *ngIf="getUser(subowner.uid) != null &&
@@ -44,12 +56,6 @@
                 <ion-col><button ion-button title="Add owner" (click)="selectUsers(subtask)"><ion-icon name="md-person-add"></ion-icon></button></ion-col>
             </ion-row>
 
-            <ion-row>
-                <ion-col>
-                    <ion-label>Task name</ion-label>
-                    <ion-input class="subtask-name" [(ngModel)]="subtask.name"></ion-input>
-                </ion-col>
-            </ion-row>
             <ion-row wrap>
                 <ion-col>
                     <ion-label>Start Date</ion-label>
@@ -78,9 +84,11 @@
                     <ion-label>Comment</ion-label>
                     <ion-input class="subtask-comment" [(ngModel)]="subtask.tempComment.comment"></ion-input>
                 </ion-col>
-                <ion-col col-1>
-                    <button ion-button (click)="uploadComment(subtask.tempComment)"><ion-icon name="md-cloud-upload"></ion-icon></button>
-                    <button ion-button (click)="commitComment(subtask)"><ion-icon name="ios-redo"></ion-icon></button>
+                <ion-col class="comment-command-bt" col-1>
+                    <div class="comment-div">
+                        <button ion-button (click)="uploadComment(subtask.tempComment)"><ion-icon name="md-cloud-upload"></ion-icon></button>
+                        <button ion-button (click)="commitComment(subtask)"><ion-icon name="ios-redo"></ion-icon></button>
+                    </div>
                 </ion-col>
             </ion-row>
             <ion-row *ngFor="let subComment of subtask.taskCommentList">
@@ -88,22 +96,8 @@
                     <div>{{subComment.comment}}</div>
                     <div>{{subComment.commentDate}}</div>
                     <div>{{ getUser(subComment.uid).employeesInfo.lastName}}</div>
-                    <div *ngIf="subComment.attachUid != '' && subComment.attachUid != null">
-                        <div>Test!</div>
-                    </div>
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </ion-col>
-    <ion-col col-2>
-        <ion-fab>
-            <button class="subtask-up-config" ion-fab><ion-icon name="md-settings" ></ion-icon></button>
-            <ion-fab-list>
-                <button class="subtask-up-button" ion-button (click)="upTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropup-circle" ></ion-icon></button>
-                <button class="subtask-down-button" ion-button (click)="downTaskIndex(parentTask,subtask)"><ion-icon name="ios-arrow-dropdown-circle" ></ion-icon></button>
-                <button class="subtask-upload-button" ion-button (click)="upload(subtask)"><ion-icon name="md-cloud-upload" ></ion-icon></button>
-                <button class="subtask-remove-button" ion-button (click)="removeRow(subtask)"><ion-icon name="md-remove" ></ion-icon></button>
-            </ion-fab-list>
-        </ion-fab>
     </ion-col>
 </ion-row>

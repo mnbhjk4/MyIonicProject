@@ -1,0 +1,19 @@
+task-normal{
+
+    .subtask-title{
+        border-radius: 10px 10px 0px 0px;
+        height: 30px;
+        text-align: center;
+        color: white;
+    }
+    .task-command-bt{
+        max-width:50px;
+    }
+    .comment-command-bt{
+        min-width:70px;
+        .comment-div{
+            position: absolute;
+            bottom: 0px;
+        }
+    }
+}

@@ -9,6 +9,9 @@ import { LoginProvider } from '../../../providers/login/login';
 import { UserListComponent } from '../../../components/user-list/user-list';
 import { CustomerProvider,Customer } from '../../../providers/customer/customer';
 import { PriorityComponent } from '../../task/priority';
+import { ProjectTitleEditorComponent } from './projecttitleeditor'
+import { TaskTitleEditorComponent } from '../../task/tasktitleeditor';
+import { CustomerSelectorComponent } from '../customerselector';
 /**
  * Generated class for the TaskPage page.
  *
@@ -27,11 +30,7 @@ export class ProjectEditorComponent {
   companyUsers: Map<string, Employee> = MyApp.companyUsers;
   project: Project;
 
-  country: Array<string> = [];
-  region: Array<string> = [];
-  company: Array<string> = [];
-  targeusers: Array<Customer> = [];
-
+  targetCustomer :Customer = new Customer();
 
 
   constructor(public navCtrl: NavController,
@@ -48,7 +47,10 @@ export class ProjectEditorComponent {
     this.project = this.navParams.get("project");
   }
   ionViewDidLoad() {
-    this.getAllCustomerCountry();
+    // this.getAllCustomerCountry();
+    if(this.project != null && this.project.customerId != null){
+      this.getCustomer(this.project.customerId);
+    }
   }
 
   getUser(uid: string) {
@@ -75,6 +77,12 @@ export class ProjectEditorComponent {
       });
       alert.present();
       return;
+    }else{
+      if(this.targetCustomer != null && this.project.customerId != null){
+        if(this.project.customerId != this.targetCustomer.customerId){
+          this.project.customerId = this.targetCustomer.customerId;
+        }
+      }
     }
     let loader = this.loadingController.create({
       content: "Saving data..."
@@ -180,16 +188,7 @@ export class ProjectEditorComponent {
       }
     });
   }
-  chgSubtaskPriority(task: Task) {
-    let pop = this.popoverController.create(PriorityComponent, { priority: task.taskStatusList[0].priority }, { cssClass: "priorityPopup" });
 
-    pop.present();
-    pop.onDidDismiss((data) => {
-      if (data != null) {
-        task.taskStatusList[0].priority = data;
-      }
-    });
-  }
   commitComment(task: Task) {
     if (task.tempComment.comment == null || task.tempComment.comment.trim() == '') {
       return;
@@ -251,6 +250,11 @@ export class ProjectEditorComponent {
     newTask.taskNo = "NEW" + this.newIndex;
     newTask.customerId = this.project.customerId;
     newTask.projectNumber = this.project.projectNo;
+    newTask.type = "NORMAL_TASK";
+    let owner = new TaskOwner();
+    owner.uid = MyApp.targetUser.uid;
+    owner.taskNo = "NEW";
+    newTask.taskOwnerList.push(owner);
 
     let initTaskStatus = new TaskStatus();
     initTaskStatus.status = "Not Action";
@@ -261,45 +265,26 @@ export class ProjectEditorComponent {
 
     this.newIndex = this.newIndex + 1;
   }
-
-  getAllCustomerCountry() {
-    this.customerProvider.getAllCustomerCountry().subscribe(data => {
-      if (data instanceof Array) {
-        this.country.splice(0, this.country.length);
-        for (let index = 0; index < data.length; index++) {
-          this.country.push(data[index]);
-        }
-      }
+  editProjectNameAndPriority(){
+    let con = this.popoverController.create(ProjectTitleEditorComponent,{project:this.project},{ cssClass: 'projecttitle'});
+    con.present();
+  }
+  editTaskNameAndPriority(task){
+    let con = this.popoverController.create(TaskTitleEditorComponent,{task:task},{ cssClass: 'tasktitle'});
+    con.present();
+  }
+  
+  getCustomer(cutomerId : string){
+    this.customerProvider.getCustomer(cutomerId).subscribe(data=>{
+      this.targetCustomer = Customer.fromObject(data);
     });
   }
-
-  getAllCusomterRegion(country: string) {
-    this.customerProvider.getAllCusomterRegion(country).subscribe(data => {
-      if (data instanceof Array) {
-        this.region.splice(0, this.region.length);
-        for (let index = 0; index < data.length; index++) {
-          this.region.push(data[index]);
-        }
-      }
-    });
-  }
-  getAllCusomterCompany(country: string, region: string) {
-    this.customerProvider.getAllCusomterCompany(country, region).subscribe(data => {
-      if (data instanceof Array) {
-        this.company.splice(0, this.company.length);
-        for (let index = 0; index < data.length; index++) {
-          this.company.push(data[index]);
-        }
-      }
-    });
-  }
-  getAllCusomterTarget(country: string, region: string, name: string) {
-    this.customerProvider.getAllCusomterTarget(country, region, name).subscribe(data => {
-      if (data instanceof Array) {
-        this.targeusers.splice(0, this.targeusers.length);
-        for (let index = 0; index < data.length; index++) {
-          this.targeusers.push(Customer.fromObject(data[index]));
-        }
+  findCustomer(customer : Customer){
+   let con = this.popoverController.create(CustomerSelectorComponent,{customer:customer},{ cssClass: 'customerselector'});
+    con.present();
+    con.onDidDismiss(data=>{
+      if(data.customer != null){
+        this.targetCustomer = Customer.fromObject(data.customer);
       }
     });
   }

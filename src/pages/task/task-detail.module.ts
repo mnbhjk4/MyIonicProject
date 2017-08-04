@@ -4,7 +4,8 @@ import { TaskDetailComponent } from './task-detail';
 import { QuotationTaskComponent } from './quotationtask/quotationtask';
 import { NormalTaskCopmonent } from './normaltask/normaltask';
 import { PriorityComponent } from './priority';
-import {QuotationEditorComponent　} from './quotationtask/quotationeditor';
+import { QuotationEditorComponent　} from './quotationtask/quotationeditor';
+import { TaskTitleEditorComponent } from './tasktitleeditor'
 
 @NgModule({
   declarations: [
@@ -12,12 +13,14 @@ import {QuotationEditorComponent　} from './quotationtask/quotationeditor';
     QuotationTaskComponent,
     PriorityComponent,
     NormalTaskCopmonent,
-    QuotationEditorComponent　
+    QuotationEditorComponent,
+    TaskTitleEditorComponent　
   ],
   entryComponents:[
     NormalTaskCopmonent,
     PriorityComponent,
-    QuotationEditorComponent　
+    QuotationEditorComponent,
+    TaskTitleEditorComponent　
   ],
   imports: [
     IonicPageModule.forChild(TaskDetailComponent),

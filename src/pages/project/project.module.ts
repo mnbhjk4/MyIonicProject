@@ -4,16 +4,21 @@ import { ProjectPage } from './project';
 import { ProjectBlockComponent } from './block/project-block';
 import { ProjectTimelineComponent } from './timeline/project-timeline';
 import { ProjectEditorComponent} from './projecteditor/projecteditor';
-
+import { ProjectTitleEditorComponent } from './projecteditor/projecttitleeditor';
+import { CustomerSelectorComponent } from './customerselector'
 @NgModule({
   declarations: [
     ProjectPage,
     ProjectBlockComponent,
     ProjectTimelineComponent,
-    ProjectEditorComponent
+    ProjectEditorComponent,
+    ProjectTitleEditorComponent,
+    CustomerSelectorComponent
   ],
   entryComponents:[
-    ProjectEditorComponent
+    ProjectEditorComponent,
+    ProjectTitleEditorComponent,
+    CustomerSelectorComponent
   ],
   imports: [
     IonicPageModule.forChild(ProjectPage)

@@ -6,7 +6,8 @@ import { TaskProvider, Task, TaskOwner, TaskComment, TaskStatus } from '../../..
 import { ProjectProvider, Project, ProjectOwner, ProjectStatus } from '../../../providers/project/project';
 import { PriorityComponent } from '../priority';
 import { UserListComponent } from '../../../components/user-list/user-list';
-/**
+import { TaskTitleEditorComponent } from '../tasktitleeditor';
+ /**
  * Generated class for the TaskPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
@@ -148,5 +149,9 @@ export class NormalTaskCopmonent {
        employee = new Employee();
     }
     return employee;
+  }
+  editTaskNameAndPriority(task){
+    let con = this.popoverController.create(TaskTitleEditorComponent,{task:task},{ cssClass: 'tasktitle'});
+    con.present();
   }
 }

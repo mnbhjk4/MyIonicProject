@@ -53,6 +53,23 @@ export class CustomerProvider {
     formData.append("name", name);
     return this.http.post(this.server + "/customer/getAllCusomterTarget", formData).map((res) => res.json());
   }
+
+  getCustomer(customerId : string){
+     let requestOptions = new RequestOptions();
+    let headers = new Headers();
+    //headers.append('Content-Type', 'multipart/form-data');
+    requestOptions.headers = headers;
+    let formData = new FormData();
+    formData.append("customerId", customerId);
+    return this.http.post(this.server + "/customer/getCustomer", formData).map((res) => res.json());
+  }
+  getAllCustomer(){
+     let requestOptions = new RequestOptions();
+    let headers = new Headers();
+    //headers.append('Content-Type', 'multipart/form-data');
+    requestOptions.headers = headers;
+    return this.http.post(this.server + "/customer/getAllCustomer",null).map((res) => res.json());
+  }
 }
 
 

@@ -5,6 +5,7 @@ import { MyApp } from '../../app/app.component';
 import { UserListComponent } from '../../components/user-list/user-list';
 import { LoginProvider } from '../../providers/login/login';
 import { Employee, EmployeeInfo } from '../../providers/organize/organize';
+import { TaskTitleEditorComponent } from './tasktitleeditor';
 
 /**
  * Generated class for the TaskDetailComponent component.
@@ -176,7 +177,10 @@ export class TaskDetailComponent {
     newTask.parentTaskNo = parentTask.taskNo;
     newTask.projectNumber = parentTask.projectNumber;
     newTask.type = "NORMAL_TASK";
-
+    let owner = new TaskOwner();
+    owner.uid = MyApp.targetUser.uid;
+    owner.taskNo = "NEW";
+    newTask.taskOwnerList.push(owner);
 
     let initTaskStatus = new TaskStatus();
     initTaskStatus.status = "Not Action";
@@ -196,7 +200,10 @@ export class TaskDetailComponent {
     newTask.parentTaskNo = parentTask.taskNo;
     newTask.projectNumber = parentTask.projectNumber;
     newTask.type = "QUOTATION_TASK";
-
+    let owner = new TaskOwner();
+    owner.uid = MyApp.targetUser.uid;
+    owner.taskNo = "NEW";
+    newTask.taskOwnerList.push(owner);
 
     let initTaskStatus = new TaskStatus();
     initTaskStatus.status = "Not Action";
@@ -207,6 +214,11 @@ export class TaskDetailComponent {
     this.task.subTaskList.push(newTask);
 
     this.newIndex = this.newIndex + 1;
+  }
+
+  editTaskNameAndPriority(task){
+    let con = this.popoverController.create(TaskTitleEditorComponent,{task:task},{ cssClass: 'tasktitle'});
+    con.present();
   }
 }
 
